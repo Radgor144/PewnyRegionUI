@@ -1,38 +1,30 @@
-.App {
-  text-align: center;
+/* Główne okno na pełny ekran, bez systemowego scrollbara */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Panel boczny o stałej szerokości, z własnym scrollem */
+.sidebar {
+  width: 350px;
+  background-color: #93C5FD; /* Twój niebieski kolor */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px;
+  overflow-y: auto; /* Pozwala na scrollowanie filtrów, jeśli jest ich za dużo */
+  box-sizing: border-box;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Kontener mapy zajmuje całą resztę miejsca */
+.map-container {
+  flex-grow: 1;
+  position: relative;
 }
