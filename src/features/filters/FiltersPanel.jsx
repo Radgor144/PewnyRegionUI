@@ -1,151 +1,92 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TimeRangePicker } from './TimeRangePicker';
 import { FilterList } from './FilterList';
+import { LanguageSwitcher } from '../../components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeSwitcher } from '../../components/ThemeSwitcher/ThemeSwitcher';
 
 export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpdate, isOpen, setIsOpen }) => {
+    const { t } = useTranslation();
     const [variables, setVariables] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isGenerating, setIsGenerating] = useState(false);
     const [error, setError] = useState(null);
-
     const [yearFrom, setYearFrom] = useState(2012);
     const [yearTo, setYearTo] = useState(2013);
-
     const MAX_SELECTION = 10;
 
     useEffect(() => {
         fetch('http://localhost:8080/api/variables')
             .then(res => {
-                if (!res.ok) throw new Error(`Błąd (Status: ${res.status})`);
+                if (!res.ok) throw new Error(`Error (Status: ${res.status})`);
                 return res.json();
             })
-            .then(data => {
-                setVariables(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError("Nie udało się pobrać filtrów.");
-                setLoading(false);
-            });
-    }, []);
+            .then(data => { setVariables(data); setLoading(false); })
+            .catch(() => { setError(t('filters.loadError')); setLoading(false); });
+    }, [t]);
 
     const handleGenerateMap = () => {
         if (selectedVariables.length === 0) return;
-
         setIsGenerating(true);
-
-        const payload = {
-            apiNames: selectedVariables.map(v => v.apiName),
-            yearFrom: yearFrom,
-            yearTo: yearTo
-        };
+        const payload = { apiNames: selectedVariables.map(v => v.apiName), yearFrom, yearTo };
 
         fetch('http://localhost:8080/api/map/county-scores', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         })
             .then(res => {
-                if (!res.ok) throw new Error("Błąd podczas generowania wyników");
+                if (!res.ok) throw new Error("Error generating results");
                 return res.json();
             })
-            .then(data => {
-                onScoresUpdate(data);
-                setIsGenerating(false);
-            })
-            .catch(err => {
-                alert("Nie udało się pobrać danych dla mapy.");
-                setIsGenerating(false);
-            });
+            .then(data => { onScoresUpdate(data); setIsGenerating(false); })
+            .catch(() => { alert(t('filters.loadError')); setIsGenerating(false); });
     };
 
     return (
-        <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            height: '100vh',
-            zIndex: 1000,
-            pointerEvents: 'none'
-        }}>
-            <div style={{
-                pointerEvents: 'auto',
-                width: isOpen ? '320px' : '64px',
-                height: '100vh',
-                backgroundColor: '#ffffff',
-                boxShadow: '4px 0 24px rgba(0,0,0,0.08)',
-                borderRight: '1px solid #e5e7eb',
-                transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease',
-                display: 'flex',
-                flexDirection: 'column',
-                boxSizing: 'border-box',
-                overflow: 'hidden',
-                position: 'relative'
-            }}>
-                {!isOpen && (
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        paddingTop: '24px',
-                        gap: '20px',
-                        width: '64px',
-                        flexShrink: 0
-                    }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontWeight: 'bold', fontSize: '15px', boxShadow: '0 2px 4px rgba(37,99,235,0.3)' }}>PR</div>
-                        <div style={{ width: '100%', height: '1px', backgroundColor: '#e2e8f0', margin: '4px 0' }} />
-                        <div title="Filtry i Zmienne" style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563eb', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>FIL</div>
-                        <div title="Zakres Czasu" style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>CZAS</div>
-                        <div title="Analityka i Eksport" style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>ANA</div>
+        <aside className={`absolute top-4 left-4 bottom-4 z-10 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 transition-all duration-300 ease-in-out ${isOpen ? 'w-80 md:w-96' : 'w-20'}`}>
+
+            <header className="flex items-center justify-between gap-3 p-5 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 shrink-0 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/30">
+                        PR
+                    </div>
+                    <div className={`transition-opacity duration-200 overflow-hidden ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0 hidden'}`}>
+                        <h1 className="font-bold text-slate-800 dark:text-slate-100 text-base leading-tight whitespace-nowrap">{t('app.title')}</h1>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">{t('app.subtitle')}</p>
+                    </div>
+                </div>
+
+                {isOpen && (
+                    <div className="flex items-center gap-2">
+                        <ThemeSwitcher />
+                        <LanguageSwitcher />
                     </div>
                 )}
+            </header>
 
-                <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '320px',
-                    height: '100%',
-                    padding: '24px 24px 32px 24px',
-                    boxSizing: 'border-box',
-                    overflowY: 'auto',
-                    overflowX: 'hidden',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    opacity: isOpen ? 1 : 0,
-                    pointerEvents: isOpen ? 'auto' : 'none',
-                    transition: 'opacity 0.2s ease'
-                }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid #f1f5f9' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '10px', backgroundColor: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontWeight: 'bold', fontSize: '15px', boxShadow: '0 2px 6px rgba(37,99,235,0.3)' }}>PR</div>
-                        <div>
-                            <h1 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: '#0f172a', letterSpacing: '-0.01em' }}>Pewny Region</h1>
-                            <span style={{ fontSize: '11px', color: '#64748b', fontWeight: '500' }}>Platforma Analityczna Regionów</span>
-                        </div>
+            <div className={`flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide ${!isOpen && 'hidden'}`}>
+
+                <section>
+                    <TimeRangePicker yearFrom={yearFrom} setYearFrom={setYearFrom} yearTo={yearTo} setYearTo={setYearTo} />
+                </section>
+
+                <hr className="border-slate-100 dark:border-slate-800" />
+
+                <section className="flex-1 flex flex-col h-full">
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">{t('filters.title')}</h2>
+                        <span className="px-2 py-1 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-[11px] font-bold rounded-md">
+                            {selectedVariables.length} / {MAX_SELECTION}
+                        </span>
                     </div>
 
-                    <TimeRangePicker
-                        yearFrom={yearFrom}
-                        setYearFrom={setYearFrom}
-                        yearTo={yearTo}
-                        setYearTo={setYearTo}
-                    />
-
-                    <div style={{ marginBottom: '16px', marginTop: '8px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <h3 style={{ margin: 0, fontSize: '13px', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>
-                                Dostępne Filtry
-                            </h3>
-                            <span style={{ fontSize: '12px', color: '#2563eb', fontWeight: '600', backgroundColor: '#eff6ff', padding: '2px 8px', borderRadius: '10px' }}>
-                                {selectedVariables.length} / {MAX_SELECTION}
-                            </span>
+                    {loading && <p className="text-center text-slate-400 dark:text-slate-500 text-sm py-4">{t('filters.loading')}</p>}
+                    {error && (
+                        <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 rounded-xl text-red-500 dark:text-red-400 text-sm font-medium text-center">
+                            {error}
                         </div>
-                    </div>
-
-                    {loading && <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px' }}>Ładowanie danych...</p>}
-                    {error && <div style={{ color: '#ef4444', textAlign: 'center', fontSize: '14px', padding: '12px', backgroundColor: '#fef2f2', borderRadius: '8px' }}>{error}</div>}
+                    )}
 
                     {!loading && !error && (
                         <FilterList
@@ -155,56 +96,46 @@ export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpda
                             maxSelection={MAX_SELECTION}
                         />
                     )}
+                </section>
+            </div>
 
+            {!isOpen && (
+                <div className="flex-1 flex flex-col items-center py-6 gap-4">
+                    <button onClick={() => setIsOpen(true)} className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-slate-800 flex items-center justify-center text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-slate-700 transition-colors" title="Open filters">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    </button>
+                </div>
+            )}
+
+            {isOpen && (
+                <div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 rounded-b-2xl shrink-0">
                     <button
                         onClick={handleGenerateMap}
                         disabled={isGenerating || selectedVariables.length === 0}
-                        style={{
-                            padding: '14px',
-                            backgroundColor: (isGenerating || selectedVariables.length === 0) ? '#cbd5e1' : '#2563eb',
-                            color: '#ffffff',
-                            border: 'none',
-                            borderRadius: '8px',
-                            fontWeight: '600',
-                            fontSize: '14px',
-                            cursor: (isGenerating || selectedVariables.length === 0) ? 'not-allowed' : 'pointer',
-                            marginTop: 'auto',
-                            transition: 'background-color 0.2s, box-shadow 0.2s',
-                            boxShadow: (isGenerating || selectedVariables.length === 0) ? 'none' : '0 4px 6px -1px rgba(37, 99, 235, 0.2)'
-                        }}
+                        className={`w-full py-3 px-4 flex items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all ${
+                            isGenerating || selectedVariables.length === 0
+                                ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-600 cursor-not-allowed'
+                                : 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50'
+                        }`}
                     >
-                        {isGenerating ? "Obliczanie..." : "Generuj Mapę"}
+                        {isGenerating ? (
+                            t('filters.generating')
+                        ) : (
+                            <>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                                {t('filters.generateMap')}
+                            </>
+                        )}
                     </button>
                 </div>
-            </div>
+            )}
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                style={{
-                    pointerEvents: 'auto',
-                    position: 'absolute',
-                    top: '50%',
-                    left: isOpen ? '300px' : '44px',
-                    transform: 'translateY(-50%)',
-                    zIndex: 1100,
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '50%',
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 4px 8px -1px rgba(0, 0, 0, 0.12)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '18px',
-                    fontWeight: 'bold',
-                    color: '#334155',
-                    transition: 'left 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
+                className="absolute top-1/2 -right-3.5 -translate-y-1/2 w-7 h-7 flex items-center justify-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-slate-500 dark:text-slate-300 shadow-md hover:text-blue-600 dark:hover:text-blue-400 transition-colors z-20"
             >
                 {isOpen ? '‹' : '›'}
             </button>
-        </div>
+        </aside>
     );
 };

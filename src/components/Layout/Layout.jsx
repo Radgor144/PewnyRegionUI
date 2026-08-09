@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Layout = ({ children }) => {
     return (
-        <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
+        <div className="relative w-screen h-screen overflow-hidden bg-slate-100">
             {children}
         </div>
     );
