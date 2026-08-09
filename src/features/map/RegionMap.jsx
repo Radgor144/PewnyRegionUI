@@ -109,14 +109,18 @@ export const RegionMap = ({ scoresData, isOpen }) => {
             });
         }
     }, [scoresMap, minMax]);
-
     const highlightFeature = (e) => {
         const layer = e.target;
+
         if (activeLayerRef.current && activeLayerRef.current !== layer) {
-            if (activeLayerRef.current && activeLayerRef.current._baseStyle) {
+            if (activeLayerRef.current._baseStyle) {
                 activeLayerRef.current.setStyle(activeLayerRef.current._baseStyle);
             }
+            if (typeof activeLayerRef.current.closeTooltip === 'function') {
+                activeLayerRef.current.closeTooltip();
+            }
         }
+
         activeLayerRef.current = layer;
         layer.setStyle({
             weight: 2.5,
@@ -135,10 +139,23 @@ export const RegionMap = ({ scoresData, isOpen }) => {
         if (layer._baseStyle) {
             layer.setStyle(layer._baseStyle);
         }
+
+        if (typeof layer.closeTooltip === 'function') {
+            layer.closeTooltip();
+        }
     };
 
     return (
         <div style={{ flexGrow: 1, position: 'relative', height: '100%', backgroundColor: '#f1f5f9' }}>
+            <style>{`
+                .custom-tooltip {
+                    pointer-events: none !important;
+                }
+                .leaflet-tooltip {
+                    pointer-events: none !important;
+                }
+            `}</style>
+
             <MapContainer center={[52.13, 19.48]} zoom={6} style={{ height: "100%", width: "100%" }} zoomControl={false}>
                 <MapInvalidator isOpen={isOpen} />
                 <TileLayer

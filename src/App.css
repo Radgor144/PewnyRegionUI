@@ -1,4 +1,3 @@
-/* Główne okno na pełny ekran, bez systemowego scrollbara */
 body, html {
   margin: 0;
   padding: 0;
@@ -12,18 +11,16 @@ body, html {
   width: 100vw;
 }
 
-/* Panel boczny o stałej szerokości, z własnym scrollem */
 .sidebar {
   width: 350px;
-  background-color: #93C5FD; /* Twój niebieski kolor */
+  background-color: #93C5FD;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  overflow-y: auto; /* Pozwala na scrollowanie filtrów, jeśli jest ich za dużo */
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* Kontener mapy zajmuje całą resztę miejsca */
 .map-container {
   flex-grow: 1;
   position: relative;
