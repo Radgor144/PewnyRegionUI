@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Layout } from './components/Layout/Layout';
-import { FiltersPanel } from './features/filters';
-import { RegionMap } from './features/map';
+import { useState } from 'react';
+import { Layout } from 'components/Layout/Layout';
+import { FiltersPanel } from 'features/filters';
+import { RegionMap } from 'features/map';
+import { Variable, CountyScore } from 'api/types';
 
 function App() {
-    const [selectedVariables, setSelectedVariables] = useState([]);
-    const [countyScores, setCountyScores] = useState(null);
-    const [isPanelOpen, setIsPanelOpen] = useState(true);
+    const [selectedVariables, setSelectedVariables] = useState<Variable[]>([]);
+    const [countyScores, setCountyScores] = useState<CountyScore[] | null>(null);
+    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(true);
 
     return (
         <Layout>

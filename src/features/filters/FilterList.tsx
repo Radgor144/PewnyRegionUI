@@ -1,7 +1,14 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Variable } from 'api/types';
 
-export const FilterList = ({ variables, selectedVariables, onVariableToggle, maxSelection }) => {
+interface FilterListProps {
+    variables: Variable[];
+    selectedVariables: Variable[];
+    onVariableToggle: (updater: (prev: Variable[]) => Variable[]) => void;
+    maxSelection: number;
+}
+
+export const FilterList = ({ variables, selectedVariables, onVariableToggle, maxSelection }: FilterListProps) => {
     const { t, i18n } = useTranslation();
     const safeSelected = Array.isArray(selectedVariables) ? selectedVariables : [];
 
@@ -12,12 +19,12 @@ export const FilterList = ({ variables, selectedVariables, onVariableToggle, max
                 const isDisabled = !isSelected && safeSelected.length >= maxSelection;
                 const hasTranslation = i18n.exists(`variables.${variable.apiName}.label`);
                 const label = hasTranslation ? t(`variables.${variable.apiName}.label`) : variable.apiName;
-                const description = hasTranslation ? t(`variables.${variable.apiName}.description`) : null;
+                const description = hasTranslation ? t(`variables.${variable.apiName}.description`) : undefined;
 
                 return (
                     <label
                         key={variable.apiName}
-                        title={description || undefined}
+                        title={description}
                         className={`flex items-center p-3.5 rounded-xl border transition-all duration-200 ${
                             isSelected
                                 ? 'bg-blue-50/90 dark:bg-blue-950/70 border-blue-500 dark:border-blue-600 shadow-sm shadow-blue-500/10 cursor-pointer'

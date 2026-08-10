@@ -1,5 +1,4 @@
-import React from 'react';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from 'context/ThemeContext';
 
 export const ThemeSwitcher = () => {
     const { theme, toggleTheme } = useTheme();
@@ -8,7 +7,7 @@ export const ThemeSwitcher = () => {
         <button
             onClick={toggleTheme}
             className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-            title={theme === 'dark' ? 'Tryb jasny' : 'Tryb ciemny'}
+            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
         >
             {theme === 'dark' ? (
                 <svg className="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

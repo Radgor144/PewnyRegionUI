@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TimeRangePicker } from './TimeRangePicker';
 import { FilterList } from './FilterList';
-import { LanguageSwitcher } from '../../components/LanguageSwitcher/LanguageSwitcher';
-import { ThemeSwitcher } from '../../components/ThemeSwitcher/ThemeSwitcher';
+import { LanguageSwitcher } from 'components/LanguageSwitcher/LanguageSwitcher';
+import { ThemeSwitcher } from 'components/ThemeSwitcher/ThemeSwitcher';
+import { useVariables } from './hooks/useVariables';
+import { useCountyScores } from './hooks/useCountyScores';
+import { Variable, CountyScore } from 'api/types';
+import { useState } from 'react';
 
-export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpdate, isOpen, setIsOpen }) => {
+interface FiltersPanelProps {
+    selectedVariables: Variable[];
+    onVariableToggle: Dispatch<SetStateAction<Variable[]>>;
+    onScoresUpdate: (data: CountyScore[]) => void;
+    isOpen: boolean;
+    setIsOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const MAX_SELECTION = 10;
+
+export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpdate, isOpen, setIsOpen }: FiltersPanelProps) => {
     const { t } = useTranslation();
-    const [variables, setVariables] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [isGenerating, setIsGenerating] = useState(false);
-    const [error, setError] = useState(null);
-    const [yearFrom, setYearFrom] = useState(2012);
-    const [yearTo, setYearTo] = useState(2013);
-    const MAX_SELECTION = 10;
-
-    useEffect(() => {
-        fetch('http://localhost:8080/api/variables')
-            .then(res => {
-                if (!res.ok) throw new Error(`Error (Status: ${res.status})`);
-                return res.json();
-            })
-            .then(data => { setVariables(data); setLoading(false); })
-            .catch(() => { setError(t('filters.loadError')); setLoading(false); });
-    }, [t]);
+    const { variables, loading, error: loadError } = useVariables();
+    const { generate, isGenerating, error: generateError } = useCountyScores(onScoresUpdate);
+    const [yearFrom, setYearFrom] = useState<number>(2012);
+    const [yearTo, setYearTo] = useState<number>(2013);
 
     const handleGenerateMap = () => {
         if (selectedVariables.length === 0) return;
-        setIsGenerating(true);
-        const payload = { apiNames: selectedVariables.map(v => v.apiName), yearFrom, yearTo };
-
-        fetch('http://localhost:8080/api/map/county-scores', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-            .then(res => {
-                if (!res.ok) throw new Error("Error generating results");
-                return res.json();
-            })
-            .then(data => { onScoresUpdate(data); setIsGenerating(false); })
-            .catch(() => { alert(t('filters.loadError')); setIsGenerating(false); });
+        generate(selectedVariables.map(v => v.apiName), yearFrom, yearTo);
     };
 
     return (
@@ -82,13 +70,13 @@ export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpda
                     </div>
 
                     {loading && <p className="text-center text-slate-400 dark:text-slate-500 text-sm py-4">{t('filters.loading')}</p>}
-                    {error && (
+                    {loadError && (
                         <div className="p-4 bg-red-50 dark:bg-red-950/30 border border-red-100 dark:border-red-900/50 rounded-xl text-red-500 dark:text-red-400 text-sm font-medium text-center">
-                            {error}
+                            {loadError}
                         </div>
                     )}
 
-                    {!loading && !error && (
+                    {!loading && !loadError && (
                         <FilterList
                             variables={variables}
                             selectedVariables={selectedVariables}
@@ -109,6 +97,9 @@ export const FiltersPanel = ({ selectedVariables, onVariableToggle, onScoresUpda
 
             {isOpen && (
                 <div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 rounded-b-2xl shrink-0">
+                    {generateError && (
+                        <p className="text-red-500 dark:text-red-400 text-xs font-medium text-center mb-2">{generateError}</p>
+                    )}
                     <button
                         onClick={handleGenerateMap}
                         disabled={isGenerating || selectedVariables.length === 0}

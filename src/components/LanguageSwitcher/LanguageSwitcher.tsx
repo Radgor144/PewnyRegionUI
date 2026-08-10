@@ -1,12 +1,14 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+
+const LANGUAGES = ['pl', 'en'] as const;
+type Language = typeof LANGUAGES[number];
 
 export const LanguageSwitcher = () => {
     const { i18n } = useTranslation();
 
     return (
         <div className="flex gap-1">
-            {['pl', 'en'].map(lng => (
+            {LANGUAGES.map((lng: Language) => (
                 <button
                     key={lng}
                     onClick={() => i18n.changeLanguage(lng)}
