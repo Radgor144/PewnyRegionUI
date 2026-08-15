@@ -1,13 +1,7 @@
 import { useState } from 'react';
-
-// Importy ze współdzielonych komponentów
 import { DashboardLayout, MainSidebar } from '../components/Layout';
-
-// Importy z domen (Features)
 import { FiltersPanel } from '../features/filters';
 import { RegionMap } from '../features/map';
-
-// Typy
 import type { CountyScore, Variable } from '../types/api';
 
 export function App() {

@@ -4,16 +4,16 @@ import L, { Layer, LeafletMouseEvent, PathOptions } from 'leaflet';
 import { useTheme } from 'app/providers/ThemeContext';
 import 'leaflet/dist/leaflet.css';
 
-import {MapInvalidator} from "./MapInvalidator";
-import {useCountyGeoData} from "../hooks/useCountyGeoData";
-import {useCountyScores} from "../hooks/useCountyScores";
-import {DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS} from "../constants";
-import {CountyFeature} from "../types";
-import {getTeryt} from "../utils/teryt";
-import {getScoreColor} from "../utils/colorScale";
-import {buildCountyTooltipHtml} from "../utils/tooltip";
-import {SearchControl} from "./SearchControl";
-import {CountyScore} from "../../../types/api";
+import { MapInvalidator } from "./MapInvalidator";
+import { useCountyGeoData } from "../hooks/useCountyGeoData";
+import { useCountyScores } from "../hooks/useCountyScores";
+import { DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS } from "../constants";
+import { CountyFeature } from "../types";
+import { getTeryt } from "../utils/teryt";
+import { getScoreColor } from "../utils/colorScale";
+import { buildCountyTooltipHtml } from "../utils/tooltip";
+import { SearchControl } from "./SearchControl";
+import { CountyScore } from "../../../types/api";
 
 interface RegionMapProps {
     scoresData: CountyScore[] | null;
@@ -30,7 +30,7 @@ const bringToFront = (layer: L.Path) => {
 };
 
 /** The style shared by a hovered county and the currently-pinned (selected) one. */
-const applyHighlightStyle = (layer: L.Path, isDark: boolean) => {
+export const applyHighlightStyle = (layer: L.Path, isDark: boolean) => {
     layer.setStyle({
         weight: HIGHLIGHT_WEIGHT,
         color: isDark ? '#f8fafc' : '#0f172a',
@@ -47,21 +47,33 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
     const { scoresMap, scoreRange } = useCountyScores(scoresData);
     const geoJsonRef = useRef<L.GeoJSON | null>(null);
 
+    const isDraggingRef = useRef(false);
+
     /** The one county currently pinned open (via click or search) — stays open regardless of hover. */
     const selectedLayerRef = useRef<L.Path | null>(null);
+    /** Reference to the standalone permanent tooltip for the pinned county */
+    const pinnedTooltipRef = useRef<L.Tooltip | null>(null);
+    /** Reference to the standalone hover tooltip managed fully by custom mouse events */
+    const hoverTooltipRef = useRef<L.Tooltip | null>(null);
 
     const tileUrl = isDark ? TILE_URLS.dark : TILE_URLS.light;
 
-    // Forces Leaflet to redraw every county shape when the theme or score data changes.
     const geoJsonKey = useMemo(
         () => (scoresMap ? `${theme}-${JSON.stringify(scoresMap)}` : `${theme}-empty`),
         [scoresMap, theme]
     );
 
-    // The previous GeoJSON layer — and every layer object in it — is discarded whenever
-    // geoJsonKey changes, so any layer we were holding onto is now stale.
     useEffect(() => {
         selectedLayerRef.current = null;
+
+        if (pinnedTooltipRef.current) {
+            pinnedTooltipRef.current.remove();
+            pinnedTooltipRef.current = null;
+        }
+        if (hoverTooltipRef.current) {
+            hoverTooltipRef.current.remove();
+            hoverTooltipRef.current = null;
+        }
     }, [geoJsonKey]);
 
     const getFeatureStyle = (feature?: CountyFeature): PathOptions => {
@@ -91,63 +103,113 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
     const selectFeature = useCallback(
         (layer: L.Path) => {
             const previous = selectedLayerRef.current;
+            const map = (layer as any)._map as L.Map;
+
             if (previous && previous !== layer) {
                 geoJsonRef.current?.resetStyle(previous);
-                previous.closeTooltip();
+            }
+
+            if (pinnedTooltipRef.current && map) {
+                map.removeLayer(pinnedTooltipRef.current);
+                pinnedTooltipRef.current = null;
+            }
+
+            if (hoverTooltipRef.current && map) {
+                map.removeLayer(hoverTooltipRef.current);
+                hoverTooltipRef.current = null;
             }
 
             selectedLayerRef.current = layer;
             applyHighlightStyle(layer, isDark);
-            layer.openTooltip();
+
+            if (map) {
+                const feature = (layer as any).feature;
+                const teryt = getTeryt(feature.properties);
+                const score = teryt && scoresMap ? scoresMap[teryt] : undefined;
+                const centerPoint = (layer as L.Polygon).getBounds().getCenter();
+
+                const tooltip = L.tooltip({
+                    className: 'custom-tooltip',
+                    direction: 'top',
+                    permanent: true
+                })
+                    .setLatLng(centerPoint)
+                    .setContent(buildCountyTooltipHtml(feature, score));
+
+                tooltip.addTo(map);
+                pinnedTooltipRef.current = tooltip;
+            }
         },
-        [isDark]
+        [isDark, scoresMap]
     );
 
     const highlightFeature = (event: LeafletMouseEvent) => {
+        if (event.originalEvent.buttons !== 0) return;
+        if (isDraggingRef.current) return;
         const layer = event.target as L.Path;
-        if (layer === selectedLayerRef.current) return; // already highlighted and open
+        if (layer === selectedLayerRef.current) return;
 
         applyHighlightStyle(layer, isDark);
-        layer.openTooltip();
+
+        const map = (layer as any)._map as L.Map;
+        if (!map) return;
+
+        if (hoverTooltipRef.current) {
+            map.removeLayer(hoverTooltipRef.current);
+            hoverTooltipRef.current = null;
+        }
+
+        const feature = (layer as any).feature;
+        const teryt = getTeryt(feature.properties);
+        const score = teryt && scoresMap ? scoresMap[teryt] : undefined;
+
+        const tooltip = L.tooltip({
+            className: 'custom-tooltip',
+            direction: 'top',
+        })
+            .setLatLng(event.latlng)
+            .setContent(buildCountyTooltipHtml(feature, score));
+
+        tooltip.addTo(map);
+        hoverTooltipRef.current = tooltip;
+    };
+
+    const moveHighlight = (event: LeafletMouseEvent) => {
+        if (hoverTooltipRef.current) {
+            hoverTooltipRef.current.setLatLng(event.latlng);
+        }
     };
 
     const resetHighlight = (event: LeafletMouseEvent) => {
         const layer = event.target as L.Path;
 
         if (layer === selectedLayerRef.current) {
-            // Leaflet auto-closes non-permanent tooltips on mouseout regardless of
-            // this handler — reopen immediately so the pinned tooltip stays visible.
-            layer.openTooltip();
             return;
         }
 
         geoJsonRef.current?.resetStyle(layer);
-        layer.closeTooltip();
 
-        // This neighbor may have been raised above the selected county while
-        // hovered, hiding part of its border along their shared edge.
+        const map = (layer as any)._map as L.Map;
+        if (hoverTooltipRef.current && map) {
+            map.removeLayer(hoverTooltipRef.current);
+            hoverTooltipRef.current = null;
+        }
+
         if (selectedLayerRef.current) {
             bringToFront(selectedLayerRef.current);
         }
     };
 
     const handleFeatureClick = (event: LeafletMouseEvent) => {
+        if (isDraggingRef.current) return;
         selectFeature(event.target as L.Path);
     };
 
     const onEachFeature = (feature: CountyFeature, layer: Layer) => {
-        const teryt = getTeryt(feature.properties);
-        const score = teryt && scoresMap ? scoresMap[teryt] : undefined;
-
-        layer.bindTooltip(buildCountyTooltipHtml(feature, score), {
-            className: 'custom-tooltip',
-            direction: 'top',
-            sticky: true,
-            permanent: false,
-        });
 
         layer.on({
             mouseover: highlightFeature as (event: L.LeafletEvent) => void,
+            mousemove: moveHighlight as (event: L.LeafletEvent) => void,
             mouseout: resetHighlight as (event: L.LeafletEvent) => void,
             click: handleFeatureClick as (event: L.LeafletEvent) => void,
         });
@@ -156,9 +218,16 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
     return (
         <div className="absolute inset-0 z-0 bg-slate-100 dark:bg-slate-950 transform-gpu" style={{ transform: 'translateZ(0)' }}>
             <MapContainer center={POLAND_CENTER} zoom={DEFAULT_ZOOM} className="h-full w-full" zoomControl={false}>
-                <MapInvalidator isOpen={isOpen} />
+                <MapInvalidator
+                    isOpen={isOpen}
+                    isDraggingRef={isDraggingRef}
+                    geoJsonRef={geoJsonRef}
+                    selectedLayerRef={selectedLayerRef}
+                    hoverTooltipRef={hoverTooltipRef}
+                    isDark={isDark}
+                    applyHighlightStyle={applyHighlightStyle}
+                />
 
-                {/* Dodano stałą szerokość (max-w-md / w-full), aby element nie zwijał się do 0 */}
                 <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] w-full max-w-md px-4 pointer-events-auto">
                     <SearchControl geoData={geoData} geoJsonRef={geoJsonRef} onSelectFeature={selectFeature} />
                 </div>

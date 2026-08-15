@@ -23,7 +23,6 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
     const [results, setResults] = useState<CountyFeature[]>([]);
     const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
 
-    // Znajdź TopBar, by tam wyrenderować wyszukiwarkę
     useEffect(() => {
         setPortalTarget(document.getElementById('search-portal-target'));
     }, []);
@@ -52,7 +51,7 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
             onSelectFeature(targetLayer);
         }
 
-        setQuery(''); // Czyści input po wyszukaniu
+        setQuery('');
         setResults([]);
     };
 
@@ -82,6 +81,5 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
         </div>
     );
 
-    // Renderuj w portalu na pasku górnym
     return portalTarget ? createPortal(searchUI, portalTarget) : searchUI;
 };
