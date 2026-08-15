@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
 import L, { Layer, LeafletMouseEvent, PathOptions } from 'leaflet';
-import { useTheme } from 'context/ThemeContext';
+import { useTheme } from 'app/providers/ThemeContext';
 import 'leaflet/dist/leaflet.css';
 
-import {MapInvalidator} from "./components/MapInvalidator";
-import {useCountyGeoData} from "./hooks/useCountyGeoData";
-import {useCountyScores} from "./hooks/useCountyScores";
-import {DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS} from "./constants";
-import {CountyFeature} from "./types";
-import {getTeryt} from "./utils/teryt";
-import {getScoreColor} from "./utils/colorScale";
-import {buildCountyTooltipHtml} from "./utils/tooltip";
-import {SearchControl} from "./components/SearchControl";
-import {CountyScore} from "../../types/api";
+import {MapInvalidator} from "./MapInvalidator";
+import {useCountyGeoData} from "../hooks/useCountyGeoData";
+import {useCountyScores} from "../hooks/useCountyScores";
+import {DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS} from "../constants";
+import {CountyFeature} from "../types";
+import {getTeryt} from "../utils/teryt";
+import {getScoreColor} from "../utils/colorScale";
+import {buildCountyTooltipHtml} from "../utils/tooltip";
+import {SearchControl} from "./SearchControl";
+import {CountyScore} from "../../../types/api";
 
 interface RegionMapProps {
     scoresData: CountyScore[] | null;

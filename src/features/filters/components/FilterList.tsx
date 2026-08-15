@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next';
-import {Variable} from "../../types/api";
+import {Variable} from "../../../types/api";
 
 interface FilterListProps {
     variables: Variable[];

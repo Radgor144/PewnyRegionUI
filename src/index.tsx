@@ -1,16 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from 'context/ThemeContext';
+import './lib/i18n';
 import './index.css';
-import './i18n/config';
-import App from './App';
+import {App} from './app/App';
+import {ThemeProvider} from "./app/providers/ThemeContext";
 
-const container = document.getElementById('root');
-if (!container) {
-    throw new Error('Root element not found');
-}
 
-const root = ReactDOM.createRoot(container);
+const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+);
+
 root.render(
     <React.StrictMode>
         <ThemeProvider>

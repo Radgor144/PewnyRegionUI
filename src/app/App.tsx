@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { MainSidebar } from 'components/Layout/MainSidebar';
-import { FiltersPanel } from 'features/filters';
-import { RegionMap } from 'features/map';
-import { DashboardLayout } from "./features/map/DashboardLayout";
-import { CountyScore, Variable } from "./types/api";
+
+// Importy ze współdzielonych komponentów
+import { DashboardLayout, MainSidebar } from '../components/Layout';
+
+// Importy z domen (Features)
+import { FiltersPanel } from '../features/filters';
+import { RegionMap } from '../features/map';
+
+// Typy
+import type { CountyScore, Variable } from '../types/api';
 
 export function App() {
     const [scoresData, setScoresData] = useState<CountyScore[] | null>(null);
@@ -30,7 +35,10 @@ export function App() {
                 />
             }
             map={
-                <RegionMap scoresData={scoresData} isOpen={isFiltersOpen} />
+                <RegionMap
+                    scoresData={scoresData}
+                    isOpen={isFiltersOpen}
+                />
             }
         />
     );

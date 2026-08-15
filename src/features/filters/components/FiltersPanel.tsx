@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TimeRangePicker } from './TimeRangePicker';
 import { FilterList } from './FilterList';
-import { useVariables } from './hooks/useVariables';
-import { useGenerateCountyScores } from './hooks/useGenerateCountyScores';
-import { CountyScore, Variable } from '../../types/api';
+import { useVariables } from '../hooks/useVariables';
+import { useGenerateCountyScores } from '../hooks/useGenerateCountyScores';
+import { CountyScore, Variable } from '../../../types/api';
 
 interface FiltersPanelProps {
     selectedVariables: Variable[];
