@@ -12,15 +12,35 @@
     "loadError": "Failed to fetch filters."
   },
   "variables": {
-    "crimes": { "label": "Crime rate", "description": "Crimes per 1,000 residents" },
-    "population_in_thousands": { "label": "Population", "description": "Number of residents (thousands)" },
-    "population_density": { "label": "Population density", "description": "Residents per km²" },
-    "unemployment": { "label": "Unemployment", "description": "Registered unemployment rate" },
-    "gross_salary": { "label": "Gross salary", "description": "Average monthly gross salary" }
+    "crimes": {
+      "label": "Crime rate",
+      "description": "Crimes per 1,000 residents"
+    },
+    "population_in_thousands": {
+      "label": "Population",
+      "description": "Number of residents (thousands)"
+    },
+    "population_density": {
+      "label": "Population density",
+      "description": "Residents per km²"
+    },
+    "unemployment": {
+      "label": "Unemployment",
+      "description": "Registered unemployment rate"
+    },
+    "gross_salary": {
+      "label": "Gross salary",
+      "description": "Average monthly gross salary"
+    }
   },
   "map": {
     "noData": "No data",
     "score": "Score",
-    "searchPlaceholder": "Search county..."
+    "search": "Search county..."
+  },
+  "sidebar": {
+    "map": "Map",
+    "counties": "Counties",
+    "rankings": "Rankings"
   }
 }

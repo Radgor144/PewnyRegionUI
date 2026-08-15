@@ -47,7 +47,7 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
 
             <div className="flex justify-between items-center">
                 <span className="text-[11px] font-bold text-slate-800 dark:text-slate-300 uppercase tracking-wider">
-                    {t('filters.timeRange', 'Zakres czasu')}
+                    {t('filters.timeRange')}
                 </span>
                 <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
                     {yearFrom === yearTo ? yearFrom : `${yearFrom} - ${yearTo}`}

@@ -12,15 +12,35 @@
     "loadError": "Nie udało się pobrać filtrów."
   },
   "variables": {
-    "crimes": { "label": "Przestępstwa", "description": "Liczba przestępstw na 1000 mieszkańców" },
-    "population_in_thousands": { "label": "Ludność", "description": "Liczba mieszkańców (w tysiącach)" },
-    "population_density": { "label": "Gęstość zaludnienia", "description": "Liczba mieszkańców na km²" },
-    "unemployment": { "label": "Bezrobocie", "description": "Stopa bezrobocia rejestrowanego" },
-    "gross_salary": { "label": "Wynagrodzenie brutto", "description": "Przeciętne miesięczne wynagrodzenie brutto" }
+    "crimes": {
+      "label": "Przestępstwa",
+      "description": "Liczba przestępstw na 1000 mieszkańców"
+    },
+    "population_in_thousands": {
+      "label": "Ludność",
+      "description": "Liczba mieszkańców (w tysiącach)"
+    },
+    "population_density": {
+      "label": "Gęstość zaludnienia",
+      "description": "Liczba mieszkańców na km²"
+    },
+    "unemployment": {
+      "label": "Bezrobocie",
+      "description": "Stopa bezrobocia rejestrowanego"
+    },
+    "gross_salary": {
+      "label": "Wynagrodzenie brutto",
+      "description": "Przeciętne miesięczne wynagrodzenie brutto"
+    }
   },
   "map": {
     "noData": "Brak danych",
     "score": "Wynik",
-    "searchPlaceholder": "Wyszukaj powiat..."
+    "search": "Wyszukaj powiat..."
+  },
+  "sidebar": {
+    "map": "Mapa",
+    "counties": "Powiaty",
+    "rankings": "Rankingi"
   }
 }

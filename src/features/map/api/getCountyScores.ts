@@ -1,8 +1,5 @@
-import { apiClient } from '../lib/api-client';
-import { Variable, CountyScore } from '../types/api';
-
-export const fetchVariables = (): Promise<Variable[]> =>
-    apiClient.get<Variable[]>('/api/variables');
+import { apiClient } from '../../../lib/api-client';
+import type { CountyScore } from '../../../types/api';
 
 export const fetchCountyScores = (
     apiNames: string[],

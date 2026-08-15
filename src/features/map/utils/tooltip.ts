@@ -7,8 +7,8 @@ const getCountyDisplayName = (feature: CountyFeature): string =>
 export const buildCountyTooltipHtml = (feature: CountyFeature, score: number | undefined): string => {
     const countyName = getCountyDisplayName(feature);
 
-    const noDataText = i18n.t('map.noData', { defaultValue: 'Brak danych' });
-    const scoreLabel = i18n.t('map.score', { defaultValue: 'Score' });
+    const noDataText = i18n.t('map.noData');
+    const scoreLabel = i18n.t('map.score');
 
     const scoreHtml = score != null
         ? `<div class="mt-1 text-blue-600 dark:text-blue-400 font-bold text-sm">${scoreLabel}: ${score.toFixed(2)}</div>`

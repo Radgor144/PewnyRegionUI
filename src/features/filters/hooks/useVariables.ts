@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchVariables } from 'api/variables';
+import { fetchVariables } from 'features/filters/api/getVariables';
 import {Variable} from "../../../types/api";
 
 interface UseVariablesResult {

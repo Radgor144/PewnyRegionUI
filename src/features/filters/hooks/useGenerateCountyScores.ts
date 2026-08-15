@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchCountyScores } from '../../../api/variables';
 import { CountyScore } from '../../../types/api';
+import {fetchCountyScores} from "../../map";
 
 interface UseGenerateCountyScoresResult {
     generate: (apiNames: string[], yearFrom: number, yearTo: number) => Promise<void>;

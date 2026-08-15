@@ -66,7 +66,7 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
                 type="text"
                 value={query}
                 onChange={handleSearchChange}
-                placeholder={t('map.searchPlaceholder', 'Wyszukaj powiat...')}
+                placeholder={t('map.search')}
                 className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-100 dark:bg-[#1f2937]/50 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-[#1f2937] transition-all"
             />
 
