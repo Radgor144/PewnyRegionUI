@@ -17,5 +17,10 @@
     "population_density": { "label": "Population density", "description": "Residents per km²" },
     "unemployment": { "label": "Unemployment", "description": "Registered unemployment rate" },
     "gross_salary": { "label": "Gross salary", "description": "Average monthly gross salary" }
+  },
+  "map": {
+    "noData": "No data",
+    "score": "Score",
+    "searchPlaceholder": "Search county..."
   }
 }

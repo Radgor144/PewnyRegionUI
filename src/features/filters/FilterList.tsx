@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
-import { Variable } from 'api/types';
+import {useTranslation} from 'react-i18next';
+import {Variable} from "../../types/api";
 
 interface FilterListProps {
     variables: Variable[];
@@ -8,8 +8,8 @@ interface FilterListProps {
     maxSelection: number;
 }
 
-export const FilterList = ({ variables, selectedVariables, onVariableToggle, maxSelection }: FilterListProps) => {
-    const { t, i18n } = useTranslation();
+export const FilterList = ({variables, selectedVariables, onVariableToggle, maxSelection}: FilterListProps) => {
+    const {t, i18n} = useTranslation();
     const safeSelected = Array.isArray(selectedVariables) ? selectedVariables : [];
 
     return (

@@ -1,28 +1,38 @@
 import { useState } from 'react';
-import { Layout } from 'components/Layout/Layout';
+import { MainSidebar } from 'components/Layout/MainSidebar';
 import { FiltersPanel } from 'features/filters';
 import { RegionMap } from 'features/map';
-import { Variable, CountyScore } from 'api/types';
+import { DashboardLayout } from "./features/map/DashboardLayout";
+import { CountyScore, Variable } from "./types/api";
 
-function App() {
+export function App() {
+    const [scoresData, setScoresData] = useState<CountyScore[] | null>(null);
     const [selectedVariables, setSelectedVariables] = useState<Variable[]>([]);
-    const [countyScores, setCountyScores] = useState<CountyScore[] | null>(null);
-    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(true);
+    const [isMainSidebarOpen, setIsMainSidebarOpen] = useState<boolean>(true);
+    const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(true);
 
     return (
-        <Layout>
-            <FiltersPanel
-                selectedVariables={selectedVariables}
-                onVariableToggle={setSelectedVariables}
-                onScoresUpdate={setCountyScores}
-                isOpen={isPanelOpen}
-                setIsOpen={setIsPanelOpen}
-            />
-            <RegionMap
-                scoresData={countyScores}
-                isOpen={isPanelOpen}
-            />
-        </Layout>
+        <DashboardLayout
+            sidebar={
+                <MainSidebar
+                    isOpen={isMainSidebarOpen}
+                    toggleOpen={() => setIsMainSidebarOpen(!isMainSidebarOpen)}
+                />
+            }
+            filters={
+                <FiltersPanel
+                    selectedVariables={selectedVariables}
+                    onVariableToggle={setSelectedVariables}
+                    onScoresUpdate={setScoresData}
+                    isOpen={isFiltersOpen}
+                    setIsOpen={setIsFiltersOpen}
+                    isMainSidebarOpen={isMainSidebarOpen}
+                />
+            }
+            map={
+                <RegionMap scoresData={scoresData} isOpen={isFiltersOpen} />
+            }
+        />
     );
 }
 

@@ -17,5 +17,10 @@
     "population_density": { "label": "Gęstość zaludnienia", "description": "Liczba mieszkańców na km²" },
     "unemployment": { "label": "Bezrobocie", "description": "Stopa bezrobocia rejestrowanego" },
     "gross_salary": { "label": "Wynagrodzenie brutto", "description": "Przeciętne miesięczne wynagrodzenie brutto" }
+  },
+  "map": {
+    "noData": "Brak danych",
+    "score": "Wynik",
+    "searchPlaceholder": "Wyszukaj powiat..."
   }
 }

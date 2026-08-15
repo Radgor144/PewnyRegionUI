@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchCountyScores } from 'api/variables';
-import { CountyScore } from 'api/types';
+import { fetchCountyScores } from '../../../api/variables';
+import { CountyScore } from '../../../types/api';
 
-interface UseCountyScoresResult {
+interface UseGenerateCountyScoresResult {
     generate: (apiNames: string[], yearFrom: number, yearTo: number) => Promise<void>;
     isGenerating: boolean;
     error: string | null;
 }
 
-export const useCountyScores = (
+export const useGenerateCountyScores = (
     onScoresUpdate: (data: CountyScore[]) => void
-): UseCountyScoresResult => {
+): UseGenerateCountyScoresResult => {
     const { t } = useTranslation();
     const [isGenerating, setIsGenerating] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
