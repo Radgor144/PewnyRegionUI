@@ -1,7 +1,4 @@
-interface ScoreRange {
-    min: number;
-    max: number;
-}
+import type { ScoreRange } from '../types';
 
 interface ColorStop {
     readonly ratio: number;
@@ -23,16 +20,12 @@ const COLOR_STOPS: readonly ColorStop[] = [
 const FALLBACK_COLOR = 'hsl(48, 95%, 48%)';
 
 const clamp01 = (value: number): number => Math.max(0, Math.min(1, value));
-
-const lerp = (start: number, end: number, factor: number): number =>
-    start + factor * (end - start);
+const lerp = (start: number, end: number, factor: number): number => start + factor * (end - start);
 
 const findSurroundingStops = (ratio: number): [ColorStop, ColorStop] => {
     for (let i = 0; i < COLOR_STOPS.length - 1; i += 1) {
-        const current = COLOR_STOPS[i];
-        const next = COLOR_STOPS[i + 1];
-        if (ratio >= current.ratio && ratio <= next.ratio) {
-            return [current, next];
+        if (ratio >= COLOR_STOPS[i].ratio && ratio <= COLOR_STOPS[i + 1].ratio) {
+            return [COLOR_STOPS[i], COLOR_STOPS[i + 1]];
         }
     }
     return [COLOR_STOPS[0], COLOR_STOPS[COLOR_STOPS.length - 1]];
