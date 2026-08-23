@@ -1,5 +1,5 @@
-import { apiClient } from '../../../lib/api-client';
-import type { CountyScore } from '../../../types/api';
+import { apiClient } from 'lib/api-client';
+import type { CountyScore } from 'types/api';
 
 export const fetchCountyScores = (
     apiNames: string[],

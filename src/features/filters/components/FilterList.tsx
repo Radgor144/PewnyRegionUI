@@ -1,5 +1,6 @@
 import {useTranslation} from 'react-i18next';
-import {Variable} from "../../../types/api";
+import { Variable } from 'types/api';
+import { BRAND_BLUE } from 'lib/colors';
 
 interface FilterListProps {
     variables: Variable[];
@@ -49,7 +50,7 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                             className={`mr-3 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 dark:border-slate-600 ${
                                 isDisabled && !isSelected ? 'cursor-not-allowed' : 'cursor-pointer'
                             }`}
-                            style={{ accentColor: '#2563eb' }}
+                            style={{ accentColor: BRAND_BLUE }}
                         />
                         <span className={`text-xs leading-relaxed break-words ${
                             isSelected

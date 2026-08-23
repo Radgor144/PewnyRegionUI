@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { BRAND_BLUE, COLOR_FFFFFF } from 'lib/colors';
 
 interface TimeRangePickerProps {
     yearFrom: number;
@@ -40,9 +41,9 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
             <style>{`
                 .dual-range-slider { position: relative; height: 16px; display: flex; align-items: center; cursor: pointer; }
                 .dual-range-slider input[type=range] { position: absolute; width: 100%; appearance: none; background: none; pointer-events: none; margin: 0; }
-                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: transform 0.1s; }
+                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: transform 0.1s; }
                 .dual-range-slider input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: #2563eb; cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
             `}</style>
 
             <div className="flex justify-between items-center">

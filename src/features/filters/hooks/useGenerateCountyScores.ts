@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CountyScore } from '../../../types/api';
+import { CountyScore } from 'types/api';
 import {fetchCountyScores} from "../../map";
 
 interface UseGenerateCountyScoresResult {

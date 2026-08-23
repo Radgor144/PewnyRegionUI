@@ -3,7 +3,7 @@ import L, { LeafletMouseEvent, Layer } from 'leaflet';
 import { getTeryt } from '../utils/teryt';
 import { buildCountyTooltipHtml } from '../utils/tooltip';
 import { applyHighlightStyle, bringToFront } from '../utils/mapStyle';
-import type { CountyFeature, ScoresLookup } from '../types';
+import type { CountyFeature, ScoresLookup } from 'features/map/types';
 
 interface UseCountyInteractionsProps {
     scoresMap: ScoresLookup | null;

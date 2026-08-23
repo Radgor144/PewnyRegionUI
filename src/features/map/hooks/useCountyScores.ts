@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import type { CountyScore } from '../../../types/api';
+import type { CountyScore } from 'types/api';
 import { DEFAULT_SCORE_RANGE } from '../constants';
 import { isValidCountyId, terytFromCountyId } from '../utils/teryt';
 import type { ScoreRange, ScoresLookup } from '../types';

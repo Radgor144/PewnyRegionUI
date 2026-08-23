@@ -14,7 +14,7 @@ import { useCountyInteractions } from '../hooks/useCountyInteractions';
 import { createFeatureStyleFactory } from '../utils/mapStyle';
 
 import { DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS } from '../constants';
-import type { CountyScore } from '../../../types/api';
+import type { CountyScore } from 'types/api';
 
 interface RegionMapProps {
     scoresData: CountyScore[] | null;

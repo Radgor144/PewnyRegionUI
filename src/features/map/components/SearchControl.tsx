@@ -67,11 +67,11 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
                 value={query}
                 onChange={handleSearchChange}
                 placeholder={t('map.search')}
-                className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-100 dark:bg-[#1f2937]/50 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-[#1f2937] transition-all"
+                className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-100 dark:bg-panel-dark/50 text-sm font-medium text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-panel-dark transition-all"
             />
 
             {results.length > 0 && (
-                <ul className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1f2937] rounded-xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700 backdrop-blur-md">
+                <ul className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-panel-dark rounded-xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700 backdrop-blur-md">
                     {results.map((feature, index) => (
                         <li key={getTeryt(feature.properties) ?? index} onClick={() => zoomToFeature(feature)} className="cursor-pointer px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-100 dark:border-slate-700/50 last:border-0">
                             <div className="font-semibold text-sm text-slate-900 dark:text-slate-100">{getCountyName(feature)}</div>

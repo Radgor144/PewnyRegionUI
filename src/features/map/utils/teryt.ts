@@ -1,4 +1,4 @@
-import type { CountyProperties } from '../types';
+import type { CountyProperties } from 'features/map/types';
 
 export const getTeryt = (properties: CountyProperties): string | undefined =>
     properties.JPT_KOD_JE ?? properties.teryt;

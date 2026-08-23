@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import type { CountyFeature } from '../types';
+import type { CountyFeature } from 'features/map/types';
 import { getCountyName } from './countySearch';
 
 export const buildCountyTooltipHtml = (feature: CountyFeature, score: number | undefined): string => {

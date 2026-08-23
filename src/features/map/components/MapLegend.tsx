@@ -17,7 +17,7 @@ export const MapLegend = ({ scoreRange }: MapLegendProps) => {
         .join(', ');
 
     return (
-        <div className="bg-white/90 dark:bg-[#1f2937]/90 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300">
+        <div className="bg-white/90 dark:bg-panel-dark/90 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300">
             <div className="flex justify-between items-center mb-1.5 font-medium">
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                     {t('map.score') || 'Score'}

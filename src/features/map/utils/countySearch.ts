@@ -1,4 +1,4 @@
-import type { CountyFeature } from '../types';
+import type { CountyFeature } from 'features/map/types';
 
 export const getCountyName = (feature: CountyFeature): string =>
     feature.properties.nazwa ?? feature.properties.JPT_NAZWA_ ?? '';

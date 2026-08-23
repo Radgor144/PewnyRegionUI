@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { DashboardLayout, MainSidebar } from '../components/Layout';
 import { FiltersPanel } from '../features/filters';
 import { RegionMap } from '../features/map';
-import type { CountyScore, Variable } from '../types/api';
+import type { CountyScore, Variable } from 'types/api';
 
 export function App() {
     const [scoresData, setScoresData] = useState<CountyScore[] | null>(null);
