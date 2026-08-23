@@ -1,4 +1,4 @@
-import type { ScoreRange } from '../types';
+import type { ScoreRange } from 'features/map/types';
 
 interface ColorStop {
     readonly ratio: number;
