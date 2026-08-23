@@ -1,12 +1,9 @@
 import i18n from 'i18next';
 import type { CountyFeature } from '../types';
-
-const getCountyDisplayName = (feature: CountyFeature): string =>
-    feature.properties.JPT_NAZWA_ ?? feature.properties.nazwa ?? 'County';
+import { getCountyName } from './countySearch';
 
 export const buildCountyTooltipHtml = (feature: CountyFeature, score: number | undefined): string => {
-    const countyName = getCountyDisplayName(feature);
-
+    const countyName = getCountyName(feature);
     const noDataText = i18n.t('map.noData');
     const scoreLabel = i18n.t('map.score');
 

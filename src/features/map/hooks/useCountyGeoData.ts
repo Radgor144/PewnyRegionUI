@@ -10,25 +10,20 @@ export const useCountyGeoData = (): CountyFeatureCollection | null => {
         let isMounted = true;
 
         fetch(GEOJSON_URL)
-            .then((response) => response.json())
+            .then((res) => res.json())
             .then((data: CountyFeatureCollection) => {
                 if (!isMounted) return;
-
                 setGeoData({
                     ...data,
-                    features: data.features.filter((feature) => {
-                        const teryt = getTeryt(feature.properties);
+                    features: data.features.filter((f) => {
+                        const teryt = getTeryt(f.properties);
                         return teryt && teryt.length === 4;
                     }),
                 });
             })
-            .catch((error) => {
-                console.error('Failed to load county boundaries:', error);
-            });
+            .catch(console.error);
 
-        return () => {
-            isMounted = false;
-        };
+        return () => { isMounted = false; };
     }, []);
 
     return geoData;

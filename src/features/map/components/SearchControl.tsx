@@ -3,7 +3,10 @@ import { createPortal } from 'react-dom';
 import { useMap } from 'react-leaflet';
 import { useTranslation } from 'react-i18next';
 import type L from 'leaflet';
+
 import { SEARCH_FIT_MAX_ZOOM, SEARCH_RESULTS_LIMIT } from '../constants';
+import { getCountyName, matchesQuery } from '../utils/countySearch';
+import { getTeryt } from '../utils/teryt';
 import type { CountyFeature, CountyFeatureCollection } from '../types';
 
 interface SearchControlProps {
@@ -11,10 +14,6 @@ interface SearchControlProps {
     geoJsonRef: RefObject<L.GeoJSON | null>;
     onSelectFeature: (layer: L.Path) => void;
 }
-
-const getCountyName = (feature: CountyFeature): string => feature.properties.nazwa ?? feature.properties.JPT_NAZWA_ ?? '';
-const normalizeText = (text: string): string => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-const matchesQuery = (feature: CountyFeature, query: string): boolean => normalizeText(getCountyName(feature)).includes(normalizeText(query));
 
 export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchControlProps) => {
     const map = useMap();
@@ -31,7 +30,7 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
         const value = event.target.value;
         setQuery(value);
         if (value.trim().length > 1 && geoData) {
-            setResults(geoData.features.filter((feature) => matchesQuery(feature, value)).slice(0, SEARCH_RESULTS_LIMIT));
+            setResults(geoData.features.filter((f) => matchesQuery(f, value)).slice(0, SEARCH_RESULTS_LIMIT));
         } else {
             setResults([]);
         }
@@ -39,10 +38,12 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
 
     const zoomToFeature = (feature: CountyFeature) => {
         if (!geoJsonRef.current) return;
-        const targetTeryt = feature.properties.teryt ?? feature.properties.JPT_KOD_JE;
+
+        const targetTeryt = getTeryt(feature.properties);
         const layers = geoJsonRef.current.getLayers() as any[];
+
         const targetLayer = layers.find((layer) => {
-            const layerTeryt = layer.feature?.properties?.teryt ?? layer.feature?.properties?.JPT_KOD_JE;
+            const layerTeryt = getTeryt(layer.feature?.properties || {});
             return layerTeryt === targetTeryt;
         });
 
@@ -72,7 +73,7 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
             {results.length > 0 && (
                 <ul className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1f2937] rounded-xl shadow-xl overflow-hidden border border-slate-200 dark:border-slate-700 backdrop-blur-md">
                     {results.map((feature, index) => (
-                        <li key={feature.properties.teryt ?? index} onClick={() => zoomToFeature(feature)} className="cursor-pointer px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-100 dark:border-slate-700/50 last:border-0">
+                        <li key={getTeryt(feature.properties) ?? index} onClick={() => zoomToFeature(feature)} className="cursor-pointer px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-100 dark:border-slate-700/50 last:border-0">
                             <div className="font-semibold text-sm text-slate-900 dark:text-slate-100">{getCountyName(feature)}</div>
                         </li>
                     ))}

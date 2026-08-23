@@ -15,3 +15,5 @@ export interface ScoreRange {
     min: number;
     max: number;
 }
+
+export type ScoresLookup = Record<string, number>;
