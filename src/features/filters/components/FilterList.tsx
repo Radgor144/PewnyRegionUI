@@ -26,7 +26,7 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                     <label
                         key={variable.apiName}
                         title={description}
-                        className={`flex items-center p-3.5 rounded-xl border transition-all duration-200 ${
+                        className={`flex items-center p-2.5 rounded-xl border transition-all duration-200 ${
                             isSelected
                                 ? 'bg-blue-50/90 dark:bg-blue-950/70 border-blue-500 dark:border-blue-600 shadow-sm shadow-blue-500/10 cursor-pointer'
                                 : isDisabled

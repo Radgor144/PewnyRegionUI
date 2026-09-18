@@ -38,13 +38,13 @@ export const FiltersPanel = ({
 
     return (
         <div
-            className={`absolute top-16 bottom-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300 ${
-                isMainSidebarOpen ? 'left-56' : 'left-[72px]'
+            className={`absolute top-12 bottom-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300 ${
+                isMainSidebarOpen ? 'left-48' : 'left-16'
             }`}
         >
-            <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[320px]' : 'w-0 border-r-0'}`}>
-                <div className={`w-[320px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="flex items-center justify-between px-4 h-16 border-b border-slate-200 dark:border-slate-800/80 shrink-0">
+            <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}>
+                <div className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="flex items-center justify-between px-4 h-12 border-b border-slate-200 dark:border-slate-800/80 shrink-0">
                         <div className="flex items-center gap-2">
                             <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                 {t('filters.title')}
@@ -96,7 +96,7 @@ export const FiltersPanel = ({
                 onClick={() => setIsOpen(!isOpen)}
                 className="absolute top-1/2 z-50 w-7 h-7 rounded-full bg-white dark:bg-panel-dark border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
-                    left: isOpen ? '320px' : '0px',
+                    left: isOpen ? '280px' : '0px',
                     transform: 'translate(-50%, -50%)'
                 }}
                 title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}

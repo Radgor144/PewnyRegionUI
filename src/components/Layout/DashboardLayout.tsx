@@ -15,7 +15,7 @@ export const DashboardLayout = ({ sidebar, filters, details, map }: DashboardLay
                 {map}
             </div>
 
-            <div className="absolute top-16 left-0 bottom-0 z-30 flex">
+            <div className="absolute top-12 left-0 bottom-0 z-30 flex">
                 {sidebar}
             </div>
 
