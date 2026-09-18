@@ -1,15 +1,24 @@
-import {useInvalidateMapSizeOnToggle} from '../hooks/useInvalidateMapSizeOnToggle';
-import {useMapDragCleanup} from '../hooks/useMapDragCleanup';
 import React from "react";
+import { useInvalidateMapSizeOnToggle } from '../hooks/useInvalidateMapSizeOnToggle';
+import { useMapDragCleanup } from '../hooks/useMapDragCleanup';
+import { useMapZoomGuard } from '../hooks/useMapZoomGuard';
 
 interface MapViewportEffectsProps {
     isOpen: boolean;
     isDraggingRef: React.RefObject<boolean>;
-    onDragStart: () => void;
+    isZoomingRef: React.RefObject<boolean>;
+    onInteractionStart: () => void;
 }
 
-export const MapViewportEffects = ({ isOpen, isDraggingRef, onDragStart }: MapViewportEffectsProps) => {
+export const MapViewportEffects = ({
+                                       isOpen,
+                                       isDraggingRef,
+                                       isZoomingRef,
+                                       onInteractionStart
+                                   }: MapViewportEffectsProps) => {
     useInvalidateMapSizeOnToggle(isOpen);
-    useMapDragCleanup(isDraggingRef, onDragStart);
+    useMapDragCleanup(isDraggingRef, onInteractionStart);
+    useMapZoomGuard(isZoomingRef, onInteractionStart);
+
     return null;
 };

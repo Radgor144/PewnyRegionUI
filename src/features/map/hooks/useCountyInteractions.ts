@@ -10,6 +10,7 @@ interface UseCountyInteractionsProps {
     isDark: boolean;
     geoJsonRef: React.MutableRefObject<L.GeoJSON | null>;
     isDraggingRef: React.MutableRefObject<boolean>;
+    isZoomingRef: React.MutableRefObject<boolean>;
 }
 
 export const useCountyInteractions = ({
@@ -17,6 +18,7 @@ export const useCountyInteractions = ({
                                           isDark,
                                           geoJsonRef,
                                           isDraggingRef,
+                                          isZoomingRef,
                                       }: UseCountyInteractionsProps) => {
     const selectedLayerRef = useRef<L.Path | null>(null);
     const pinnedTooltipRef = useRef<L.Tooltip | null>(null);
@@ -68,7 +70,7 @@ export const useCountyInteractions = ({
     }, [isDark, scoresMap, clearPinned, clearHover, geoJsonRef]);
 
     const highlightFeature = useCallback((event: LeafletMouseEvent) => {
-        if (event.originalEvent.buttons !== 0 || isDraggingRef.current) return;
+        if (event.originalEvent.buttons !== 0 || isDraggingRef.current || isZoomingRef.current) return;
 
         const layer = event.target as L.Path;
         if (layer === selectedLayerRef.current) return;
@@ -91,7 +93,7 @@ export const useCountyInteractions = ({
             .setLatLng(event.latlng)
             .setContent(buildCountyTooltipHtml(feature, score))
             .addTo(map);
-    }, [isDark, scoresMap, isDraggingRef, clearHover]);
+    }, [isDark, scoresMap, isDraggingRef, isZoomingRef, clearHover]);
 
     const moveHighlight = useCallback((event: LeafletMouseEvent) => {
         if (hoverTooltipRef.current) {
@@ -112,9 +114,9 @@ export const useCountyInteractions = ({
     }, [clearHover, geoJsonRef]);
 
     const handleFeatureClick = useCallback((event: LeafletMouseEvent) => {
-        if (isDraggingRef.current) return;
+        if (isDraggingRef.current || isZoomingRef.current) return;
         selectFeature(event.target as L.Path);
-    }, [isDraggingRef, selectFeature]);
+    }, [isDraggingRef, isZoomingRef, selectFeature]);
 
     const onEachFeature = useCallback((_feature: CountyFeature, layer: Layer) => {
         layer.on({
@@ -131,7 +133,7 @@ export const useCountyInteractions = ({
         clearHover();
     }, [clearHover, clearPinned]);
 
-    const handleDragStart = useCallback(() => {
+    const handleInteractionStart = useCallback(() => {
         clearHover();
         geoJsonRef.current?.resetStyle();
         if (selectedLayerRef.current) {
@@ -139,5 +141,5 @@ export const useCountyInteractions = ({
         }
     }, [clearHover, geoJsonRef, isDark]);
 
-    return { onEachFeature, selectFeature, resetAll, handleDragStart };
+    return { onEachFeature, selectFeature, resetAll, handleInteractionStart };
 };

@@ -30,12 +30,14 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
 
     const geoJsonRef = useRef<L.GeoJSON | null>(null);
     const isDraggingRef = useRef(false);
+    const isZoomingRef = useRef(false);
 
-    const { onEachFeature, selectFeature, resetAll, handleDragStart } = useCountyInteractions({
+    const { onEachFeature, selectFeature, resetAll, handleInteractionStart } = useCountyInteractions({
         scoresMap,
         isDark,
         geoJsonRef,
-        isDraggingRef
+        isDraggingRef,
+        isZoomingRef
     });
 
     const geoJsonKey = `${theme}-${scoresVersion}`;
@@ -60,7 +62,8 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
                 <MapViewportEffects
                     isOpen={isOpen}
                     isDraggingRef={isDraggingRef}
-                    onDragStart={handleDragStart}
+                    isZoomingRef={isZoomingRef}
+                    onInteractionStart={handleInteractionStart}
                 />
 
                 <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] w-full max-w-md px-4 pointer-events-auto">
