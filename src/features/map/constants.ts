@@ -8,10 +8,10 @@ export const SEARCH_FIT_MAX_ZOOM = 7;
 export const SEARCH_RESULTS_LIMIT = 5;
 
 export const TILE_URLS = {
-    light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-    dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+    light: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+    dark: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
 } as const;
 
-export const TILE_ATTRIBUTION = '&copy; <a href="https://carto.com/">CARTO</a>';
+export const TILE_ATTRIBUTION = 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ';
 
 export const DEFAULT_SCORE_RANGE: ScoreRange = { min: 0, max: 100 };
