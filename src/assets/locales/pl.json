@@ -5,11 +5,13 @@
   },
   "filters": {
     "title": "Filtry",
-    "timeRange": "Zakres Czasu",
-    "generateMap": "Generuj Mapę",
+    "timeRange": "Zakres czasowy",
+    "generateMap": "Generuj mapę",
     "generating": "Obliczanie...",
     "loading": "Ładowanie...",
-    "loadError": "Nie udało się pobrać filtrów."
+    "loadError": "Nie udało się pobrać filtrów.",
+    "collapsePanel": "Zwiń panel",
+    "expandPanel": "Rozwiń panel"
   },
   "variables": {
     "crimes": {
@@ -42,5 +44,9 @@
     "map": "Mapa",
     "counties": "Powiaty",
     "rankings": "Rankingi"
+  },
+  "countyDetails": {
+    "title": "Szczegóły powiatu",
+    "comingSoon": "Szczegółowe dane pojawią się wkrótce"
   }
 }
