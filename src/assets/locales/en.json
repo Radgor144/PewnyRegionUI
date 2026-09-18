@@ -9,7 +9,9 @@
     "generateMap": "Generate Map",
     "generating": "Calculating...",
     "loading": "Loading...",
-    "loadError": "Failed to fetch filters."
+    "loadError": "Failed to fetch filters.",
+    "collapsePanel": "Collapse panel",
+    "expandPanel": "Expand panel"
   },
   "variables": {
     "crimes": {
@@ -42,5 +44,9 @@
     "map": "Map",
     "counties": "Counties",
     "rankings": "Rankings"
+  },
+  "countyDetails": {
+    "title": "County details",
+    "comingSoon": "Detailed data coming soon"
   }
 }

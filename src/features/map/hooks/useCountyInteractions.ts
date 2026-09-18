@@ -11,6 +11,7 @@ interface UseCountyInteractionsProps {
     geoJsonRef: React.MutableRefObject<L.GeoJSON | null>;
     isDraggingRef: React.MutableRefObject<boolean>;
     isZoomingRef: React.MutableRefObject<boolean>;
+    onFeatureSelect?: (feature: CountyFeature) => void;
 }
 
 export const useCountyInteractions = ({
@@ -19,6 +20,7 @@ export const useCountyInteractions = ({
                                           geoJsonRef,
                                           isDraggingRef,
                                           isZoomingRef,
+                                          onFeatureSelect,
                                       }: UseCountyInteractionsProps) => {
     const selectedLayerRef = useRef<L.Path | null>(null);
     const pinnedTooltipRef = useRef<L.Tooltip | null>(null);
@@ -41,6 +43,7 @@ export const useCountyInteractions = ({
     const selectFeature = useCallback((layer: L.Path) => {
         const previous = selectedLayerRef.current;
         const map = (layer as any)._map as L.Map;
+        const feature = (layer as any).feature as CountyFeature;
 
         if (previous && previous !== layer) {
             geoJsonRef.current?.resetStyle(previous);
@@ -51,9 +54,9 @@ export const useCountyInteractions = ({
 
         selectedLayerRef.current = layer;
         applyHighlightStyle(layer, isDark);
+        onFeatureSelect?.(feature);
 
         if (map) {
-            const feature = (layer as any).feature;
             const teryt = getTeryt(feature.properties);
             const score = teryt && scoresMap ? scoresMap[teryt] : undefined;
             const centerPoint = (layer as L.Polygon).getBounds().getCenter();
@@ -67,7 +70,7 @@ export const useCountyInteractions = ({
                 .setContent(buildCountyTooltipHtml(feature, score))
                 .addTo(map);
         }
-    }, [isDark, scoresMap, clearPinned, clearHover, geoJsonRef]);
+    }, [isDark, scoresMap, clearPinned, clearHover, geoJsonRef, onFeatureSelect]);
 
     const highlightFeature = useCallback((event: LeafletMouseEvent) => {
         if (event.originalEvent.buttons !== 0 || isDraggingRef.current || isZoomingRef.current) return;

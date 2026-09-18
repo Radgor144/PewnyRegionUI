@@ -99,7 +99,7 @@ export const FiltersPanel = ({
                     left: isOpen ? '320px' : '0px',
                     transform: 'translate(-50%, -50%)'
                 }}
-                title={isOpen ? "Collapse panel" : "Expand panel"}
+                title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}
             >
                 <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />

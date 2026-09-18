@@ -14,14 +14,16 @@ import { useCountyInteractions } from '../hooks/useCountyInteractions';
 import { createFeatureStyleFactory } from '../utils/mapStyle';
 
 import { DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS } from '../constants';
-import type { CountyScore } from 'types/api';
+import type { CountyScore } from '../../../types/api';
+import type { CountyFeature } from '../types';
 
 interface RegionMapProps {
     scoresData: CountyScore[] | null;
     isOpen: boolean;
+    onCountySelect?: (feature: CountyFeature) => void;
 }
 
-export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
+export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps) => {
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
@@ -37,7 +39,8 @@ export const RegionMap = ({ scoresData, isOpen }: RegionMapProps) => {
         isDark,
         geoJsonRef,
         isDraggingRef,
-        isZoomingRef
+        isZoomingRef,
+        onFeatureSelect: onCountySelect,
     });
 
     const geoJsonKey = `${theme}-${scoresVersion}`;
