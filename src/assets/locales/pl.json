@@ -47,6 +47,12 @@
   },
   "countyDetails": {
     "title": "Szczegóły powiatu",
-    "comingSoon": "Szczegółowe dane pojawią się wkrótce"
+    "noVariablesSelected": "Wybierz zmienne w filtrach, aby zobaczyć wykresy.",
+    "selectCountyTitle": "Brak wybranego powiatu",
+    "selectCounty": "Wybierz powiat na mapie, aby zobaczyć szczegóły.",
+    "loading": "Ładowanie danych...",
+    "loadError": "Nie udało się pobrać danych szczegółów powiatu.",
+    "nationalAverage": "Średnia krajowa",
+    "thisCounty": "Ten powiat"
   }
 }

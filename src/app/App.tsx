@@ -11,7 +11,7 @@ export function App() {
     const [isMainSidebarOpen, setIsMainSidebarOpen] = useState<boolean>(true);
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(true);
     const [selectedCounty, setSelectedCounty] = useState<CountyFeature | null>(null);
-    const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false); // Domyślnie zamknięty
+    const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
 
     const handleCountySelect = (feature: CountyFeature) => {
         setSelectedCounty(feature);
@@ -41,6 +41,7 @@ export function App() {
                     county={selectedCounty}
                     isOpen={isDetailsOpen}
                     setIsOpen={setIsDetailsOpen}
+                    selectedVariables={selectedVariables}
                 />
             }
             map={
