@@ -1,5 +1,6 @@
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from 'app/providers/ThemeContext';
 import { VariableDetail } from 'types/api';
 
 interface ChartCardProps {
@@ -9,8 +10,16 @@ interface ChartCardProps {
 
 export const ChartCard = ({ variable, title }: ChartCardProps) => {
     const { t } = useTranslation();
+    const { theme } = useTheme();
 
     const data = [...variable.yearlyValues].sort((a, b) => a.year - b.year);
+
+    const gridStroke = theme === 'dark' ? '#374151' : '#d1d5db';
+    const gridOpacity = theme === 'dark' ? 0.3 : 0.4;
+    const axisStroke = theme === 'dark' ? '#64748b' : '#78716c';
+    const axisFill = theme === 'dark' ? '#64748b' : '#44403c';
+    const dotFill = theme === 'dark' ? '#1e293b' : '#ffffff';
+    const dotStroke = '#3b82f6';
 
     return (
         <div className="bg-white dark:bg-slate-800 rounded-lg p-3 mb-3 border border-slate-200 dark:border-slate-700 shadow-sm">
@@ -27,18 +36,18 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                                 <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.0} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#cbd5e1" opacity={0.15} vertical={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} opacity={gridOpacity} vertical={false} />
                         <XAxis
                             dataKey="year"
-                            stroke="#94a3b8"
-                            tick={{ fontSize: 10, fill: '#94a3b8' }}
+                            stroke={axisStroke}
+                            tick={{ fontSize: 10, fill: axisFill }}
                             tickMargin={6}
                             axisLine={false}
                             tickLine={false}
                         />
                         <YAxis
-                            stroke="#94a3b8"
-                            tick={{ fontSize: 10, fill: '#94a3b8' }}
+                            stroke={axisStroke}
+                            tick={{ fontSize: 10, fill: axisFill }}
                             tickMargin={6}
                             axisLine={false}
                             tickLine={false}
@@ -66,7 +75,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                             wrapperStyle={{ paddingTop: '8px' }}
                             iconType="circle"
                             formatter={(value) => (
-                                <span className="text-slate-600 dark:text-slate-300 text-[10px] font-medium ml-1">
+                                <span className={theme === 'dark' ? 'text-slate-300 text-[10px] font-medium ml-1' : 'text-slate-700 text-[10px] font-medium ml-1'}>
                                     {value === 'rawValue'
                                         ? t('countyDetails.thisCounty')
                                         : t('countyDetails.nationalAverage')}
@@ -80,7 +89,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                             strokeWidth={2.5}
                             fillOpacity={1}
                             fill="url(#colorRawValue)"
-                            dot={{ r: 3, strokeWidth: 1.5, fill: '#1e293b', stroke: '#3b82f6' }}
+                            dot={{ r: 3, strokeWidth: 1.5, fill: dotFill, stroke: dotStroke }}
                             activeDot={{ r: 5, strokeWidth: 0, fill: '#3b82f6' }}
                         />
                         <Line

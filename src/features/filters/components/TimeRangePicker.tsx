@@ -49,18 +49,18 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
                 <span className="text-[10px] font-bold text-slate-800 dark:text-slate-300 uppercase tracking-wider">
                     {t('filters.timeRange')}
                 </span>
-                <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">
+                <span className="text-[11px] font-bold text-blue-700 dark:text-blue-400">
                     {yearFrom === yearTo ? yearFrom : `${yearFrom} - ${yearTo}`}
                 </span>
             </div>
 
             <div className="dual-range-slider mt-1" onClick={handleTrackClick}>
-                <div className="absolute w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-full"></div>
+                <div className="absolute w-full h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
                 <input type="range" min={MIN_YEAR} max={MAX_YEAR} value={yearFrom} onChange={handleMinChange} className="z-10" />
                 <input type="range" min={MIN_YEAR} max={MAX_YEAR} value={yearTo} onChange={handleMaxChange} className="z-20" />
             </div>
 
-            <div className="flex justify-between text-[9px] text-slate-500 dark:text-slate-400 font-semibold">
+            <div className="flex justify-between text-[9px] text-slate-700 dark:text-slate-400 font-semibold">
                 <span>{MIN_YEAR}</span>
                 <span>{MAX_YEAR}</span>
             </div>

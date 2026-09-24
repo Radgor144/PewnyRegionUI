@@ -15,7 +15,7 @@ export const LanguageSwitcher = () => {
                     className={`h-8 min-w-[32px] px-2 text-[10px] font-bold rounded-md transition-colors ${
                         i18n.language === lng
                             ? 'bg-blue-600 text-white'
-                            : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                            : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-700'
                     }`}
                 >
                     {lng.toUpperCase()}

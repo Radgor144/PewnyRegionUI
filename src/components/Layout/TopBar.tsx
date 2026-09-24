@@ -8,7 +8,7 @@ export const TopBar = () => {
                 <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-[11px] shadow-md shadow-blue-500/20">
                     PR
                 </div>
-                <h1 className="font-bold text-slate-800 dark:text-slate-100 text-base tracking-tight hidden sm:block">
+                <h1 className="font-bold text-slate-900 dark:text-slate-100 text-base tracking-tight hidden sm:block">
                     Pewny Region
                 </h1>
             </div>

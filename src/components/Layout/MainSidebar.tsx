@@ -9,15 +9,15 @@ export const MainSidebar = ({ isOpen, toggleOpen }: MainSidebarProps) => {
     const { t } = useTranslation();
 
     return (
-        <aside className={`relative flex flex-col h-full bg-white dark:bg-canvas-dark border-r border-slate-200 dark:border-slate-800/85 shrink-0 z-30 transition-[width] duration-300 ease-in-out ${isOpen ? 'w-40' : 'w-12'}`}>
-            <div className="flex items-center h-14 border-b border-slate-200 dark:border-slate-800/80 shrink-0 px-1.5">
-                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+        <aside className={`relative flex flex-col h-full bg-white dark:bg-canvas-dark border-r border-slate-300 dark:border-slate-800/85 shrink-0 z-30 transition-[width] duration-300 ease-in-out ${isOpen ? 'w-40' : 'w-12'}`}>
+            <div className="flex items-center h-14 border-b border-slate-300 dark:border-slate-800/80 shrink-0 px-1.5">
+                <div className="w-9 h-full flex items-center justify-center shrink-0">
                     <button
                         onClick={toggleOpen}
-                        className="w-8 h-8 p-1.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-xl text-slate-600 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors"
                         title="Menu"
                     >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
@@ -32,14 +32,14 @@ export const MainSidebar = ({ isOpen, toggleOpen }: MainSidebarProps) => {
                     <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.map')}</span>
                 </button>
 
-                <button className="w-full flex items-center h-10 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 font-medium text-[11px] transition-all overflow-hidden" title={t('sidebar.counties')}>
+                <button className="w-full flex items-center h-10 rounded-xl text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 font-medium text-[11px] transition-all overflow-hidden" title={t('sidebar.counties')}>
                     <div className="w-9 h-full flex items-center justify-center shrink-0">
                         <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     </div>
                     <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.counties')}</span>
                 </button>
 
-                <button className="w-full flex items-center h-10 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 font-medium text-[11px] transition-all overflow-hidden" title={t('sidebar.rankings')}>
+                <button className="w-full flex items-center h-10 rounded-xl text-slate-700 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 font-medium text-[11px] transition-all overflow-hidden" title={t('sidebar.rankings')}>
                     <div className="w-9 h-full flex items-center justify-center shrink-0">
                         <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
