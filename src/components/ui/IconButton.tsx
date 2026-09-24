@@ -8,7 +8,7 @@ export const IconButton = ({ active, className, children, ...props }: IconButton
     const base = active
         ? 'bg-blue-600 text-white'
         : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
-    const classes = ['p-1.5', 'h-7', 'w-7', 'rounded-md', 'transition-colors', base, className].filter(Boolean).join(' ');
+    const classes = ['inline-flex', 'items-center', 'justify-center', 'p-1.5', 'h-8', 'w-8', 'rounded-md', 'transition-colors', base, className].filter(Boolean).join(' ');
     return (
         <button className={classes} {...props}>
             {children}

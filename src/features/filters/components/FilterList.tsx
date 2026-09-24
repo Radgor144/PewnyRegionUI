@@ -47,12 +47,12 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                                     });
                                 }
                             }}
-                            className={`mr-2.5 w-3.5 h-3.5 rounded text-blue-600 focus:ring-blue-500 border-slate-300 dark:border-slate-600 ${
+                            className={`mr-2.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300 dark:border-slate-600 ${
                                 isDisabled && !isSelected ? 'cursor-not-allowed' : 'cursor-pointer'
                             }`}
                             style={{ accentColor: BRAND_BLUE }}
                         />
-                        <span className={`text-[11px] leading-relaxed break-words ${
+                        <span className={`text-[12px] leading-relaxed break-words ${
                             isSelected
                                 ? 'font-semibold text-blue-950 dark:text-blue-200'
                                 : 'font-medium text-slate-700 dark:text-slate-300'

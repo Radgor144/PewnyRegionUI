@@ -44,11 +44,11 @@ export const FiltersPanel = ({
         >
             <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}>
                 <div className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="border-b border-slate-200 dark:border-slate-800/80 px-3 py-3">
+                    <div className="border-b border-slate-200 dark:border-slate-800/80 px-3 py-2.5">
                         <div id="county-search-panel-target" className="w-full" />
                     </div>
 
-                    <div className="flex items-center justify-between px-3 h-14 border-b border-slate-200 dark:border-slate-800/80 shrink-0">
+                    <div className="flex items-center justify-between px-3 h-11 border-b border-slate-200 dark:border-slate-800/80 shrink-0">
                         <div className="flex items-center gap-2">
                             <h2 className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 whitespace-nowrap">
                                 {t('filters.title')}
@@ -60,7 +60,7 @@ export const FiltersPanel = ({
                     </div>
 
                     <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                        <div className="flex-1 overflow-y-auto px-3 py-2.5 scrollbar-hide">
+                        <div className="flex-1 overflow-y-auto px-3 py-2 scrollbar-hide">
                             {loading && <p className="text-center text-slate-400 text-xs py-4">{t('filters.loading')}</p>}
                             {loadError && <div className="text-red-500 text-xs text-center">{loadError}</div>}
                             {!loading && !loadError && (
@@ -79,12 +79,12 @@ export const FiltersPanel = ({
                             <TimeRangePicker yearFrom={yearFrom} setYearFrom={setYearFrom} yearTo={yearTo} setYearTo={setYearTo} />
                         </div>
 
-                        {generateError && <p className="text-red-500 dark:text-red-400 text-[10px] font-medium text-center mb-2">{generateError}</p>}
+                        {generateError && <p className="text-red-500 dark:text-red-400 text-[11px] font-medium text-center mb-2">{generateError}</p>}
 
                         <button
                             onClick={handleGenerateMap}
                             disabled={isGenerating || selectedVariables.length === 0}
-                            className={`w-full py-2.5 px-3 rounded-xl text-xs font-semibold transition-all shadow-md ${
+                            className={`w-full min-h-[40px] py-2 px-3 rounded-xl text-[12px] font-semibold transition-all shadow-md ${
                                 isGenerating || selectedVariables.length === 0
                                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed shadow-none'
                                     : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20 hover:shadow-blue-600/40'
@@ -98,14 +98,14 @@ export const FiltersPanel = ({
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-6 h-6 rounded-full bg-white dark:bg-panel-dark border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-white dark:bg-panel-dark border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
                     left: isOpen ? '280px' : '0px',
                     transform: 'translate(-50%, -50%)'
                 }}
                 title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}
             >
-                <svg className={`w-3 h-3 transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>

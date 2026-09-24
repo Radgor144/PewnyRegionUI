@@ -37,13 +37,12 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
     };
 
     return (
-        <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-2">
             <style>{`
-                .dual-range-slider { position: relative; height: 16px; display: flex; align-items: center; cursor: pointer; }
+                .dual-range-slider { position: relative; height: 18px; display: flex; align-items: center; cursor: pointer; }
                 .dual-range-slider input[type=range] { position: absolute; width: 100%; appearance: none; background: none; pointer-events: none; margin: 0; }
-                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: transform 0.1s; }
-                .dual-range-slider input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
+                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
             `}</style>
 
             <div className="flex justify-between items-center">

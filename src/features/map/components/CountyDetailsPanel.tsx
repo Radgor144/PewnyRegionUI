@@ -19,7 +19,7 @@ const PanelContent = ({ county, selectedVariables, loading, error, detailsData, 
 
     if (activeFallback) {
         const textColor = activeFallback.isError ? 'text-red-500' : 'text-slate-400';
-        return <p className={`text-center text-sm py-4 ${textColor}`}>{activeFallback.message}</p>;
+        return <p className={`text-center text-base py-4 ${textColor}`}>{activeFallback.message}</p>;
     }
 
     if (!detailsData || detailsData.length === 0) return null;
@@ -79,14 +79,14 @@ export const CountyDetailsPanel = ({ county, isOpen, setIsOpen, selectedVariable
             </aside>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-6 h-6 rounded-full bg-white dark:bg-[#1f2937] border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-white dark:bg-[#1f2937] border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
                     right: isOpen ? '420px' : '14px',
                     transform: 'translate(50%, -50%)'
                 }}
                 title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}
             >
-                <svg className={`w-3 h-3 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
