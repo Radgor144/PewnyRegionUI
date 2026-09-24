@@ -37,20 +37,20 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
     };
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
             <style>{`
                 .dual-range-slider { position: relative; height: 16px; display: flex; align-items: center; cursor: pointer; }
                 .dual-range-slider input[type=range] { position: absolute; width: 100%; appearance: none; background: none; pointer-events: none; margin: 0; }
-                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 14px; height: 14px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: transform 0.1s; }
+                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: transform 0.1s; }
                 .dual-range-slider input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 14px; height: 14px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid ${COLOR_FFFFFF}; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
             `}</style>
 
             <div className="flex justify-between items-center">
-                <span className="text-[11px] font-bold text-slate-800 dark:text-slate-300 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-slate-800 dark:text-slate-300 uppercase tracking-wider">
                     {t('filters.timeRange')}
                 </span>
-                <span className="text-xs font-bold text-blue-600 dark:text-blue-400">
+                <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400">
                     {yearFrom === yearTo ? yearFrom : `${yearFrom} - ${yearTo}`}
                 </span>
             </div>
@@ -61,7 +61,7 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
                 <input type="range" min={MIN_YEAR} max={MAX_YEAR} value={yearTo} onChange={handleMaxChange} className="z-20" />
             </div>
 
-            <div className="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
+            <div className="flex justify-between text-[9px] text-slate-500 dark:text-slate-400 font-semibold">
                 <span>{MIN_YEAR}</span>
                 <span>{MAX_YEAR}</span>
             </div>

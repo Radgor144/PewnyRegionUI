@@ -12,7 +12,7 @@ export const LanguageSwitcher = () => {
                 <button
                     key={lng}
                     onClick={() => i18n.changeLanguage(lng)}
-                    className={`px-2 py-1 text-xs font-bold rounded-md transition-colors ${
+                    className={`px-1.5 py-0.5 text-[10px] font-bold rounded-md transition-colors ${
                         i18n.language === lng
                             ? 'bg-blue-600 text-white'
                             : 'bg-slate-100 text-slate-500 hover:bg-slate-200'

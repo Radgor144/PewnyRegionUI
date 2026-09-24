@@ -13,12 +13,12 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
     const data = [...variable.yearlyValues].sort((a, b) => a.year - b.year);
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-xl p-4 mb-4 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 mb-3">
+        <div className="bg-white dark:bg-slate-800 rounded-lg p-3 mb-3 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-2.5">
                 {title}
             </h3>
 
-            <div className="w-full h-36">
+            <div className="w-full h-32">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                         <defs>
@@ -52,8 +52,8 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                                 color: '#f8fafc',
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
                             }}
-                            itemStyle={{ fontSize: '12px', fontWeight: 500 }}
-                            labelStyle={{ color: '#94a3b8', marginBottom: '4px', fontSize: '11px' }}
+                            itemStyle={{ fontSize: '11px', fontWeight: 500 }}
+                            labelStyle={{ color: '#94a3b8', marginBottom: '4px', fontSize: '10px' }}
                             formatter={(value: any, name: any) => {
                                 const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
                                 const formattedName = name === 'rawValue'
@@ -66,7 +66,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                             wrapperStyle={{ paddingTop: '8px' }}
                             iconType="circle"
                             formatter={(value) => (
-                                <span className="text-slate-600 dark:text-slate-300 text-[11px] font-medium ml-1">
+                                <span className="text-slate-600 dark:text-slate-300 text-[10px] font-medium ml-1">
                                     {value === 'rawValue'
                                         ? t('countyDetails.thisCounty')
                                         : t('countyDetails.nationalAverage')}
