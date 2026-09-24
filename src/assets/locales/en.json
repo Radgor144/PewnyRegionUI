@@ -47,6 +47,12 @@
   },
   "countyDetails": {
     "title": "County details",
-    "comingSoon": "Detailed data coming soon"
+    "noVariablesSelected": "Select variables in the filters to see charts.",
+    "selectCountyTitle": "No county selected",
+    "selectCounty": "Click on a county on the map to see details.",
+    "loading": "Loading data...",
+    "loadError": "Failed to fetch county details.",
+    "nationalAverage": "National average",
+    "thisCounty": "This county"
   }
 }
