@@ -13,9 +13,10 @@ interface SearchControlProps {
     geoData: CountyFeatureCollection | null;
     geoJsonRef: RefObject<L.GeoJSON | null>;
     onSelectFeature: (layer: L.Path) => void;
+    targetId?: string;
 }
 
-export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchControlProps) => {
+export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature, targetId = 'search-portal-target' }: SearchControlProps) => {
     const map = useMap();
     const { t } = useTranslation();
     const [query, setQuery] = useState('');
@@ -23,8 +24,8 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
     const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
-        setPortalTarget(document.getElementById('search-portal-target'));
-    }, []);
+        setPortalTarget(document.getElementById(targetId));
+    }, [targetId]);
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -82,5 +83,5 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature }: SearchCo
         </div>
     );
 
-    return portalTarget ? createPortal(searchUI, portalTarget) : searchUI;
+    return portalTarget ? createPortal(searchUI, portalTarget) : null;
 };
