@@ -38,27 +38,31 @@ export const FiltersPanel = ({
 
     return (
         <div
-            className={`absolute top-16 bottom-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300 ${
-                isMainSidebarOpen ? 'left-56' : 'left-[72px]'
+            className={`absolute top-14 bottom-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300 ${
+                isMainSidebarOpen ? 'left-40' : 'left-[44px]'
             }`}
         >
-            <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[320px]' : 'w-0 border-r-0'}`}>
-                <div className={`w-[320px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="flex items-center justify-between px-4 h-16 border-b border-slate-200 dark:border-slate-800/80 shrink-0">
+            <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-300 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}>
+                <div className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                    <div className="flex items-center h-14 border-b border-slate-300 dark:border-slate-800/80 px-3 shrink-0">
+                        <div id="county-search-panel-target" className="w-full" />
+                    </div>
+
+                    <div className="flex items-center justify-between px-3 h-14 border-b border-slate-300 dark:border-slate-800/80 shrink-0">
                         <div className="flex items-center gap-2">
-                            <h2 className="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                            <h2 className="text-[10px] font-bold uppercase tracking-wider text-slate-800 dark:text-slate-300 whitespace-nowrap">
                                 {t('filters.title')}
                             </h2>
-                            <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded-md border border-slate-200/50 dark:border-slate-700/50">
+                            <span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 text-[9px] font-bold rounded-md border border-slate-300 dark:border-slate-700/50">
                                 {selectedVariables.length}/{MAX_SELECTION}
                             </span>
                         </div>
                     </div>
 
                     <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                        <div className="flex-1 overflow-y-auto px-4 py-3 scrollbar-hide">
-                            {loading && <p className="text-center text-slate-400 text-sm py-4">{t('filters.loading')}</p>}
-                            {loadError && <div className="text-red-500 text-sm text-center">{loadError}</div>}
+                        <div className="flex-1 overflow-y-auto px-3 py-2 scrollbar-hide">
+                            {loading && <p className="text-center text-slate-500 dark:text-slate-400 text-xs py-4">{t('filters.loading')}</p>}
+                            {loadError && <div className="text-red-600 dark:text-red-500 text-xs text-center">{loadError}</div>}
                             {!loading && !loadError && (
                                 <FilterList
                                     variables={variables}
@@ -70,19 +74,19 @@ export const FiltersPanel = ({
                         </div>
                     </div>
 
-                    <div className="p-4 border-t border-slate-200 dark:border-slate-800/80 bg-white dark:bg-surface-dark shrink-0">
-                        <div className="mb-4">
+                    <div className="p-3 border-t border-slate-300 dark:border-slate-800/80 bg-white dark:bg-surface-dark shrink-0">
+                        <div className="mb-3">
                             <TimeRangePicker yearFrom={yearFrom} setYearFrom={setYearFrom} yearTo={yearTo} setYearTo={setYearTo} />
                         </div>
 
-                        {generateError && <p className="text-red-500 dark:text-red-400 text-xs font-medium text-center mb-3">{generateError}</p>}
+                        {generateError && <p className="text-red-600 dark:text-red-400 text-[11px] font-medium text-center mb-2">{generateError}</p>}
 
                         <button
                             onClick={handleGenerateMap}
                             disabled={isGenerating || selectedVariables.length === 0}
-                            className={`w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all shadow-md ${
+                            className={`w-full min-h-[40px] py-2 px-3 rounded-xl text-[12px] font-semibold transition-all shadow-md ${
                                 isGenerating || selectedVariables.length === 0
-                                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed shadow-none'
+                                    ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-500 cursor-not-allowed shadow-none'
                                     : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-600/20 hover:shadow-blue-600/40'
                             }`}
                         >
@@ -94,9 +98,9 @@ export const FiltersPanel = ({
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-7 h-7 rounded-full bg-white dark:bg-panel-dark border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-white dark:bg-panel-dark border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
-                    left: isOpen ? '320px' : '0px',
+                    left: isOpen ? '280px' : '0px',
                     transform: 'translate(-50%, -50%)'
                 }}
                 title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}

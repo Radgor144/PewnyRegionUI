@@ -69,9 +69,7 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
                     onInteractionStart={handleInteractionStart}
                 />
 
-                <div className="fixed top-3 left-1/2 -translate-x-1/2 z-[60] w-full max-w-md px-4 pointer-events-auto">
-                    <SearchControl geoData={geoData} geoJsonRef={geoJsonRef} onSelectFeature={selectFeature} />
-                </div>
+                <SearchControl geoData={geoData} geoJsonRef={geoJsonRef} onSelectFeature={selectFeature} targetId="county-search-panel-target" />
 
                 <TileLayer url={tileUrl} attribution={TILE_ATTRIBUTION} />
 

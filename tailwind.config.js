@@ -11,11 +11,11 @@ export default {
             },
             colors: {
                 surface: {
-                    DEFAULT: '#ffffff',
+                    DEFAULT: '#f3f4f6',
                     dark: '#111827'
                 },
                 canvas: {
-                    DEFAULT: '#f8fafc',
+                    DEFAULT: '#ffffff',
                     dark: '#0b1121'
                 },
                 panel: {
