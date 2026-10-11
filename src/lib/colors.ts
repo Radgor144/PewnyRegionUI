@@ -1,19 +1,15 @@
-export const colors = {
-  surface: {
-    light: '#f3f4f6',
-    dark: '#111827'
-  },
-  canvas: {
-    light: '#e6f0ff',
-    dark: '#0b1121'
-  },
-  panel: {
-    light: '#e10b2b',
-    dark: '#1f2937'
-  }
-};
+export type ThemeName = 'light' | 'dark';
 
-// Additional constants used in components
-export const BRAND_BLUE = '#3b82f6';
-export const COLOR_FFFFFF = '#ffffff';
-export const COLOR_SHADOW_SM = 'rgba(0, 0, 0, 0.1)';
+export const BRAND_BLUE = '#2563eb';
+export const BRAND_BLUE_STRONG = '#1d4ed8';
+export const BRAND_BLUE_SOFT = '#dbeafe';
+export const BRAND_BLUE_SHADOW = 'rgba(37, 99, 235, 0.25)';
+
+export const WHITE = '#ffffff';
+export const ERROR_RED = '#ef4444';
+export const SHADOW_SM = 'rgba(0,0,0,0.28)';
+
+export const CHART_GRADIENT_OPACITY_START = 0.4;
+export const CHART_GRADIENT_OPACITY_END = 0.0;
+
+export const CHART_STROKE_PRIMARY = BRAND_BLUE;

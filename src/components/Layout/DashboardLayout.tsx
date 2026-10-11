@@ -10,7 +10,13 @@ interface DashboardLayoutProps {
 
 export const DashboardLayout = ({ sidebar, filters, details, map }: DashboardLayoutProps) => {
     return (
-        <div className="relative w-full h-screen overflow-hidden bg-slate-100 dark:bg-[#0b1121] text-slate-900 dark:text-slate-100 font-sans">
+        <div
+            className="relative w-full h-screen overflow-hidden font-sans"
+            style={{
+                backgroundColor: 'var(--color-bg)',
+                color: 'var(--color-text)',
+            }}
+        >
             <div className="absolute inset-0 z-0">
                 {map}
             </div>

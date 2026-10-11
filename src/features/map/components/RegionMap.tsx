@@ -56,7 +56,7 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
     const tileUrl = isDark ? TILE_URLS.dark : TILE_URLS.light;
 
     return (
-        <div className="absolute inset-0 z-0 bg-slate-100 dark:bg-slate-950 transform-gpu" style={{ transform: 'translateZ(0)' }}>
+        <div className="absolute inset-0 z-0 transform-gpu" style={{ transform: 'translateZ(0)', backgroundColor: 'var(--color-bg)' }}>
             <div className="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
                 <MapLegend scoreRange={scoreRange} />
             </div>

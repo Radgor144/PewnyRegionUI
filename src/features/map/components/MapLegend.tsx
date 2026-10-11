@@ -17,20 +17,30 @@ export const MapLegend = ({ scoreRange }: MapLegendProps) => {
         .join(', ');
 
     return (
-        <div className="bg-canvas/90 dark:bg-panel-dark/90 backdrop-blur-md px-3 py-2 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 text-[11px] text-slate-700 dark:text-slate-300">
+        <div
+            className="backdrop-blur-md px-3 py-2 rounded-lg shadow-xl border text-[11px]"
+            style={{
+                backgroundColor: 'var(--color-tooltip-bg)',
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-text)',
+            }}
+        >
             <div className="flex justify-between items-center mb-1 font-medium">
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="font-semibold" style={{ color: 'var(--color-text)' }}>
                     {t('map.score') || 'Score'}
                 </span>
-                <span className="text-slate-500 dark:text-slate-400">
+                <span style={{ color: 'var(--color-text-muted)' }}>
                     ({Math.round(scoreRange.min)}–{Math.round(scoreRange.max)})
                 </span>
             </div>
             <div
-                className="h-2.5 w-40 rounded-full mb-1 border border-slate-200/50 dark:border-slate-700/50"
-                style={{ background: `linear-gradient(to right, ${gradientSteps})` }}
+                className="h-2.5 w-40 rounded-full mb-1 border"
+                style={{
+                    background: `linear-gradient(to right, ${gradientSteps})`,
+                    borderColor: 'var(--color-border)',
+                }}
             />
-            <div className="flex justify-between text-[9px] text-slate-500 dark:text-slate-400 font-semibold">
+            <div className="flex justify-between text-[9px] font-semibold" style={{ color: 'var(--color-text-muted)' }}>
                 <span>{Math.round(scoreRange.min)}</span>
                 <span>{Math.round(scoreRange.min + (scoreRange.max - scoreRange.min) * 0.25)}</span>
                 <span>{Math.round(scoreRange.min + (scoreRange.max - scoreRange.min) * 0.5)}</span>

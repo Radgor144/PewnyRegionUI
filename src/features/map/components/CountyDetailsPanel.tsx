@@ -18,8 +18,8 @@ const PanelContent = ({ county, selectedVariables, loading, error, detailsData, 
     const activeFallback = fallbacks.find(fallback => fallback.isActive);
 
     if (activeFallback) {
-        const textColor = activeFallback.isError ? 'text-red-500' : 'text-slate-400';
-        return <p className={`text-center text-base py-4 ${textColor}`}>{activeFallback.message}</p>;
+        const textColor = activeFallback.isError ? '#ef4444' : 'var(--color-text-muted)';
+        return <p className="text-center text-base py-4" style={{ color: textColor }}>{activeFallback.message}</p>;
     }
 
     if (!detailsData || detailsData.length === 0) return null;
@@ -55,13 +55,19 @@ export const CountyDetailsPanel = ({ county, isOpen, setIsOpen, selectedVariable
 
     return (
         <div className="absolute top-14 bottom-0 right-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300">
-            <aside className={`h-full bg-canvas dark:bg-panel-dark border-l border-slate-200 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[420px]' : 'w-0 border-l-0'}`}>
+            <aside
+                className={`h-full transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[420px]' : 'w-0 border-l-0'}`}
+                style={{
+                    backgroundColor: 'var(--color-panel)',
+                    borderLeft: isOpen ? '1px solid var(--color-border)' : 'none',
+                }}
+            >
                 <div className={`w-[420px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="flex flex-col justify-center px-3 h-14 border-b border-slate-200 dark:border-slate-800/80 shrink-0 overflow-hidden">
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                    <div className="flex flex-col justify-center px-3 h-14 shrink-0 overflow-hidden" style={{ borderBottom: '1px solid var(--color-border)' }}>
+                        <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
                             {t('countyDetails.title')}
                         </span>
-                        <h2 className="text-sm font-bold text-slate-800 dark:text-slate-100 truncate">
+                        <h2 className="text-sm font-bold truncate" style={{ color: 'var(--color-text)' }}>
                             {countyName || t('countyDetails.selectCountyTitle', 'No county selected')}
                         </h2>
                     </div>
@@ -79,10 +85,13 @@ export const CountyDetailsPanel = ({ county, isOpen, setIsOpen, selectedVariable
             </aside>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-canvas dark:bg-panel-dark border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                className="absolute top-1/2 z-50 w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
                     right: isOpen ? '420px' : '14px',
-                    transform: 'translate(50%, -50%)'
+                    transform: 'translate(50%, -50%)',
+                    backgroundColor: 'var(--color-panel)',
+                    border: '1px solid var(--color-border)',
+                    color: 'var(--color-text-muted)',
                 }}
                 title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}
             >

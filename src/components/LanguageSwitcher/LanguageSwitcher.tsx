@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { BRAND_BLUE } from 'lib/colors';
 
 const LANGUAGES = ['pl', 'en'] as const;
 type Language = typeof LANGUAGES[number];
@@ -12,11 +13,11 @@ export const LanguageSwitcher = () => {
                 <button
                     key={lng}
                     onClick={() => i18n.changeLanguage(lng)}
-                    className={`h-8 min-w-[32px] px-2 text-[10px] font-bold rounded-md transition-colors ${
-                        i18n.language === lng
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 hover:bg-slate-300 dark:hover:bg-slate-700'
-                    }`}
+                    className="h-8 min-w-[32px] px-2 text-[10px] font-bold rounded-md transition-colors"
+                    style={{
+                        backgroundColor: i18n.language === lng ? BRAND_BLUE : 'var(--color-panel-alt)',
+                        color: i18n.language === lng ? '#ffffff' : 'var(--color-text)',
+                    }}
                 >
                     {lng.toUpperCase()}
                 </button>
