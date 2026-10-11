@@ -1,6 +1,0 @@
-[  107755ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=b4364265:20102
-[  107993ms] [ERROR] Access to fetch at 'http://localhost:8080/api/variables' from origin 'http://localhost:3001' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:3001/:0
-[  107994ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:8080/api/variables:0
-[  107994ms] [ERROR] Access to fetch at 'http://localhost:8080/api/variables' from origin 'http://localhost:3001' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ http://localhost:3001/:0
-[  107994ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:8080/api/variables:0
-[  110551ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=b4364265:20102
