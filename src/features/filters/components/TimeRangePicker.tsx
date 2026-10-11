@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { BRAND_BLUE } from 'lib/colors';
 
 interface TimeRangePickerProps {
     yearFrom: number;
@@ -41,8 +40,8 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
             <style>{`
                 .dual-range-slider { position: relative; height: 18px; display: flex; align-items: center; cursor: pointer; }
                 .dual-range-slider input[type=range] { position: absolute; width: 100%; appearance: none; background: none; pointer-events: none; margin: 0; }
-                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
-                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: ${BRAND_BLUE}; cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
+                .dual-range-slider input[type=range]::-webkit-slider-thumb { pointer-events: auto; appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--color-header-accent-bg); cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
+                .dual-range-slider input[type=range]::-moz-range-thumb { pointer-events: auto; width: 12px; height: 12px; border-radius: 50%; background: var(--color-header-accent-bg); cursor: pointer; border: 2px solid #ffffff; box-shadow: 0 1px 2px rgba(0,0,0,0.28); }
             `}</style>
 
             <div className="flex justify-between items-center">
@@ -56,6 +55,16 @@ export const TimeRangePicker = ({ yearFrom, setYearFrom, yearTo, setYearTo }: Ti
 
             <div className="dual-range-slider mt-1" onClick={handleTrackClick}>
                 <div className="absolute w-full h-1 rounded-full" style={{ backgroundColor: 'var(--color-chart-grid)' }}></div>
+                <div
+                    className="absolute h-1 rounded-full"
+                    style={{
+                        backgroundColor: 'var(--color-chart-stroke-primary)',
+                        left: `${((yearFrom - MIN_YEAR) / (MAX_YEAR - MIN_YEAR)) * 100}%`,
+                        width: `${((yearTo - yearFrom) / (MAX_YEAR - MIN_YEAR)) * 100}%`,
+                        pointerEvents: 'none',
+                        zIndex: 5,
+                    }}
+                />
                 <input type="range" min={MIN_YEAR} max={MAX_YEAR} value={yearFrom} onChange={handleMinChange} className="z-10" />
                 <input type="range" min={MIN_YEAR} max={MAX_YEAR} value={yearTo} onChange={handleMaxChange} className="z-20" />
             </div>

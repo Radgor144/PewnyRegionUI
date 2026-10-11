@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { BRAND_BLUE, BRAND_BLUE_SHADOW } from 'lib/colors';
 import { TimeRangePicker } from './TimeRangePicker';
 import { FilterList } from './FilterList';
 import { useVariables } from '../hooks/useVariables';
@@ -97,9 +96,9 @@ export const FiltersPanel = ({
                             disabled={isGenerating || selectedVariables.length === 0}
                             className="w-full min-h-[40px] py-2 px-3 rounded-xl text-[12px] font-semibold transition-all shadow-md"
                             style={{
-                                backgroundColor: isGenerating || selectedVariables.length === 0 ? 'var(--color-panel-alt)' : BRAND_BLUE,
-                                color: isGenerating || selectedVariables.length === 0 ? 'var(--color-text-muted)' : '#ffffff',
-                                boxShadow: isGenerating || selectedVariables.length === 0 ? 'none' : '0 10px 15px -3px rgba(37,99,235,0.25)',
+                                backgroundColor: isGenerating || selectedVariables.length === 0 ? 'var(--color-generate-map-disabled-bg)' : 'var(--color-generate-map-bg)',
+                                color: isGenerating || selectedVariables.length === 0 ? 'var(--color-generate-map-disabled-text)' : 'var(--color-generate-map-text)',
+                                boxShadow: isGenerating || selectedVariables.length === 0 ? 'none' : '0 10px 15px -3px var(--color-menu-accent-shadow)',
                                 cursor: isGenerating || selectedVariables.length === 0 ? 'not-allowed' : 'pointer',
                             }}
                         >

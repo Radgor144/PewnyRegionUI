@@ -7,67 +7,123 @@
 :root {
   color-scheme: light;
 
-  --color-bg: #f8fafc;
-  --color-panel: #ebedf3;
-  --color-panel-alt: #f1f5f9;
-  --color-border: #e2e8f0;
+  --color-bg: #f5f2eb;
+  --color-panel: #faf8f5;
+  --color-panel-alt: #ebe6df;
+  --color-border: #ded8ce;
 
-  --color-text: #0f172a;
-  --color-text-muted: #475569;
+  --color-text: #272522;
+  --color-text-muted: #78736a;
 
-  --color-primary: #2563eb;
-  --color-primary-strong: #1d4ed8;
-  --color-primary-soft: #dbeafe;
+  --color-primary: #8b1e2f;
+  --color-primary-strong: #6d1322;
+  --color-primary-soft: #f2e2e4;
 
-  --color-hover: #e2e8f0;
-  --color-selected-bg: #eff6ff;
-  --color-selected-border: #60a5fa;
-  --color-selected-text: #1e3a8a;
+  --color-hover: #ebe6df;
+  --color-selected-bg: #f2e2e4;
+  --color-selected-border: #8b1e2f;
+  --color-selected-text: #6d1322;
 
-  --color-disabled-bg: #f1f5f9;
-  --color-disabled-border: #cbd5e1;
-  --color-error: #dc2626;
+  --color-disabled-bg: #e5ded5;
+  --color-disabled-border: #d2c8bc;
+  --color-error: #b91c1c;
 
-  --color-chart-grid: #d1d5db;
-  --color-chart-axis: #78716c;
-  --color-chart-text: #44403c;
-  --color-chart-average: #ea580c;
+  --color-chart-grid: #b8b2aa;
+  --color-chart-axis: #78736a;
+  --color-chart-text: #272522;
+  --color-chart-average: #d97706;
 
-  --color-tooltip-bg: rgba(255, 255, 255, 0.92);
-  --color-tooltip-text: #0f172a;
+  --color-tooltip-bg: #faf8f5;
+  --color-tooltip-text: #272522;
+  --color-tooltip-bg-alpha: rgba(250,248,245,0.8);
+
+  /* New UI-specific tokens */
+  --color-header-bg: var(--color-panel);
+  --color-header-text: var(--color-text);
+  --color-header-border: var(--color-border);
+  --color-header-accent-bg: var(--color-primary); /* primary accent used in header (light) */
+  --color-header-accent-shadow: rgba(139,30,47,0.18);
+
+  --color-generate-map-bg: var(--color-primary);
+  --color-generate-map-text: #ffffff;
+  --color-generate-map-disabled-bg: var(--color-panel-alt);
+  --color-generate-map-disabled-text: var(--color-text-muted);
+
+  --color-menu-accent-bg: var(--color-primary);
+  --color-menu-accent-text: #ffffff;
+  --color-menu-accent-shadow: rgba(139,30,47,0.18);
+  --color-menu-item-active-bg: var(--color-selected-bg);
+  --color-menu-item-active-text: var(--color-selected-text);
+  /* Chart-specific tokens */
+  --color-chart-stroke-primary: var(--color-primary);
+  --color-dot: var(--color-primary-soft);
+  --color-dot-this-county: var(--color-chart-stroke-primary);
 }
 
 .dark {
   color-scheme: dark;
 
-  --color-bg: #0f172a;
-  --color-panel: #111827;
-  --color-panel-alt: #1f2937;
-  --color-border: #334155;
+  --color-bg: #141214;
+  --color-panel: #1f1a1d;
+  --color-panel-alt: #2a2428;
+  --color-border: #3b3237;
 
-  --color-text: #e2e8f0;
-  --color-text-muted: #94a3b8;
+  --color-text: #f5f5f4;
+  --color-text-muted: #a8a29e;
 
-  --color-primary: #60a5fa;
-  --color-primary-strong: #93c5fd;
-  --color-primary-soft: #1d4ed8;
+  --color-primary: #f43f5e;
+  --color-primary-strong: #fb7185;
+  --color-primary-soft: #4c0519;
 
-  --color-hover: #1f2937;
-  --color-selected-bg: #172554;
-  --color-selected-border: #3b82f6;
-  --color-selected-text: #dbeafe;
+  --color-hover: #2a2428;
+  --color-selected-bg: #4c0519;
+  --color-selected-border: #f43f5e;
+  --color-selected-text: #ffe4e6;
 
-  --color-disabled-bg: #0f172a;
-  --color-disabled-border: #334155;
-  --color-error: #f87171;
+  --color-disabled-bg: #1c1917;
+  --color-disabled-border: #44403c;
+  --color-error: #f43f5e;
 
-  --color-chart-grid: #374151;
-  --color-chart-axis: #64748b;
-  --color-chart-text: #cbd5e1;
-  --color-chart-average: #fb923c;
+  --color-chart-grid: #51474c;
+  --color-chart-axis: #a8a29e;
+  --color-chart-text: #e7e5e4;
+  --color-chart-average: #f59e0b;
 
-  --color-tooltip-bg: rgba(15, 23, 42, 0.92);
-  --color-tooltip-text: #f8fafc;
+  --color-tooltip-bg: #1f1a1d;
+  --color-tooltip-text: #f5f5f4;
+  --color-tooltip-bg-alpha: rgba(31,26,29,0.8);
+
+  /* Dark theme overrides for new UI tokens */
+  --color-header-bg: var(--color-panel);
+  --color-header-text: var(--color-text);
+  --color-header-border: var(--color-border);
+  --color-header-accent-bg: #f43f5e;
+  --color-header-accent-shadow: rgba(244,63,94,0.18);
+
+  --color-generate-map-bg: var(--color-primary);
+  --color-generate-map-text: #ffffff;
+  --color-generate-map-disabled-bg: var(--color-panel-alt);
+  --color-generate-map-disabled-text: var(--color-text-muted);
+
+  --color-menu-accent-bg: var(--color-primary);
+  --color-menu-accent-text: #ffffff;
+  --color-menu-accent-shadow: rgba(244,63,94,0.18);
+  --color-menu-item-active-bg: var(--color-selected-bg);
+  --color-menu-item-active-text: var(--color-selected-text);
+}
+
+/* Recharts tooltip immediate styling: remove transitions so text appears immediately and make text bold */
+.recharts-tooltip-wrapper,
+.recharts-default-tooltip {
+  transition: none !important;
+}
+.recharts-default-tooltip,
+.recharts-default-tooltip * {
+  transition: none !important;
+  color: var(--color-tooltip-text) !important;
+}
+.recharts-default-tooltip .item {
+  font-weight: 700 !important;
 }
 
 @layer base {
@@ -108,11 +164,40 @@ path:focus {
   color: var(--color-tooltip-text) !important;
   border: 0 !important;
   border-radius: 10px !important;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 10px 25px rgba(28, 25, 23, 0.1) !important;
 }
 
 .custom-tooltip .leaflet-tooltip-content-wrapper {
   padding: 0 !important;
+}
+
+.sidebar-button {
+  background-color: transparent;
+  color: var(--color-text);
+  border: 0;
+}
+
+.sidebar-button:hover {
+  background-color: var(--color-panel-alt);
+}
+
+.sidebar-button--accent {
+  background-color: var(--color-menu-accent-bg);
+  color: var(--color-menu-accent-text);
+  box-shadow: 0 10px 15px -3px var(--color-menu-accent-shadow);
+}
+
+.sidebar-button:active,
+.sidebar-button[aria-pressed="true"] {
+  background-color: var(--color-menu-item-active-bg) !important;
+  color: var(--color-menu-item-active-text) !important;
+}
+
+/* Small helper for header-accent (logo / avatar) to use CSS variables if preferred */
+.header-accent {
+  background-color: var(--color-header-accent-bg);
+  box-shadow: 0 10px 15px -3px var(--color-header-accent-shadow);
+  color: #fff;
 }
 
 .custom-tooltip .leaflet-tooltip-content,

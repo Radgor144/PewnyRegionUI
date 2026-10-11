@@ -1,6 +1,6 @@
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { CHART_GRADIENT_OPACITY_START, CHART_GRADIENT_OPACITY_END, CHART_STROKE_PRIMARY } from 'lib/colors';
+import { CHART_GRADIENT_OPACITY_START, CHART_GRADIENT_OPACITY_END } from 'lib/colors';
 import { VariableDetail } from 'types/api';
 
 interface ChartCardProps {
@@ -29,11 +29,11 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                     <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorRawValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={CHART_STROKE_PRIMARY} stopOpacity={CHART_GRADIENT_OPACITY_START} />
-                                <stop offset="95%" stopColor={CHART_STROKE_PRIMARY} stopOpacity={CHART_GRADIENT_OPACITY_END} />
+                                <stop offset="5%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_START} />
+                                <stop offset="95%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_END} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-chart-grid)" opacity={0.4} vertical={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-chart-grid)" opacity={0.6} vertical={false} />
                         <XAxis
                             dataKey="year"
                             stroke="var(--color-chart-axis)"
@@ -52,14 +52,14 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                         />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: 'var(--color-tooltip-bg)',
+                                backgroundColor: 'var(--color-tooltip-bg-alpha)',
                                 border: 'none',
                                 borderRadius: '8px',
                                 color: 'var(--color-tooltip-text)',
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
                             }}
-                            itemStyle={{ fontSize: '11px', fontWeight: 500 }}
-                            labelStyle={{ color: 'var(--color-chart-average)', marginBottom: '4px', fontSize: '10px' }}
+                            itemStyle={{ fontSize: '11px', fontWeight: 700 }}
+                            labelStyle={{ color: 'var(--color-chart-average)', marginBottom: '4px', fontSize: '10px', fontWeight: 700 }}
                             formatter={(value: any, name: any) => {
                                 const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
                                 const formattedName = name === 'rawValue'
@@ -82,12 +82,12 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                         <Area
                             type="monotone"
                             dataKey="rawValue"
-                            stroke={CHART_STROKE_PRIMARY}
+                            stroke={'var(--color-chart-stroke-primary)'}
                             strokeWidth={2.5}
                             fillOpacity={1}
                             fill="url(#colorRawValue)"
-                            dot={{ r: 3, strokeWidth: 1.5, fill: 'var(--color-dot)', stroke: CHART_STROKE_PRIMARY }}
-                            activeDot={{ r: 5, strokeWidth: 0, fill: CHART_STROKE_PRIMARY }}
+                            dot={{ r: 2, strokeWidth: 1, fill: 'var(--color-dot-this-county)', stroke: 'var(--color-chart-stroke-primary)' }}
+                            activeDot={{ r: 4, strokeWidth: 0, fill: 'var(--color-chart-stroke-primary)' }}
                         />
                         <Line
                             type="monotone"
