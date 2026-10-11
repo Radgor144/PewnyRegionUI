@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-canvas;
+  }
+}
+
 body, html {
   margin: 0;
   padding: 0;

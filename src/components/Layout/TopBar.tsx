@@ -3,7 +3,7 @@ import { LanguageSwitcher } from 'components/LanguageSwitcher/LanguageSwitcher';
 
 export const TopBar = () => {
     return (
-        <header className="h-14 flex items-center justify-between px-3 sm:px-4 bg-white dark:bg-canvas-dark border-b border-slate-200 dark:border-slate-800 z-[60] shrink-0 transition-colors">
+        <header className="h-14 flex items-center justify-between px-3 sm:px-4 bg-canvas dark:bg-canvas-dark border-b border-slate-200 dark:border-slate-800 z-[60] shrink-0 transition-colors">
             <div className="flex items-center gap-2.5 w-56 shrink-0">
                 <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-[11px] shadow-md shadow-blue-500/20">
                     PR

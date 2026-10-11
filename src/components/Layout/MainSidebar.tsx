@@ -9,7 +9,7 @@ export const MainSidebar = ({ isOpen, toggleOpen }: MainSidebarProps) => {
     const { t } = useTranslation();
 
     return (
-        <aside className={`relative flex flex-col h-full bg-white dark:bg-canvas-dark border-r border-slate-300 dark:border-slate-800/85 shrink-0 z-30 transition-[width] duration-300 ease-in-out ${isOpen ? 'w-40' : 'w-12'}`}>
+        <aside className={`relative flex flex-col h-full bg-canvas dark:bg-canvas-dark border-r border-slate-300 dark:border-slate-800/85 shrink-0 z-30 transition-[width] duration-300 ease-in-out ${isOpen ? 'w-40' : 'w-12'}`}>
             <div className="flex items-center h-14 border-b border-slate-300 dark:border-slate-800/80 shrink-0 px-1.5">
                 <div className="w-9 h-full flex items-center justify-center shrink-0">
                     <button

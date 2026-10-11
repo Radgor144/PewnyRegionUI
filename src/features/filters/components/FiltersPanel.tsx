@@ -42,7 +42,7 @@ export const FiltersPanel = ({
                 isMainSidebarOpen ? 'left-40' : 'left-[44px]'
             }`}
         >
-            <aside className={`h-full bg-white dark:bg-surface-dark border-r border-slate-300 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}>
+            <aside className={`h-full bg-canvas dark:bg-surface-dark border-r border-slate-300 dark:border-slate-800/80 shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}>
                 <div className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                     <div className="flex items-center h-14 border-b border-slate-300 dark:border-slate-800/80 px-3 shrink-0">
                         <div id="county-search-panel-target" className="w-full" />
@@ -74,7 +74,7 @@ export const FiltersPanel = ({
                         </div>
                     </div>
 
-                    <div className="p-3 border-t border-slate-300 dark:border-slate-800/80 bg-white dark:bg-surface-dark shrink-0">
+                    <div className="p-3 border-t border-slate-300 dark:border-slate-800/80 bg-canvas dark:bg-surface-dark shrink-0">
                         <div className="mb-3">
                             <TimeRangePicker yearFrom={yearFrom} setYearFrom={setYearFrom} yearTo={yearTo} setYearTo={setYearTo} />
                         </div>
@@ -98,7 +98,7 @@ export const FiltersPanel = ({
 
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-white dark:bg-panel-dark border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                className="absolute top-1/2 z-50 w-9 h-9 rounded-full bg-canvas dark:bg-panel-dark border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
                     left: isOpen ? '280px' : '0px',
                     transform: 'translate(-50%, -50%)'

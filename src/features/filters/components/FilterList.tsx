@@ -31,7 +31,7 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                                 ? 'bg-blue-50 dark:bg-blue-950/70 border-blue-400 dark:border-blue-600 shadow-sm shadow-blue-500/10 cursor-pointer'
                                 : isDisabled
                                     ? 'bg-slate-100 dark:bg-slate-900/40 border-slate-300 dark:border-slate-800 opacity-50 cursor-not-allowed'
-                                    : 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700/60 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm cursor-pointer'
+                                    : 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700/60 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-canvas dark:hover:bg-slate-800 hover:shadow-sm cursor-pointer'
                         }`}
                     >
                         <input

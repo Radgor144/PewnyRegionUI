@@ -1,3 +1,5 @@
+import { colors } from './src/lib/colors';
+
 export default {
     darkMode: 'class',
     content: [
@@ -10,18 +12,9 @@ export default {
                 sans: ['Inter', 'sans-serif'],
             },
             colors: {
-                surface: {
-                    DEFAULT: '#f3f4f6',
-                    dark: '#111827'
-                },
-                canvas: {
-                    DEFAULT: '#ffffff',
-                    dark: '#0b1121'
-                },
-                panel: {
-                    DEFAULT: '#ffffff',
-                    dark: '#1f2937'
-                }
+                surface: colors.surface,
+                canvas: colors.canvas,
+                panel: colors.panel
             }
         },
     },

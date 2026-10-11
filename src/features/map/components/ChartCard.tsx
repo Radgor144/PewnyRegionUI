@@ -40,7 +40,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
     const legendTextClass = theme === 'dark' ? 'text-slate-300' : 'text-slate-700';
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-lg p-3 mb-3 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div className="bg-canvas dark:bg-slate-800 rounded-lg p-3 mb-3 border border-slate-200 dark:border-slate-700 shadow-sm">
             <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-2.5">
                 {title}
             </h3>
