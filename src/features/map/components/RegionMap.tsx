@@ -49,9 +49,9 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
         resetAll();
     }, [geoJsonKey, resetAll]);
 
-    const featureStyle = useMemo(() =>
-            createFeatureStyleFactory(isDark, scoreRange, scoresMap),
-        [isDark, scoreRange, scoresMap]);
+    const featureStyle = useMemo(() => {
+        return createFeatureStyleFactory(isDark, scoreRange, scoresMap ?? {});
+    }, [isDark, scoreRange, scoresMap]);
 
     const tileUrl = isDark ? TILE_URLS.dark : TILE_URLS.light;
 

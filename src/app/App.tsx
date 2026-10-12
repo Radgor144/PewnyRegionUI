@@ -24,6 +24,7 @@ export function App() {
                 <MainSidebar
                     isOpen={isMainSidebarOpen}
                     toggleOpen={() => setIsMainSidebarOpen(!isMainSidebarOpen)}
+                    isDetailsOpen={isDetailsOpen}
                 />
             }
             filters={

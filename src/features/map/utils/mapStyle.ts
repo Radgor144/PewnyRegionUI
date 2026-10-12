@@ -12,6 +12,7 @@ export const bringToFront = (layer: L.Path) => {
 
 export const applyHighlightStyle = (layer: L.Path, isDark: boolean) => {
     layer.setStyle({
+        stroke: true,
         weight: HIGHLIGHT_WEIGHT,
         color: isDark ? '#f8fafc' : '#0f172a',
         fillOpacity: 1,
@@ -26,10 +27,13 @@ export const createFeatureStyleFactory = (
 ) => {
     return (feature?: CountyFeature): PathOptions => {
         const noDataStyle: PathOptions = {
-            color: isDark ? '#1e293b' : '#cbd5e1',
-            weight: 0.8,
-            fillColor: isDark ? '#020617' : '#f8fafc',
-            fillOpacity: isDark ? 0.5 : 0.6,
+            stroke: false,
+            color: 'transparent',
+            fill: true,
+            fillColor: 'transparent',
+            fillOpacity: 0,
+            lineJoin: 'round',
+            lineCap: 'round',
         };
 
         if (!feature) return noDataStyle;
@@ -39,11 +43,17 @@ export const createFeatureStyleFactory = (
 
         if (score == null) return noDataStyle;
 
+        const fillCol = getScoreColor(score, scoreRange);
         return {
-            color: isDark ? '#0f172a' : '#ffffff',
-            weight: isDark ? 1 : 0.8,
-            fillColor: getScoreColor(score, scoreRange),
-            fillOpacity: isDark ? 0.85 : 0.9,
+            stroke: true,
+            color: fillCol,
+            opacity: 1,
+            weight: 1,
+            fill: true,
+            fillColor: fillCol,
+            fillOpacity: 0.95,
+            lineJoin: 'round',
+            lineCap: 'round',
         };
     };
 };
