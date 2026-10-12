@@ -1,13 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 
+export type SidebarTab = 'map' | 'counties' | 'rankings';
+
 interface MainSidebarProps {
     isOpen: boolean;
     toggleOpen: () => void;
-    isDetailsOpen: boolean;
+    activeTab: SidebarTab;
+    onTabChange: (tab: SidebarTab) => void;
 }
 
-export const MainSidebar = ({ isOpen, toggleOpen, isDetailsOpen }: MainSidebarProps) => {
+export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: MainSidebarProps) => {
     const { t } = useTranslation();
     const [isHamburgerHovered, setIsHamburgerHovered] = useState(false);
     const [isMapHovered, setIsMapHovered] = useState(false);
@@ -15,69 +18,102 @@ export const MainSidebar = ({ isOpen, toggleOpen, isDetailsOpen }: MainSidebarPr
     const [isRankingsHovered, setIsRankingsHovered] = useState(false);
 
     return (
-            <aside
+        <aside
             className={`relative flex flex-col h-full shrink-0 z-[70] transition-[width] duration-300 ease-in-out ${isOpen ? 'w-40' : 'w-12'}`}
             style={{
                 backgroundColor: 'var(--color-panel)',
                 borderRight: '1px solid var(--color-border)',
             }}
         >
-                <div className="flex items-center h-14 shrink-0 px-1.5" style={{ borderBottom: '1px solid var(--color-border)' }}>
-                        <div className="w-9 h-full flex items-center justify-center shrink-0">
-                        <button
-                            onClick={toggleOpen}
-                            onMouseEnter={() => setIsHamburgerHovered(true)}
-                            onMouseLeave={() => setIsHamburgerHovered(false)}
-                            className={`w-8 h-8 flex items-center justify-center rounded-xl transition-colors sidebar-button ${isHamburgerHovered ? 'hover:bg-[var(--color-hover)]' : ''}`}
-                            title="Menu"
-                        >
-                            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
+            <div className="flex items-center h-14 shrink-0 px-1.5" style={{ borderBottom: '1px solid var(--color-border)' }}>
+                <div className="w-9 h-full flex items-center justify-center shrink-0">
+                    <button
+                        onClick={toggleOpen}
+                        onMouseEnter={() => setIsHamburgerHovered(true)}
+                        onMouseLeave={() => setIsHamburgerHovered(false)}
+                        className={`w-8 h-8 flex items-center justify-center rounded-xl transition-colors sidebar-button ${isHamburgerHovered ? 'hover:bg-[var(--color-hover)]' : ''}`}
+                        title="Menu"
+                    >
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
                 </div>
+            </div>
 
-                <nav className="py-2 px-1.5 space-y-1.5 flex-1 overflow-hidden">
-                    <button
-                        onMouseEnter={() => setIsMapHovered(true)}
-                        onMouseLeave={() => setIsMapHovered(false)}
-                        className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all shadow-md overflow-hidden sidebar-button sidebar-button--accent ${isMapHovered ? 'hover:bg-[var(--color-hover)]' : ''} ${!isDetailsOpen ? 'sidebar-button--no-hover-change' : ''}`}
-                        title={t('sidebar.map')}
-                        style={{ color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }}
-                    >
-                        <div className="w-9 h-full flex items-center justify-center shrink-0">
-                            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                        </div>
-                        <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.map')}</span>
-                    </button>
+            <nav className="py-2 px-1.5 space-y-1.5 flex-1 overflow-hidden">
+                <button
+                    onClick={() => onTabChange('map')}
+                    onMouseEnter={() => setIsMapHovered(true)}
+                    onMouseLeave={() => setIsMapHovered(false)}
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                        activeTab === 'map'
+                            ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
+                            : `\${isMapHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                    }`}
+                    title={t('sidebar.map')}
+                    style={
+                        activeTab === 'map'
+                            ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
+                            : { color: 'var(--color-text)' }
+                    }
+                >
+                    <div className="w-9 h-full flex items-center justify-center shrink-0">
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                        </svg>
+                    </div>
+                    <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.map')}</span>
+                </button>
 
-                    <button
-                        onMouseEnter={() => setIsCountiesHovered(true)}
-                        onMouseLeave={() => setIsCountiesHovered(false)}
-                        className={`w-full flex items-center h-10 rounded-xl font-medium text-[11px] transition-all overflow-hidden sidebar-button ${isCountiesHovered ? 'hover:bg-[var(--color-hover)]' : ''}`}
-                        title={t('sidebar.counties')}
-                        style={{ color: 'var(--color-text)' }}
-                    >
-                        <div className="w-9 h-full flex items-center justify-center shrink-0">
-                            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2 2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2 2v-2z"></path></svg>
-                        </div>
-                        <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.counties')}</span>
-                    </button>
+                <button
+                    onClick={() => onTabChange('counties')}
+                    onMouseEnter={() => setIsCountiesHovered(true)}
+                    onMouseLeave={() => setIsCountiesHovered(false)}
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                        activeTab === 'counties'
+                            ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
+                            : `\${isCountiesHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                    }`}
+                    title={t('sidebar.counties')}
+                    style={
+                        activeTab === 'counties'
+                            ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
+                            : { color: 'var(--color-text)' }
+                    }
+                >
+                    <div className="w-9 h-full flex items-center justify-center shrink-0">
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2 2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2 2v-2z"></path>
+                        </svg>
+                    </div>
+                    <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.counties')}</span>
+                </button>
 
-                    <button
-                        onMouseEnter={() => setIsRankingsHovered(true)}
-                        onMouseLeave={() => setIsRankingsHovered(false)}
-                        className={`w-full flex items-center h-10 rounded-xl font-medium text-[11px] transition-all overflow-hidden sidebar-button ${isRankingsHovered ? 'hover:bg-[var(--color-hover)]' : ''}`}
-                        title={t('sidebar.rankings')}
-                        style={{ color: 'var(--color-text)' }}
-                    >
-                        <div className="w-9 h-full flex items-center justify-center shrink-0">
-                            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                        </div>
-                        <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.rankings')}</span>
-                    </button>
-                </nav>
-            </aside>
-        );
+                <button
+                    onClick={() => onTabChange('rankings')}
+                    onMouseEnter={() => setIsRankingsHovered(true)}
+                    onMouseLeave={() => setIsRankingsHovered(false)}
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                        activeTab === 'rankings'
+                            ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
+                            : `\${isRankingsHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                    }`}
+                    title={t('sidebar.rankings')}
+                    style={
+                        activeTab === 'rankings'
+                            ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
+                            : { color: 'var(--color-text)' }
+                    }
+                >
+                    <div className="w-9 h-full flex items-center justify-center shrink-0">
+                        <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.rankings')}</span>
+                </button>
+            </nav>
+        </aside>
+    );
 };
