@@ -12,6 +12,7 @@ export function App() {
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(true);
     const [selectedCounty, setSelectedCounty] = useState<CountyFeature | null>(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
+    const [activeTab, setActiveTab] = useState<'map' | 'counties' | 'rankings'>('map');
 
     const handleCountySelect = (feature: CountyFeature) => {
         setSelectedCounty(feature);
@@ -24,6 +25,8 @@ export function App() {
                 <MainSidebar
                     isOpen={isMainSidebarOpen}
                     toggleOpen={() => setIsMainSidebarOpen(!isMainSidebarOpen)}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
                 />
             }
             filters={

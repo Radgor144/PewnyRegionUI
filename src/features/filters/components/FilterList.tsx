@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next';
-import { Variable } from 'types/api';
 import { BRAND_BLUE } from 'lib/colors';
+import { Variable } from 'types/api';
 
 interface FilterListProps {
     variables: Variable[];
@@ -21,18 +21,32 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                 const hasTranslation = i18n.exists(`variables.${variable.apiName}.label`);
                 const label = hasTranslation ? t(`variables.${variable.apiName}.label`) : variable.apiName;
                 const description = hasTranslation ? t(`variables.${variable.apiName}.description`) : undefined;
+                const containerStyle = isSelected
+                    ? {
+                        backgroundColor: 'var(--color-selected-bg)',
+                        borderColor: 'var(--color-selected-border)',
+                        boxShadow: '0 1px 2px rgba(96, 165, 250, 0.12)',
+                        cursor: 'pointer',
+                    }
+                    : isDisabled
+                        ? {
+                            backgroundColor: 'var(--color-disabled-bg)',
+                            borderColor: 'var(--color-disabled-border)',
+                            opacity: 0.5,
+                            cursor: 'not-allowed',
+                        }
+                        : {
+                            backgroundColor: 'var(--color-panel-alt)',
+                            borderColor: 'var(--color-border)',
+                            cursor: 'pointer',
+                        };
 
                 return (
                     <label
                         key={variable.apiName}
                         title={description}
-                        className={`flex items-center p-2.5 rounded-lg border transition-all duration-200 ${
-                            isSelected
-                                ? 'bg-blue-50 dark:bg-blue-950/70 border-blue-400 dark:border-blue-600 shadow-sm shadow-blue-500/10 cursor-pointer'
-                                : isDisabled
-                                    ? 'bg-slate-100 dark:bg-slate-900/40 border-slate-300 dark:border-slate-800 opacity-50 cursor-not-allowed'
-                                    : 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700/60 hover:border-blue-400 dark:hover:border-blue-500 hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm cursor-pointer'
-                        }`}
+                        className="flex items-center p-2.5 rounded-lg border transition-all duration-200"
+                        style={containerStyle}
                     >
                         <input
                             type="checkbox"
@@ -47,16 +61,19 @@ export const FilterList = ({variables, selectedVariables, onVariableToggle, maxS
                                     });
                                 }
                             }}
-                            className={`mr-2.5 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-400 dark:border-slate-600 ${
-                                isDisabled && !isSelected ? 'cursor-not-allowed' : 'cursor-pointer'
-                            }`}
-                            style={{ accentColor: BRAND_BLUE }}
+                            className="mr-2.5 w-4 h-4 rounded focus:ring-blue-500"
+                            style={{
+                                accentColor: BRAND_BLUE,
+                                borderColor: 'var(--color-border)',
+                            }}
                         />
-                        <span className={`text-[12px] leading-relaxed break-words ${
-                            isSelected
-                                ? 'font-semibold text-blue-900 dark:text-blue-200'
-                                : 'font-medium text-slate-800 dark:text-slate-300'
-                        }`}>
+                        <span
+                            className="text-[12px] leading-relaxed break-words"
+                            style={{
+                                fontWeight: isSelected ? 600 : 500,
+                                color: isSelected ? 'var(--color-selected-text)' : 'var(--color-text)',
+                            }}
+                        >
                             {label}
                         </span>
                     </label>

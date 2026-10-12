@@ -1,48 +1,27 @@
 import type { ScoreRange } from 'features/map/types';
 
-interface ColorStop {
-    readonly ratio: number;
-    readonly hue: number;
-    readonly saturation: number;
-    readonly lightness: number;
+interface ColorThreshold {
+    readonly maxRatio: number;
+    readonly color: string;
 }
 
-const COLOR_STOPS: readonly ColorStop[] = [
-    { ratio: 0.00, hue: 0,   saturation: 82, lightness: 52 },
-    { ratio: 0.16, hue: 16,  saturation: 88, lightness: 52 },
-    { ratio: 0.33, hue: 34,  saturation: 92, lightness: 50 },
-    { ratio: 0.50, hue: 48,  saturation: 95, lightness: 48 },
-    { ratio: 0.67, hue: 82,  saturation: 68, lightness: 45 },
-    { ratio: 0.84, hue: 125, saturation: 62, lightness: 40 },
-    { ratio: 1.00, hue: 148, saturation: 78, lightness: 36 },
+const THRESHOLDS: readonly ColorThreshold[] = [
+    { maxRatio: 0.20, color: 'hsl(40, 75%, 78%)' },
+    { maxRatio: 0.40, color: 'hsl(32, 65%, 62%)' },
+    { maxRatio: 0.60, color: 'hsl(20, 55%, 50%)' },
+    { maxRatio: 0.80, color: 'hsl(0, 60%, 42%)' },
+    { maxRatio: 1.00, color: 'hsl(346, 65%, 34%)' },
 ];
 
-const FALLBACK_COLOR = 'hsl(48, 95%, 48%)';
+const FALLBACK_COLOR = 'hsl(30, 10%, 82%)';
 
 const clamp01 = (value: number): number => Math.max(0, Math.min(1, value));
-const lerp = (start: number, end: number, factor: number): number => start + factor * (end - start);
-
-const findSurroundingStops = (ratio: number): [ColorStop, ColorStop] => {
-    for (let i = 0; i < COLOR_STOPS.length - 1; i += 1) {
-        if (ratio >= COLOR_STOPS[i].ratio && ratio <= COLOR_STOPS[i + 1].ratio) {
-            return [COLOR_STOPS[i], COLOR_STOPS[i + 1]];
-        }
-    }
-    return [COLOR_STOPS[0], COLOR_STOPS[COLOR_STOPS.length - 1]];
-};
 
 export const getScoreColor = (score: number, range: ScoreRange): string => {
     if (range.max === range.min) return FALLBACK_COLOR;
 
     const ratio = clamp01((score - range.min) / (range.max - range.min));
-    const [lower, upper] = findSurroundingStops(ratio);
+    const threshold = THRESHOLDS.find((t) => ratio <= t.maxRatio);
 
-    const span = upper.ratio - lower.ratio;
-    const factor = span === 0 ? 0 : (ratio - lower.ratio) / span;
-
-    const hue = Math.round(lerp(lower.hue, upper.hue, factor));
-    const saturation = Math.round(lerp(lower.saturation, upper.saturation, factor));
-    const lightness = Math.round(lerp(lower.lightness, upper.lightness, factor));
-
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    return threshold ? threshold.color : THRESHOLDS[THRESHOLDS.length - 1].color;
 };

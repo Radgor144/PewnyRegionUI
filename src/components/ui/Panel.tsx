@@ -5,12 +5,19 @@ interface PanelProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Panel = ({ className, children, ...props }: PanelProps) => {
-    const classes = ['bg-white', 'dark:bg-panel-dark', 'rounded-xl', 'shadow-xl', 'border', 'border-slate-200', 'dark:border-slate-700', 'text-slate-700', 'dark:text-slate-300', className].filter(Boolean).join(' ');
+    const classes = ['rounded-xl', 'shadow-xl', 'border', 'transition-colors', className].filter(Boolean).join(' ');
+
     return (
-        <div className={classes} {...props}>
+        <div
+            className={classes}
+            style={{
+                backgroundColor: 'var(--color-panel)',
+                borderColor: 'var(--color-border)',
+                color: 'var(--color-text)',
+            }}
+            {...props}
+        >
             {children}
         </div>
     );
 };
-
-

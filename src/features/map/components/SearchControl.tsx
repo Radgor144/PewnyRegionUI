@@ -59,7 +59,7 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature, targetId =
 
     const searchUI = (
         <div className="relative w-full max-w-sm mx-auto">
-            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--color-text-muted)' }}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
 
@@ -68,14 +68,32 @@ export const SearchControl = ({ geoData, geoJsonRef, onSelectFeature, targetId =
                 value={query}
                 onChange={handleSearchChange}
                 placeholder={t('map.search')}
-                className="w-full h-10 pl-9 pr-3 rounded-xl border border-slate-300 dark:border-slate-700/80 bg-white dark:bg-panel-dark/50 text-[13px] font-medium text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 outline-none focus:border-blue-500 dark:focus:border-blue-500 focus:bg-white dark:focus:bg-panel-dark transition-all"
+                className="w-full h-10 pl-9 pr-3 rounded-xl border text-[13px] font-medium outline-none transition-all"
+                style={{
+                    backgroundColor: 'var(--color-panel)',
+                    borderColor: 'var(--color-border)',
+                    color: 'var(--color-text)',
+                    caretColor: 'var(--color-primary)',
+                }}
             />
 
             {results.length > 0 && (
-                <ul className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-panel-dark rounded-xl shadow-xl overflow-hidden border border-slate-300 dark:border-slate-700 backdrop-blur-md">
+                <ul className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-xl overflow-hidden border backdrop-blur-md" style={{
+                    backgroundColor: 'var(--color-panel)',
+                    borderColor: 'var(--color-border)',
+                }}>
                     {results.map((feature, index) => (
-                        <li key={getTeryt(feature.properties) ?? index} onClick={() => zoomToFeature(feature)} className="cursor-pointer px-3 py-2 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border-b border-slate-200 dark:border-slate-700/50 last:border-0">
-                            <div className="font-semibold text-[12px] text-slate-900 dark:text-slate-100">{getCountyName(feature)}</div>
+                        <li
+                            key={getTeryt(feature.properties) ?? index}
+                            onClick={() => zoomToFeature(feature)}
+                            className="cursor-pointer px-3 py-2 transition-colors border-b last:border-0"
+                            style={{
+                                borderColor: 'var(--color-border)',
+                                backgroundColor: 'transparent',
+                                color: 'var(--color-text)',
+                            }}
+                        >
+                            <div className="font-semibold text-[12px]" style={{ color: 'var(--color-text)' }}>{getCountyName(feature)}</div>
                         </li>
                     ))}
                 </ul>

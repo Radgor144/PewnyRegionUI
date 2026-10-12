@@ -1,22 +1,6 @@
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'app/providers/ThemeContext';
-import {
-    COLOR_F8FAFC,
-    CHART_GRID_DARK,
-    CHART_GRID_LIGHT,
-    CHART_AXIS_DARK,
-    CHART_AXIS_LIGHT,
-    CHART_TEXT_DARK,
-    CHART_TEXT_LIGHT,
-    CHART_DOT_DARK,
-    CHART_DOT_LIGHT,
-    CHART_STROKE_PRIMARY,
-    CHART_LINE_AVERAGE_DARK,
-    CHART_LINE_AVERAGE_LIGHT,
-    CHART_GRADIENT_OPACITY_START,
-    CHART_GRADIENT_OPACITY_END,
-} from 'lib/colors';
+import { CHART_GRADIENT_OPACITY_START, CHART_GRADIENT_OPACITY_END } from 'lib/colors';
 import { VariableDetail } from 'types/api';
 
 interface ChartCardProps {
@@ -26,22 +10,17 @@ interface ChartCardProps {
 
 export const ChartCard = ({ variable, title }: ChartCardProps) => {
     const { t } = useTranslation();
-    const { theme } = useTheme();
-
     const data = [...variable.yearlyValues].sort((a, b) => a.year - b.year);
 
-    // Dostosuj kolory do motywu
-    const gridStroke = theme === 'dark' ? CHART_GRID_DARK : CHART_GRID_LIGHT;
-    const gridOpacity = theme === 'dark' ? 0.3 : 0.4;
-    const axisStroke = theme === 'dark' ? CHART_AXIS_DARK : CHART_AXIS_LIGHT;
-    const axisFill = theme === 'dark' ? CHART_TEXT_DARK : CHART_TEXT_LIGHT;
-    const dotFill = theme === 'dark' ? CHART_DOT_DARK : CHART_DOT_LIGHT;
-    const lineAverageStroke = theme === 'dark' ? CHART_LINE_AVERAGE_DARK : CHART_LINE_AVERAGE_LIGHT;
-    const legendTextClass = theme === 'dark' ? 'text-slate-300' : 'text-slate-700';
-
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-lg p-3 mb-3 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h3 className="text-xs font-bold text-slate-800 dark:text-slate-100 mb-2.5">
+        <div
+            className="rounded-lg p-3 mb-3 shadow-sm"
+            style={{
+                backgroundColor: 'var(--color-panel)',
+                border: '1px solid var(--color-border)',
+            }}
+        >
+            <h3 className="text-xs font-bold mb-2.5" style={{ color: 'var(--color-text)' }}>
                 {title}
             </h3>
 
@@ -50,22 +29,22 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                     <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorRawValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={CHART_STROKE_PRIMARY} stopOpacity={CHART_GRADIENT_OPACITY_START} />
-                                <stop offset="95%" stopColor={CHART_STROKE_PRIMARY} stopOpacity={CHART_GRADIENT_OPACITY_END} />
+                                <stop offset="5%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_START} />
+                                <stop offset="95%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_END} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} opacity={gridOpacity} vertical={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="var(--color-chart-grid)" opacity={0.6} vertical={false} />
                         <XAxis
                             dataKey="year"
-                            stroke={axisStroke}
-                            tick={{ fontSize: 10, fill: axisFill }}
+                            stroke="var(--color-chart-axis)"
+                            tick={{ fontSize: 10, fill: 'var(--color-chart-text)' }}
                             tickMargin={6}
                             axisLine={false}
                             tickLine={false}
                         />
                         <YAxis
-                            stroke={axisStroke}
-                            tick={{ fontSize: 10, fill: axisFill }}
+                            stroke="var(--color-chart-axis)"
+                            tick={{ fontSize: 10, fill: 'var(--color-chart-text)' }}
                             tickMargin={6}
                             axisLine={false}
                             tickLine={false}
@@ -73,14 +52,14 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                         />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                                backgroundColor: 'var(--color-tooltip-bg-alpha)',
                                 border: 'none',
                                 borderRadius: '8px',
-                                color: COLOR_F8FAFC,
+                                color: 'var(--color-tooltip-text)',
                                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
                             }}
-                            itemStyle={{ fontSize: '11px', fontWeight: 500 }}
-                            labelStyle={{ color: lineAverageStroke, marginBottom: '4px', fontSize: '10px' }}
+                            itemStyle={{ fontSize: '11px', fontWeight: 700 }}
+                            labelStyle={{ color: 'var(--color-chart-average)', marginBottom: '4px', fontSize: '10px', fontWeight: 700 }}
                             formatter={(value: any, name: any) => {
                                 const formattedValue = typeof value === 'number' ? value.toFixed(2) : value;
                                 const formattedName = name === 'rawValue'
@@ -93,7 +72,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                             wrapperStyle={{ paddingTop: '8px' }}
                             iconType="circle"
                             formatter={(value) => (
-                                <span className={`${legendTextClass} text-[10px] font-medium ml-1`}>
+                                <span className="text-[10px] font-medium ml-1" style={{ color: 'var(--color-text)' }}>
                                     {value === 'rawValue'
                                         ? t('countyDetails.thisCounty')
                                         : t('countyDetails.nationalAverage')}
@@ -103,21 +82,21 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                         <Area
                             type="monotone"
                             dataKey="rawValue"
-                            stroke={CHART_STROKE_PRIMARY}
+                            stroke={'var(--color-chart-stroke-primary)'}
                             strokeWidth={2.5}
                             fillOpacity={1}
                             fill="url(#colorRawValue)"
-                            dot={{ r: 3, strokeWidth: 1.5, fill: dotFill, stroke: CHART_STROKE_PRIMARY }}
-                            activeDot={{ r: 5, strokeWidth: 0, fill: CHART_STROKE_PRIMARY }}
+                            dot={{ r: 2, strokeWidth: 1, fill: 'var(--color-dot-this-county)', stroke: 'var(--color-chart-stroke-primary)' }}
+                            activeDot={{ r: 4, strokeWidth: 0, fill: 'var(--color-chart-stroke-primary)' }}
                         />
                         <Line
                             type="monotone"
                             dataKey="averageScore"
-                            stroke={lineAverageStroke}
+                            stroke="var(--color-chart-average)"
                             strokeWidth={1.5}
                             strokeDasharray="4 4"
                             dot={false}
-                            activeDot={{ r: 3, strokeWidth: 0, fill: lineAverageStroke }}
+                            activeDot={{ r: 3, strokeWidth: 0, fill: 'var(--color-chart-average)' }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
