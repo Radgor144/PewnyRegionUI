@@ -1,10 +1,22 @@
 export type Direction = 'STIMULANT' | 'DESTIMULANT';
 
+export type VariableCategory =
+    | 'SAFETY'
+    | 'HEALTH'
+    | 'TRANSPORT'
+    | 'POPULATION'
+    | 'LABOR'
+    | 'HOUSING'
+    | 'FINANCE'
+    | 'OTHER';
+
 export interface Variable {
     apiName: string;
+    category: VariableCategory;
     bdlIds: number[];
     direction: Direction;
     per_capita: boolean;
+    unit: string;
 }
 
 export interface CountyScore {

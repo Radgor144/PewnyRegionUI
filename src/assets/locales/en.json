@@ -6,17 +6,56 @@
   "filters": {
     "title": "Filters",
     "timeRange": "Time Range",
+    "yearFrom": "Year from",
+    "yearTo": "Year to",
     "generateMap": "Generate Map",
     "generating": "Calculating...",
     "loading": "Loading...",
     "loadError": "Failed to fetch filters.",
     "collapsePanel": "Collapse panel",
-    "expandPanel": "Expand panel"
+    "expandPanel": "Expand panel",
+    "clearSelections": "Clear",
+    "unitTooltip": "Unit: {{unit}}",
+    "categorySelectionCount": "{{selected}} of {{total}} filters selected",
+    "categories": {
+      "SAFETY": "Safety",
+      "HEALTH": "Health",
+      "TRANSPORT": "Transport",
+      "POPULATION": "Population",
+      "LABOR": "Labour market",
+      "HOUSING": "Housing",
+      "FINANCE": "Finance",
+      "OTHER": "Other"
+    }
   },
   "variables": {
-    "crimes": {
-      "label": "Crime rate",
-      "description": "Crimes per 1,000 residents"
+    "gross_salary": {
+      "label": "Gross salary",
+      "description": "Average monthly gross salary"
+    },
+    "doctors": {
+      "label": "Doctors",
+      "description": "Working doctors per 1,000 residents"
+    },
+    "nurses": {
+      "label": "Nurses & medical staff",
+      "description": "Working medical personnel per 1,000 residents"
+    },
+    "flat_price_avg": {
+      "label": "Average flat price",
+      "description": "Average apartment price per m²"
+    },
+    "flat_price_primary": {
+      "label": "Primary market flat price",
+      "description": "Average apartment price on the primary market per m²"
+    },
+    "flat_price_secondary": {
+      "label": "Secondary market flat price",
+      "description": "Average apartment price on the secondary market per m²"
+    },
+    "unemployment": {
+      "label": "Unemployment",
+      "description": "Registered unemployment rate"
     },
     "population_in_thousands": {
       "label": "Population",
@@ -26,14 +65,43 @@
       "label": "Population density",
       "description": "Residents per km²"
     },
-    "unemployment": {
-      "label": "Unemployment",
-      "description": "Registered unemployment rate"
+    "crimes_total": {
+      "label": "Total crimes",
+      "description": "The chart shows total crimes; the map score uses crimes per 1,000 residents"
     },
-    "gross_salary": {
-      "label": "Gross salary",
-      "description": "Average monthly gross salary"
+    "crimes_per_1000": {
+      "label": "Crimes per 1,000 residents",
+      "description": "Recorded crimes per 1,000 residents"
+    },
+    "criminal_crimes_per_1000": {
+      "label": "Criminal offenses",
+      "description": "Criminal offenses per 1,000 residents"
+    },
+    "crime_detection_rate": {
+      "label": "Crime detection rate",
+      "description": "Percentage of detected crimes"
+    },
+    "road_accidents_per_100k": {
+      "label": "Road accidents",
+      "description": "Road accidents per 100,000 residents"
+    },
+    "road_fatalities_per_100k": {
+      "label": "Road fatalities",
+      "description": "Road fatalities per 100,000 residents"
+    },
+    "passenger_cars": {
+      "label": "Passenger cars",
+      "description": "Registered passenger cars per 1,000 residents"
     }
+  },
+  "units": {
+    "PLN": "PLN",
+    "persons": "persons",
+    "thousands": "thousand residents",
+    "persons/km2": "persons/km²",
+    "%": "%",
+    "pcs": "items",
+    "per_1000": "per 1,000 residents"
   },
   "map": {
     "noData": "No data",

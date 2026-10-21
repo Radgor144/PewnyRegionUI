@@ -4,10 +4,19 @@ import { getCountyName } from '../utils/countySearch';
 import { getTeryt } from '../utils/teryt';
 import { useCountyDetails } from '../hooks/useCountyDetails';
 import { ChartCard } from './ChartCard';
+import type { TFunction } from 'i18next';
 import type { CountyFeature } from '../types';
 import type { Variable, VariableDetail } from 'types/api';
 
-const PanelContent = ({ county, selectedVariables, loading, error, detailsData, t }: any) => {
+interface PanelContentProps {
+    county: CountyFeature | null;
+    selectedVariables: Variable[];
+    loading: boolean;
+    error: string | null;
+    detailsData: { apiName: string; variables: VariableDetail[] }[] | null;
+    t: TFunction;
+}
+const PanelContent = ({ county, selectedVariables, loading, error, detailsData, t }: PanelContentProps) => {
     const fallbacks = [
         { isActive: !county, message: t('countyDetails.selectCounty', 'Select a county on the map to view details.') },
         { isActive: selectedVariables.length === 0, message: t('countyDetails.noVariablesSelected', 'Select variables in filters to view charts.') },
@@ -26,7 +35,7 @@ const PanelContent = ({ county, selectedVariables, loading, error, detailsData, 
 
     return (
         <div className="space-y-4">
-            {detailsData.map(({ apiName, variables }: { apiName: string, variables: VariableDetail[] }) =>
+            {detailsData.map(({ apiName, variables }) =>
                 variables.map((variableDetail) => (
                     <ChartCard
                         key={`${apiName}-${variableDetail.bdlVariableId}`}
