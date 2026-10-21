@@ -41,7 +41,6 @@ export const TimeRangePicker = ({
     };
 
     const handleTrackClick = (e: MouseEvent<HTMLDivElement>) => {
-        // Kliknięcie w samą kropkę (input) obsługuje przeglądarka, nie przesuwamy jej drugi raz.
         if (e.target instanceof HTMLInputElement) return;
 
         const rect = e.currentTarget.getBoundingClientRect();

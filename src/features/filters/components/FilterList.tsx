@@ -17,7 +17,6 @@ export const FilterList = ({
                                onVariableToggle,
                                maxSelection,
                            }: FilterListProps) => {
-    // Jedyne miejsce, gdzie ustalamy co jest domyślnie rozwinięte.
     const [expanded, setExpanded] = useState<
         Partial<Record<VariableCategory, boolean>>
     >({ SAFETY: true });
@@ -26,7 +25,6 @@ export const FilterList = ({
         const byCategory = new Map<VariableCategory, Variable[]>();
 
         for (const variable of variables) {
-            // nieznana kategoria z backendu -> OTHER
             const category = FILTER_CATEGORY_ORDER.includes(variable.category)
                 ? variable.category
                 : 'OTHER';
@@ -39,7 +37,6 @@ export const FilterList = ({
             }
         }
 
-        // kolejność wynika z FILTER_CATEGORY_ORDER, puste kategorie pomijamy
         return FILTER_CATEGORY_ORDER
             .filter(category => byCategory.has(category))
             .map(category => ({
