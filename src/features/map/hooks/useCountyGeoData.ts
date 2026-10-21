@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { GEOJSON_URL } from '../constants';
 import { getTeryt } from '../utils/teryt';
-import type { CountyFeatureCollection } from 'features/map/types';
+import { createPolandOutline } from '../utils/polandOutline';
+import type { CountyFeatureCollection, CountyGeoData } from 'features/map/types';
 
-export const useCountyGeoData = (): CountyFeatureCollection | null => {
-    const [geoData, setGeoData] = useState<CountyFeatureCollection | null>(null);
+export const useCountyGeoData = (): CountyGeoData | null => {
+    const [geoData, setGeoData] = useState<CountyGeoData | null>(null);
 
     useEffect(() => {
         let isMounted = true;
@@ -13,12 +14,17 @@ export const useCountyGeoData = (): CountyFeatureCollection | null => {
             .then((res) => res.json())
             .then((data: CountyFeatureCollection) => {
                 if (!isMounted) return;
-                setGeoData({
+                const counties = {
                     ...data,
-                    features: data.features.filter((f) => {
-                        const teryt = getTeryt(f.properties);
+                    features: data.features.filter((feature) => {
+                        const teryt = getTeryt(feature.properties);
                         return teryt && teryt.length === 4;
                     }),
+                };
+
+                setGeoData({
+                    counties,
+                    polandOutline: createPolandOutline(data.features),
                 });
             })
             .catch(console.error);
