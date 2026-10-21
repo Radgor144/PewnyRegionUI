@@ -6,17 +6,56 @@
   "filters": {
     "title": "Filtry",
     "timeRange": "Zakres czasowy",
+    "yearFrom": "Rok od",
+    "yearTo": "Rok do",
     "generateMap": "Generuj mapę",
     "generating": "Obliczanie...",
     "loading": "Ładowanie...",
     "loadError": "Nie udało się pobrać filtrów.",
     "collapsePanel": "Zwiń panel",
-    "expandPanel": "Rozwiń panel"
+    "expandPanel": "Rozwiń panel",
+    "clearSelections": "Wyczyść",
+    "unitTooltip": "Jednostka: {{unit}}",
+    "categorySelectionCount": "Zaznaczono {{selected}} z {{total}} filtrów",
+    "categories": {
+      "SAFETY": "Bezpieczeństwo",
+      "HEALTH": "Zdrowie",
+      "TRANSPORT": "Transport",
+      "POPULATION": "Ludność",
+      "LABOR": "Rynek pracy",
+      "HOUSING": "Mieszkalnictwo",
+      "FINANCE": "Finanse",
+      "OTHER": "Inne"
+    }
   },
   "variables": {
-    "crimes": {
-      "label": "Przestępstwa",
-      "description": "Liczba przestępstw na 1000 mieszkańców"
+    "gross_salary": {
+      "label": "Wynagrodzenie brutto",
+      "description": "Przeciętne miesięczne wynagrodzenie brutto"
+    },
+    "doctors": {
+      "label": "Lekarze",
+      "description": "Lekarze pracujący na 1000 mieszkańców"
+    },
+    "nurses": {
+      "label": "Personel medyczny / Pielęgniarki",
+      "description": "Personel pracujący na 1000 mieszkańców"
+    },
+    "flat_price_avg": {
+      "label": "Średnia cena mieszkań",
+      "description": "Średnia cena mieszkań za m²"
+    },
+    "flat_price_primary": {
+      "label": "Cena mieszkań (pierwotny)",
+      "description": "Średnia cena mieszkań na rynku pierwotnym za m²"
+    },
+    "flat_price_secondary": {
+      "label": "Cena mieszkań (wtórny)",
+      "description": "Średnia cena mieszkań na rynku wtórnym za m²"
+    },
+    "unemployment": {
+      "label": "Bezrobocie",
+      "description": "Stopa bezrobocia rejestrowanego"
     },
     "population_in_thousands": {
       "label": "Ludność",
@@ -26,14 +65,43 @@
       "label": "Gęstość zaludnienia",
       "description": "Liczba mieszkańców na km²"
     },
-    "unemployment": {
-      "label": "Bezrobocie",
-      "description": "Stopa bezrobocia rejestrowanego"
+    "crimes_total": {
+      "label": "Przestępstwa ogółem",
+      "description": "Wykres pokazuje liczbę przestępstw ogółem; wynik mapy uwzględnia przestępstwa na 1000 mieszkańców"
     },
-    "gross_salary": {
-      "label": "Wynagrodzenie brutto",
-      "description": "Przeciętne miesięczne wynagrodzenie brutto"
+    "crimes_per_1000": {
+      "label": "Przestępstwa na 1000 mieszk.",
+      "description": "Stwierdzone przestępstwa na 1000 mieszkańców"
+    },
+    "criminal_crimes_per_1000": {
+      "label": "Przestępstwa kryminalne",
+      "description": "Przestępstwa o charakterze kryminalnym na 1000 mieszkańców"
+    },
+    "crime_detection_rate": {
+      "label": "Wykrywalność przestępstw",
+      "description": "Wskaźnik wykrywalności sprawców przestępstw"
+    },
+    "road_accidents_per_100k": {
+      "label": "Wypadki drogowe",
+      "description": "Wypadki drogowe na 100 tys. mieszkańców"
+    },
+    "road_fatalities_per_100k": {
+      "label": "Ofiary wypadków drogowych",
+      "description": "Zabici w wypadkach drogowych na 100 tys. mieszkańców"
+    },
+    "passenger_cars": {
+      "label": "Samochody osobowe",
+      "description": "Zarejestrowane samochody osobowe na 1000 mieszkańców"
     }
+  },
+  "units": {
+    "PLN": "zł",
+    "persons": "os.",
+    "thousands": "tys. mieszkańców",
+    "persons/km2": "os./km²",
+    "%": "%",
+    "pcs": "szt.",
+    "per_1000": "na 1000 mieszkańców"
   },
   "map": {
     "noData": "Brak danych",

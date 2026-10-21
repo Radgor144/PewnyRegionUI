@@ -34,6 +34,7 @@ export function App() {
                     selectedVariables={selectedVariables}
                     onVariableToggle={setSelectedVariables}
                     onScoresUpdate={setScoresData}
+                    hasScores={scoresData !== null}
                     isOpen={isFiltersOpen}
                     setIsOpen={setIsFiltersOpen}
                     isMainSidebarOpen={isMainSidebarOpen}

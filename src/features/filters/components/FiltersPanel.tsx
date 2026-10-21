@@ -1,15 +1,17 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TimeRangePicker } from './TimeRangePicker';
 import { FilterList } from './FilterList';
 import { useVariables } from '../hooks/useVariables';
 import { useGenerateCountyScores } from '../hooks/useGenerateCountyScores';
-import { CountyScore, Variable } from 'types/api';
+import type { CountyScore, Variable } from 'types/api';
 
 interface FiltersPanelProps {
     selectedVariables: Variable[];
     onVariableToggle: Dispatch<SetStateAction<Variable[]>>;
-    onScoresUpdate: (data: CountyScore[]) => void;
+    onScoresUpdate: (data: CountyScore[] | null) => void;
+    hasScores: boolean;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
     isMainSidebarOpen: boolean;
@@ -21,20 +23,50 @@ export const FiltersPanel = ({
                                  selectedVariables,
                                  onVariableToggle,
                                  onScoresUpdate,
+                                 hasScores,
                                  isOpen,
                                  setIsOpen,
                                  isMainSidebarOpen,
                              }: FiltersPanelProps) => {
     const { t } = useTranslation();
-    const { variables, loading, error: loadError } = useVariables();
-    const { generate, isGenerating, error: generateError } = useGenerateCountyScores(onScoresUpdate);
+
+    const {
+        variables,
+        loading,
+        error: loadError,
+    } = useVariables();
+
+    const {
+        generate,
+        isGenerating,
+        error: generateError,
+    } = useGenerateCountyScores(onScoresUpdate);
+
     const [yearFrom, setYearFrom] = useState<number>(2016);
     const [yearTo, setYearTo] = useState<number>(2023);
 
     const handleGenerateMap = () => {
-        if (selectedVariables.length === 0) return;
-        generate(selectedVariables.map(v => v.apiName), yearFrom, yearTo);
+        if (selectedVariables.length === 0) {
+            return;
+        }
+
+        generate(
+            selectedVariables.map(variable => variable.apiName),
+            yearFrom,
+            yearTo,
+        );
     };
+
+    const handleResetFilters = () => {
+        onVariableToggle([]);
+        onScoresUpdate(null);
+    };
+
+    const isResetDisabled =
+        isGenerating || (selectedVariables.length === 0 && !hasScores);
+
+    const isGenerateDisabled =
+        isGenerating || selectedVariables.length === 0;
 
     return (
         <div
@@ -43,36 +75,118 @@ export const FiltersPanel = ({
             }`}
         >
             <aside
-                className={`h-full shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${isOpen ? 'w-[280px]' : 'w-0 border-r-0'}`}
+                className={`h-full shadow-2xl transition-[width] duration-300 ease-in-out overflow-hidden pointer-events-auto flex flex-col ${
+                    isOpen ? 'w-[280px]' : 'w-0 border-r-0'
+                }`}
                 style={{
                     backgroundColor: 'var(--color-panel)',
-                    borderRight: isOpen ? '1px solid var(--color-border)' : 'none',
+                    borderRight: isOpen
+                        ? '1px solid var(--color-border)'
+                        : 'none',
                 }}
             >
-                <div className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                    <div className="flex items-center h-14 px-3 shrink-0" style={{ borderBottom: '1px solid var(--color-border)' }}>
-                        <div id="county-search-panel-target" className="w-full" />
+                <div
+                    className={`w-[280px] shrink-0 h-full flex flex-col transition-opacity duration-200 ${
+                        isOpen
+                            ? 'opacity-100'
+                            : 'opacity-0 pointer-events-none'
+                    }`}
+                >
+                    <div
+                        className="relative z-20 flex h-14 shrink-0 items-center px-3"
+                        style={{
+                            borderBottom: '1px solid var(--color-border)',
+                        }}
+                    >
+                        <div
+                            id="county-search-panel-target"
+                            className="w-full"
+                        />
                     </div>
 
-                    <div className="flex items-center justify-between px-3 h-14 shrink-0" style={{ borderBottom: '1px solid var(--color-border)' }}>
-                        <div className="flex items-center gap-2">
-                            <h2 className="text-[10px] font-bold uppercase tracking-wider whitespace-nowrap" style={{ color: 'var(--color-text)' }}>
+                    <div
+                        className="flex h-14 shrink-0 items-center justify-between gap-2 px-3"
+                        style={{
+                            borderBottom: '1px solid var(--color-border)',
+                        }}
+                    >
+                        <div className="flex min-w-0 items-center gap-2">
+                            <h2
+                                className="whitespace-nowrap text-[10px] font-bold uppercase tracking-wider"
+                                style={{ color: 'var(--color-text)' }}
+                            >
                                 {t('filters.title')}
                             </h2>
-                            <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md border" style={{
-                                backgroundColor: 'var(--color-panel-alt)',
-                                color: 'var(--color-text-muted)',
-                                borderColor: 'var(--color-border)',
-                            }}>
+
+                            <span
+                                className="rounded-md border px-1.5 py-0.5 text-[9px] font-bold"
+                                style={{
+                                    backgroundColor:
+                                        'var(--color-panel-alt)',
+                                    color: 'var(--color-text-muted)',
+                                    borderColor: 'var(--color-border)',
+                                }}
+                            >
                                 {selectedVariables.length}/{MAX_SELECTION}
                             </span>
                         </div>
+
+                        <button
+                            type="button"
+                            onClick={handleResetFilters}
+                            disabled={isResetDisabled}
+                            title={t('filters.clearSelections')}
+                            aria-label={t('filters.clearSelections')}
+                            className="flex shrink-0 items-center gap-1 rounded-md px-1.5 py-1 text-[10px] font-medium transition-colors"
+                            style={{
+                                color: isResetDisabled
+                                    ? 'var(--color-text-muted)'
+                                    : 'var(--color-primary)',
+                                cursor: isResetDisabled ? 'not-allowed' : 'pointer',
+                            }}
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="h-3.5 w-3.5"
+                                aria-hidden="true"
+                            >
+                                <path d="M3 6h18" />
+                                <path d="m8 6 .7-2h6.6l.7 2" />
+                                <path d="m19 6-1 14H6L5 6" />
+                                <path d="M10 10v6M14 10v6" />
+                            </svg>
+
+                            <span>{t('filters.clearSelections')}</span>
+                        </button>
                     </div>
 
-                    <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
-                        <div className="flex-1 overflow-y-auto px-3 py-2 scrollbar-hide">
-                            {loading && <p className="text-center text-xs py-4" style={{ color: 'var(--color-text-muted)' }}>{t('filters.loading')}</p>}
-                            {loadError && <div className="text-xs text-center" style={{ color: '#ef4444' }}>{loadError}</div>}
+                    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+                        <div className="scrollbar-hide flex-1 overflow-y-auto px-3 py-2">
+                            {loading && (
+                                <p
+                                    className="py-4 text-center text-xs"
+                                    style={{
+                                        color: 'var(--color-text-muted)',
+                                    }}
+                                >
+                                    {t('filters.loading')}
+                                </p>
+                            )}
+
+                            {loadError && (
+                                <div
+                                    className="text-center text-xs"
+                                    style={{ color: '#ef4444' }}
+                                >
+                                    {loadError}
+                                </div>
+                            )}
+
                             {!loading && !loadError && (
                                 <FilterList
                                     variables={variables}
@@ -84,33 +198,63 @@ export const FiltersPanel = ({
                         </div>
                     </div>
 
-                    <div className="p-3 shrink-0" style={{ borderTop: '1px solid var(--color-border)', backgroundColor: 'var(--color-panel)' }}>
+                    <div
+                        className="shrink-0 p-3"
+                        style={{
+                            borderTop: '1px solid var(--color-border)',
+                            backgroundColor: 'var(--color-panel)',
+                        }}
+                    >
                         <div className="mb-3">
-                            <TimeRangePicker yearFrom={yearFrom} setYearFrom={setYearFrom} yearTo={yearTo} setYearTo={setYearTo} />
+                            <TimeRangePicker
+                                yearFrom={yearFrom}
+                                setYearFrom={setYearFrom}
+                                yearTo={yearTo}
+                                setYearTo={setYearTo}
+                            />
                         </div>
 
-                        {generateError && <p className="text-[11px] font-medium text-center mb-2" style={{ color: '#ef4444' }}>{generateError}</p>}
+                        {generateError && (
+                            <p
+                                className="mb-2 text-center text-[11px] font-medium"
+                                style={{ color: '#ef4444' }}
+                            >
+                                {generateError}
+                            </p>
+                        )}
 
                         <button
+                            type="button"
                             onClick={handleGenerateMap}
-                            disabled={isGenerating || selectedVariables.length === 0}
-                            className="w-full min-h-[40px] py-2 px-3 rounded-xl text-[12px] font-semibold transition-all shadow-md"
+                            disabled={isGenerateDisabled}
+                            className="min-h-[40px] w-full rounded-xl px-3 py-2 text-[12px] font-semibold shadow-md transition-all"
                             style={{
-                                backgroundColor: isGenerating || selectedVariables.length === 0 ? 'var(--color-generate-map-disabled-bg)' : 'var(--color-generate-map-bg)',
-                                color: isGenerating || selectedVariables.length === 0 ? 'var(--color-generate-map-disabled-text)' : 'var(--color-generate-map-text)',
-                                boxShadow: isGenerating || selectedVariables.length === 0 ? 'none' : '0 10px 15px -3px var(--color-menu-accent-shadow)',
-                                cursor: isGenerating || selectedVariables.length === 0 ? 'not-allowed' : 'pointer',
+                                backgroundColor: isGenerateDisabled
+                                    ? 'var(--color-generate-map-disabled-bg)'
+                                    : 'var(--color-generate-map-bg)',
+                                color: isGenerateDisabled
+                                    ? 'var(--color-generate-map-disabled-text)'
+                                    : 'var(--color-generate-map-text)',
+                                boxShadow: isGenerateDisabled
+                                    ? 'none'
+                                    : '0 10px 15px -3px var(--color-menu-accent-shadow)',
+                                cursor: isGenerateDisabled
+                                    ? 'not-allowed'
+                                    : 'pointer',
                             }}
                         >
-                            {isGenerating ? t('filters.generating') : t('filters.generateMap')}
+                            {isGenerating
+                                ? t('filters.generating')
+                                : t('filters.generateMap')}
                         </button>
                     </div>
                 </div>
             </aside>
 
             <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="absolute top-1/2 z-50 w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
+                type="button"
+                onClick={() => setIsOpen(previous => !previous)}
+                className="absolute top-1/2 z-50 flex h-9 w-9 items-center justify-center rounded-full shadow-lg transition-all duration-300 ease-in-out hover:scale-105 pointer-events-auto"
                 style={{
                     left: isOpen ? '280px' : '0px',
                     transform: 'translate(-50%, -50%)',
@@ -118,10 +262,32 @@ export const FiltersPanel = ({
                     border: '1px solid var(--color-border)',
                     color: 'var(--color-text-muted)',
                 }}
-                title={isOpen ? t('filters.collapsePanel') : t('filters.expandPanel')}
+                title={
+                    isOpen
+                        ? t('filters.collapsePanel')
+                        : t('filters.expandPanel')
+                }
+                aria-label={
+                    isOpen
+                        ? t('filters.collapsePanel')
+                        : t('filters.expandPanel')
+                }
             >
-                <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${!isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                <svg
+                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
+                        !isOpen ? 'rotate-180' : ''
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M15 19l-7-7 7-7"
+                    />
                 </svg>
             </button>
         </div>
