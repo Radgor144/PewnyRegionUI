@@ -4,6 +4,7 @@ import './lib/i18n';
 import './index.css';
 import {App} from './app/App';
 import {ThemeProvider} from "./app/providers/ThemeContext";
+import { BrowserRouter } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ThemeProvider>
-            <App />
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </ThemeProvider>
     </React.StrictMode>
 );
