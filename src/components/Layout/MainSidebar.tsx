@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 
 export type SidebarTab = 'map' | 'counties' | 'rankings';
 
@@ -12,10 +11,6 @@ interface MainSidebarProps {
 
 export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: MainSidebarProps) => {
     const { t } = useTranslation();
-    const [isHamburgerHovered, setIsHamburgerHovered] = useState(false);
-    const [isMapHovered, setIsMapHovered] = useState(false);
-    const [isCountiesHovered, setIsCountiesHovered] = useState(false);
-    const [isRankingsHovered, setIsRankingsHovered] = useState(false);
 
     return (
         <aside
@@ -29,9 +24,7 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
                 <div className="w-9 h-full flex items-center justify-center shrink-0">
                     <button
                         onClick={toggleOpen}
-                        onMouseEnter={() => setIsHamburgerHovered(true)}
-                        onMouseLeave={() => setIsHamburgerHovered(false)}
-                        className={`w-8 h-8 flex items-center justify-center rounded-xl transition-colors sidebar-button ${isHamburgerHovered ? 'hover:bg-[var(--color-hover)]' : ''}`}
+                        className="w-8 h-8 flex items-center justify-center rounded-xl transition-colors sidebar-button hover:bg-[var(--color-hover)]"
                         title="Menu"
                     >
                         <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,12 +37,10 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
             <nav className="py-2 px-1.5 space-y-1.5 flex-1 overflow-hidden">
                 <button
                     onClick={() => onTabChange('map')}
-                    onMouseEnter={() => setIsMapHovered(true)}
-                    onMouseLeave={() => setIsMapHovered(false)}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
                         activeTab === 'map'
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
-                            : `\${isMapHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                            : ''
                     }`}
                     title={t('sidebar.map')}
                     style={
@@ -68,12 +59,10 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
 
                 <button
                     onClick={() => onTabChange('counties')}
-                    onMouseEnter={() => setIsCountiesHovered(true)}
-                    onMouseLeave={() => setIsCountiesHovered(false)}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
                         activeTab === 'counties'
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
-                            : `\${isCountiesHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                            : ''
                     }`}
                     title={t('sidebar.counties')}
                     style={
@@ -92,12 +81,10 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
 
                 <button
                     onClick={() => onTabChange('rankings')}
-                    onMouseEnter={() => setIsRankingsHovered(true)}
-                    onMouseLeave={() => setIsRankingsHovered(false)}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button ${
+                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
                         activeTab === 'rankings'
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
-                            : `\${isRankingsHovered ? 'hover:bg-[var(--color-hover)]' : ''}`
+                            : ''
                     }`}
                     title={t('sidebar.rankings')}
                     style={
