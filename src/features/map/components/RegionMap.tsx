@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GeoJSON, MapContainer, Pane, TileLayer } from 'react-leaflet';
 import L, { PathOptions } from 'leaflet';
 import { useTheme } from 'app/providers/ThemeContext';
@@ -33,10 +34,11 @@ interface RegionMapProps {
 }
 
 export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps) => {
+    const { t } = useTranslation();
     const { theme } = useTheme();
     const isDark = theme === 'dark';
 
-    const geoData = useCountyGeoData();
+    const { data: geoData, loading: isGeoDataLoading, error: geoDataError } = useCountyGeoData();
     const { scoresMap, scoreRange, scoresVersion } = useCountyScores(scoresData);
 
     const geoJsonRef = useRef<L.GeoJSON | null>(null);
@@ -107,6 +109,20 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
                     </Pane>
                 )}
             </MapContainer>
+            {(isGeoDataLoading || geoDataError) && (
+                <div className="pointer-events-none absolute inset-0 z-[1000] flex items-center justify-center">
+                    <p
+                        role={geoDataError ? 'alert' : 'status'}
+                        className={`rounded-md px-5 py-3 shadow-lg ${geoDataError ? 'text-red-600 dark:text-red-400' : ''}`}
+                        style={{
+                            backgroundColor: 'var(--color-panel)',
+                            color: geoDataError ? undefined : 'var(--color-text)',
+                        }}
+                    >
+                        {t(geoDataError ? 'map.geoDataLoadError' : 'map.geoDataLoading')}
+                    </p>
+                </div>
+            )}
         </div>
     );
 };

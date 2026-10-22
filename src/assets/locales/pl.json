@@ -106,7 +106,9 @@
   "map": {
     "noData": "Brak danych",
     "score": "Wynik",
-    "search": "Wyszukaj powiat..."
+    "search": "Wyszukaj powiat...",
+    "geoDataLoading": "Ładowanie danych mapy...",
+    "geoDataLoadError": "Nie udało się załadować danych mapy. Odśwież stronę, aby spróbować ponownie."
   },
   "sidebar": {
     "map": "Mapa",

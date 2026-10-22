@@ -106,7 +106,9 @@
   "map": {
     "noData": "No data",
     "score": "Score",
-    "search": "Search county..."
+    "search": "Search county...",
+    "geoDataLoading": "Loading map data...",
+    "geoDataLoadError": "Failed to load map data. Refresh the page to try again."
   },
   "sidebar": {
     "map": "Map",
