@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import type { Dispatch, SetStateAction } from 'react';
-import { BRAND_PRIMARY } from 'lib/colors';
 import type { Variable } from 'types/api';
 
 interface VariableFilterItemProps {
@@ -80,7 +79,7 @@ export const VariableFilterItem = ({
                 onChange={handleChange}
                 className="h-4 w-4 shrink-0 rounded focus:ring-[var(--color-primary)]"
                 style={{
-                    accentColor: BRAND_PRIMARY,
+                    accentColor: 'var(--color-primary)',
                     borderColor: 'var(--color-border)',
                 }}
             />
