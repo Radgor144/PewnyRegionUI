@@ -113,6 +113,9 @@
     "counties": "Powiaty",
     "rankings": "Rankingi"
   },
+  "pages": {
+    "comingSoon": "Widok w przygotowaniu"
+  },
   "countyDetails": {
     "title": "Szczegóły powiatu",
     "noVariablesSelected": "Wybierz zmienne w filtrach, aby zobaczyć wykresy.",

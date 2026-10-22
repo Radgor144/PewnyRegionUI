@@ -113,6 +113,9 @@
     "counties": "Counties",
     "rankings": "Rankings"
   },
+  "pages": {
+    "comingSoon": "This page is being prepared"
+  },
   "countyDetails": {
     "title": "County details",
     "noVariablesSelected": "Select variables in the filters to see charts.",

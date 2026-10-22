@@ -3,12 +3,12 @@ import { TopBar } from './TopBar';
 
 interface DashboardLayoutProps {
     sidebar: ReactNode;
-    filters: ReactNode;
+    content: ReactNode;
+    filters?: ReactNode;
     details?: ReactNode;
-    map: ReactNode;
 }
 
-export const DashboardLayout = ({ sidebar, filters, details, map }: DashboardLayoutProps) => {
+export const DashboardLayout = ({ sidebar, content, filters, details }: DashboardLayoutProps) => {
     return (
         <div
             className="relative w-full h-screen overflow-hidden font-sans"
@@ -18,7 +18,7 @@ export const DashboardLayout = ({ sidebar, filters, details, map }: DashboardLay
             }}
         >
             <div className="absolute inset-0 z-0">
-                {map}
+                {content}
             </div>
 
             <div className="absolute top-14 left-0 bottom-0 z-30 flex">

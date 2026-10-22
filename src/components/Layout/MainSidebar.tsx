@@ -1,15 +1,12 @@
+import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
-export type SidebarTab = 'map' | 'counties' | 'rankings';
 
 interface MainSidebarProps {
     isOpen: boolean;
     toggleOpen: () => void;
-    activeTab: SidebarTab;
-    onTabChange: (tab: SidebarTab) => void;
 }
 
-export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: MainSidebarProps) => {
+export const MainSidebar = ({ isOpen, toggleOpen }: MainSidebarProps) => {
     const { t } = useTranslation();
 
     return (
@@ -35,16 +32,17 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
             </div>
 
             <nav className="py-2 px-1.5 space-y-1.5 flex-1 overflow-hidden">
-                <button
-                    onClick={() => onTabChange('map')}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
-                        activeTab === 'map'
+                <NavLink
+                    to="/map"
+                    end
+                    className={({ isActive }) => `w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
+                        isActive
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
                             : ''
                     }`}
                     title={t('sidebar.map')}
-                    style={
-                        activeTab === 'map'
+                    style={({ isActive }) =>
+                        isActive
                             ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
                             : { color: 'var(--color-text)' }
                     }
@@ -55,18 +53,18 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
                         </svg>
                     </div>
                     <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.map')}</span>
-                </button>
+                </NavLink>
 
-                <button
-                    onClick={() => onTabChange('counties')}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
-                        activeTab === 'counties'
+                <NavLink
+                    to="/counties"
+                    className={({ isActive }) => `w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
+                        isActive
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
                             : ''
                     }`}
                     title={t('sidebar.counties')}
-                    style={
-                        activeTab === 'counties'
+                    style={({ isActive }) =>
+                        isActive
                             ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
                             : { color: 'var(--color-text)' }
                     }
@@ -77,18 +75,18 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
                         </svg>
                     </div>
                     <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.counties')}</span>
-                </button>
+                </NavLink>
 
-                <button
-                    onClick={() => onTabChange('rankings')}
-                    className={`w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
-                        activeTab === 'rankings'
+                <NavLink
+                    to="/rankings"
+                    className={({ isActive }) => `w-full flex items-center h-10 rounded-xl font-semibold text-[11px] transition-all overflow-hidden sidebar-button hover:bg-[var(--color-hover)] ${
+                        isActive
                             ? 'sidebar-button--accent sidebar-button--no-hover-change shadow-md'
                             : ''
                     }`}
                     title={t('sidebar.rankings')}
-                    style={
-                        activeTab === 'rankings'
+                    style={({ isActive }) =>
+                        isActive
                             ? { color: 'var(--color-menu-accent-text)', boxShadow: '0 10px 15px -3px var(--color-menu-accent-shadow)' }
                             : { color: 'var(--color-text)' }
                     }
@@ -99,7 +97,7 @@ export const MainSidebar = ({ isOpen, toggleOpen, activeTab, onTabChange }: Main
                         </svg>
                     </div>
                     <span className={`ml-1 whitespace-nowrap transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>{t('sidebar.rankings')}</span>
-                </button>
+                </NavLink>
             </nav>
         </aside>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import './lib/i18n';
 import './index.css';
 import {App} from './app/App';
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ThemeProvider>
-            <App />
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+                <App />
+            </BrowserRouter>
         </ThemeProvider>
     </React.StrictMode>
 );
