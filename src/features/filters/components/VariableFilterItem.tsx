@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import type { Dispatch, SetStateAction } from 'react';
-import { BRAND_BLUE } from 'lib/colors';
+import { BRAND_PRIMARY } from 'lib/colors';
 import type { Variable } from 'types/api';
 
 interface VariableFilterItemProps {
@@ -67,7 +67,7 @@ export const VariableFilterItem = ({
                     ? 'var(--color-selected-border)'
                     : 'var(--color-border)',
                 boxShadow: isSelected
-                    ? '0 1px 2px rgba(96, 165, 250, 0.12)'
+                    ? '0 1px 2px var(--color-menu-accent-shadow)'
                     : 'none',
                 cursor: isDisabled ? 'not-allowed' : 'pointer',
                 opacity: isDisabled ? 0.5 : 1,
@@ -78,9 +78,9 @@ export const VariableFilterItem = ({
                 checked={isSelected}
                 disabled={isDisabled}
                 onChange={handleChange}
-                className="h-4 w-4 shrink-0 rounded focus:ring-blue-500"
+                className="h-4 w-4 shrink-0 rounded focus:ring-[var(--color-primary)]"
                 style={{
-                    accentColor: BRAND_BLUE,
+                    accentColor: BRAND_PRIMARY,
                     borderColor: 'var(--color-border)',
                 }}
             />
