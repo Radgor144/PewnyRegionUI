@@ -4,16 +4,31 @@ import { getTeryt } from '../utils/teryt';
 import { createPolandOutline } from '../utils/polandOutline';
 import type { CountyFeatureCollection, CountyGeoData } from 'features/map/types';
 
-export const useCountyGeoData = (): CountyGeoData | null => {
+interface UseCountyGeoDataResult {
+    data: CountyGeoData | null;
+    loading: boolean;
+    error: Error | null;
+}
+
+export const useCountyGeoData = (): UseCountyGeoDataResult => {
     const [geoData, setGeoData] = useState<CountyGeoData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        let isMounted = true;
+        const abortController = new AbortController();
+        setLoading(true);
+        setError(null);
 
-        fetch(GEOJSON_URL)
-            .then((res) => res.json())
+        fetch(GEOJSON_URL, { signal: abortController.signal })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`GeoJSON request failed with status ${res.status}.`);
+                }
+                return res.json();
+            })
             .then((data: CountyFeatureCollection) => {
-                if (!isMounted) return;
+                if (abortController.signal.aborted) return;
                 const counties = {
                     ...data,
                     features: data.features.filter((feature) => {
@@ -26,11 +41,16 @@ export const useCountyGeoData = (): CountyGeoData | null => {
                     counties,
                     polandOutline: createPolandOutline(data.features),
                 });
+                setLoading(false);
             })
-            .catch(console.error);
+            .catch((err: unknown) => {
+                if (abortController.signal.aborted) return;
+                setError(err instanceof Error ? err : new Error('Failed to load county GeoJSON.'));
+                setLoading(false);
+            });
 
-        return () => { isMounted = false; };
+        return () => abortController.abort();
     }, []);
 
-    return geoData;
+    return { data: geoData, loading, error };
 };
