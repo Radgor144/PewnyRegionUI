@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { GeoJSON, MapContainer, TileLayer } from 'react-leaflet';
+import { GeoJSON, MapContainer, Pane, TileLayer } from 'react-leaflet';
 import L, { PathOptions } from 'leaflet';
 import { useTheme } from 'app/providers/ThemeContext';
 import 'leaflet/dist/leaflet.css';
@@ -16,6 +16,15 @@ import { createFeatureStyleFactory } from '../utils/mapStyle';
 import { DEFAULT_ZOOM, POLAND_CENTER, TILE_ATTRIBUTION, TILE_URLS } from '../constants';
 import type { CountyScore } from '../../../types/api';
 import type { CountyFeature } from '../types';
+
+const polandOutlineStyle: PathOptions = {
+    color: 'var(--color-map-country-outline)',
+    weight: 1,
+    opacity: 0.95,
+    fill: false,
+    lineJoin: 'round',
+    lineCap: 'round',
+};
 
 interface RegionMapProps {
     scoresData: CountyScore[] | null;
@@ -50,16 +59,18 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
     }, [geoJsonKey, resetAll]);
 
     const featureStyle = useMemo(() => {
-        return createFeatureStyleFactory(isDark, scoreRange, scoresMap ?? {});
-    }, [isDark, scoreRange, scoresMap]);
+        return createFeatureStyleFactory(scoreRange, scoresMap ?? {});
+    }, [scoreRange, scoresMap]);
 
     const tileUrl = isDark ? TILE_URLS.dark : TILE_URLS.light;
 
     return (
         <div className="absolute inset-0 z-0 transform-gpu" style={{ transform: 'translateZ(0)', backgroundColor: 'var(--color-bg)' }}>
-            <div className="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
-                <MapLegend scoreRange={scoreRange} />
-            </div>
+            {scoresData && scoresData.length > 0 && (
+                <div className="absolute bottom-6 right-6 z-[9999] pointer-events-auto">
+                    <MapLegend scoreRange={scoreRange} />
+                </div>
+            )}
 
             <MapContainer center={POLAND_CENTER} zoom={DEFAULT_ZOOM} className="h-full w-full" zoomControl={false}>
                 <MapViewportEffects
@@ -69,7 +80,7 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
                     onInteractionStart={handleInteractionStart}
                 />
 
-                <SearchControl geoData={geoData} geoJsonRef={geoJsonRef} onSelectFeature={selectFeature} targetId="county-search-panel-target" />
+                <SearchControl geoData={geoData?.counties ?? null} geoJsonRef={geoJsonRef} onSelectFeature={selectFeature} targetId="county-search-panel-target" />
 
                 <TileLayer url={tileUrl} attribution={TILE_ATTRIBUTION} />
 
@@ -77,10 +88,23 @@ export const RegionMap = ({ scoresData, isOpen, onCountySelect }: RegionMapProps
                     <GeoJSON
                         key={geoJsonKey}
                         ref={geoJsonRef}
-                        data={geoData}
+                        data={geoData.counties}
                         style={featureStyle as (feature?: any) => PathOptions}
                         onEachFeature={onEachFeature}
                     />
+                )}
+                {geoData && (
+                    <Pane
+                        name="polandOutline"
+                        style={{ zIndex: 450, pointerEvents: 'none' }}
+                    >
+                        <GeoJSON
+                            key={`poland-outline-${theme}`}
+                            data={geoData.polandOutline}
+                            style={polandOutlineStyle}
+                            interactive={false}
+                        />
+                    </Pane>
                 )}
             </MapContainer>
         </div>

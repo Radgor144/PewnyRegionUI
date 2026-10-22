@@ -21,16 +21,16 @@ export const applyHighlightStyle = (layer: L.Path, isDark: boolean) => {
 };
 
 export const createFeatureStyleFactory = (
-    isDark: boolean,
     scoreRange: ScoreRange,
     scoresMap?: ScoresLookup | null
 ) => {
     return (feature?: CountyFeature): PathOptions => {
         const noDataStyle: PathOptions = {
-            stroke: false,
-            color: 'transparent',
+            stroke: true,
+            color: 'var(--color-map-no-data-border)',
+            opacity: 0.8,
+            weight: 0.75,
             fill: true,
-            fillColor: 'transparent',
             fillOpacity: 0,
             lineJoin: 'round',
             lineCap: 'round',
