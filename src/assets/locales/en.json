@@ -113,6 +113,11 @@
     "counties": "Counties",
     "rankings": "Rankings"
   },
+  "navigation": {
+    "pageUnavailable": "This page is not available yet.",
+    "backToMap": "Back to map",
+    "notFound": "Page not found."
+  },
   "countyDetails": {
     "title": "County details",
     "noVariablesSelected": "Select variables in the filters to see charts.",

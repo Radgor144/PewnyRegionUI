@@ -1,6 +1,5 @@
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTranslation } from 'react-i18next';
-import { CHART_GRADIENT_OPACITY_START, CHART_GRADIENT_OPACITY_END } from 'lib/colors';
 import { VariableDetail } from 'types/api';
 
 interface ChartCardProps {
@@ -29,8 +28,8 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                     <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorRawValue" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_START} />
-                                <stop offset="95%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={CHART_GRADIENT_OPACITY_END} />
+                                <stop offset="5%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={0.4} />
+                                <stop offset="95%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={0} />
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="var(--color-chart-grid)" opacity={0.6} vertical={false} />

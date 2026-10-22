@@ -113,6 +113,11 @@
     "counties": "Powiaty",
     "rankings": "Rankingi"
   },
+  "navigation": {
+    "pageUnavailable": "Ta podstrona nie jest jeszcze dostępna.",
+    "backToMap": "Wróć do mapy",
+    "notFound": "Nie znaleziono strony."
+  },
   "countyDetails": {
     "title": "Szczegóły powiatu",
     "noVariablesSelected": "Wybierz zmienne w filtrach, aby zobaczyć wykresy.",

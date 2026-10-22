@@ -13,10 +13,20 @@ export const IconButton = ({ active, className, children, ...props }: IconButton
         : {
             backgroundColor: 'var(--color-panel-alt)',
             color: 'var(--color-text)',
-            hoverBackgroundColor: 'var(--color-hover)',
         };
 
-    const classes = ['inline-flex', 'items-center', 'justify-center', 'p-1.5', 'h-8', 'w-8', 'rounded-md', 'transition-colors', className].filter(Boolean).join(' ');
+    const classes = [
+        'inline-flex',
+        'items-center',
+        'justify-center',
+        'p-1.5',
+        'h-8',
+        'w-8',
+        'rounded-md',
+        'transition-colors',
+        !active && 'hover:bg-[var(--color-hover)]',
+        className,
+    ].filter(Boolean).join(' ');
 
     return (
         <button
