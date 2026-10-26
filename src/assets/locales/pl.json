@@ -73,10 +73,6 @@
       "label": "Przestępstwa na 1000 mieszk.",
       "description": "Stwierdzone przestępstwa na 1000 mieszkańców"
     },
-    "criminal_crimes_per_1000": {
-      "label": "Przestępstwa kryminalne",
-      "description": "Przestępstwa o charakterze kryminalnym na 1000 mieszkańców"
-    },
     "crime_detection_rate": {
       "label": "Wykrywalność przestępstw",
       "description": "Wskaźnik wykrywalności sprawców przestępstw"

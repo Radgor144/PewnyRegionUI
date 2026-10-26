@@ -38,7 +38,7 @@ const PanelContent = ({ county, selectedVariables, loading, error, detailsData, 
             {detailsData.map(({ apiName, variables }) =>
                 variables.map((variableDetail) => (
                     <ChartCard
-                        key={`${apiName}-${variableDetail.bdlVariableId}`}
+                        key={variableDetail.apiName}
                         variable={variableDetail}
                         title={t(`variables.${apiName}.label`)}
                     />

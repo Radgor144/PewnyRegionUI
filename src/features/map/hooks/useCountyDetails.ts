@@ -32,27 +32,31 @@ export const useCountyDetails = (
         }
 
         const abortController = new AbortController();
+        const apiNames = [
+            ...new Set(selectedVariables.map((variable) => variable.apiName)),
+        ];
+
         setLoading(true);
         setError(null);
 
-        Promise.all(
-            selectedVariables.map((variable) =>
-                fetchCountyDetails(terytCode, variable.bdlIds, abortController.signal)
-                    .then((response) => ({
+        fetchCountyDetails(terytCode, apiNames, abortController.signal)
+            .then((response) => {
+                setData(
+                    selectedVariables.map((variable) => ({
                         apiName: variable.apiName,
-                        variables: response.variables || [],
+                        variables: response.variables.filter(
+                            (detail) => detail.apiName === variable.apiName
+                        ),
                     }))
-            )
-        )
-            .then((results) => {
-                setData(results);
+                );
+
                 setLoading(false);
             })
             .catch((err) => {
                 if (err.name === 'AbortError') {
-                    console.log('Duplicated network request was aborted.');
                     return;
                 }
+
                 setError(t('countyDetails.loadError', 'Failed to load details.'));
                 setLoading(false);
             });
@@ -60,7 +64,7 @@ export const useCountyDetails = (
         return () => {
             abortController.abort();
         };
-    }, [terytCode, selectedVariables]);
+    }, [terytCode, selectedVariables, t]);
 
     return { data, loading, error };
 };

@@ -5,16 +5,6 @@ interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 }
 
 export const IconButton = ({ active, className, children, ...props }: IconButtonProps) => {
-    const base = active
-        ? {
-            backgroundColor: 'var(--color-primary)',
-            color: '#ffffff',
-        }
-        : {
-            backgroundColor: 'var(--color-panel-alt)',
-            color: 'var(--color-text)',
-        };
-
     const classes = [
         'inline-flex',
         'items-center',
@@ -24,14 +14,15 @@ export const IconButton = ({ active, className, children, ...props }: IconButton
         'w-8',
         'rounded-md',
         'transition-colors',
-        !active && 'hover:bg-[var(--color-hover)]',
+        active
+            ? 'bg-[var(--color-primary)] text-white'
+            : 'bg-[var(--color-panel-alt)] text-[var(--color-text)] hover:bg-[var(--color-hover)]',
         className,
     ].filter(Boolean).join(' ');
 
     return (
         <button
             className={classes}
-            style={base}
             {...props}
         >
             {children}

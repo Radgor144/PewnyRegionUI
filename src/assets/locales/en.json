@@ -73,10 +73,6 @@
       "label": "Crimes per 1,000 residents",
       "description": "Recorded crimes per 1,000 residents"
     },
-    "criminal_crimes_per_1000": {
-      "label": "Criminal offenses",
-      "description": "Criminal offenses per 1,000 residents"
-    },
     "crime_detection_rate": {
       "label": "Crime detection rate",
       "description": "Percentage of detected crimes"
