@@ -10,6 +10,7 @@
     "yearTo": "Rok do",
     "generateMap": "Generuj mapę",
     "generating": "Obliczanie...",
+    "mapNeedsUpdate": "Filtry się zmieniły. Wygeneruj mapę ponownie.",
     "loading": "Ładowanie...",
     "loadError": "Nie udało się pobrać filtrów.",
     "collapsePanel": "Zwiń panel",

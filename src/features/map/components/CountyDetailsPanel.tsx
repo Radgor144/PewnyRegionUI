@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { getCountyName } from '../utils/countySearch';
 import { getTeryt } from '../utils/teryt';
 import { useCountyDetails } from '../hooks/useCountyDetails';
+import type { CountyDetailsRequest } from '../hooks/useCountyDetails';
 import { ChartCard } from './ChartCard';
 import type { TFunction } from 'i18next';
 import type { CountyFeature } from '../types';
@@ -52,15 +53,16 @@ interface CountyDetailsPanelProps {
     county: CountyFeature | null;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
-    selectedVariables: Variable[];
+    request: CountyDetailsRequest | null;
 }
 
-export const CountyDetailsPanel = ({ county, isOpen, setIsOpen, selectedVariables }: CountyDetailsPanelProps) => {
+export const CountyDetailsPanel = ({ county, isOpen, setIsOpen, request }: CountyDetailsPanelProps) => {
     const { t } = useTranslation();
     const countyName = county ? getCountyName(county) : '';
     const terytCode = county?.properties ? getTeryt(county.properties) ?? null : null;
 
-    const { data: detailsData, loading, error } = useCountyDetails(terytCode, selectedVariables);
+    const { data: detailsData, loading, error } = useCountyDetails(request);
+    const selectedVariables = request?.selectedVariables ?? [];
 
     return (
         <div className="absolute top-14 bottom-0 right-0 z-40 flex pointer-events-none overflow-visible transition-all duration-300">

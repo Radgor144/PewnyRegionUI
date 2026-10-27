@@ -39,9 +39,7 @@ describe('useCountyDetails', () => {
         const fetchMock = vi.mocked(fetchCountyDetails);
         fetchMock.mockReset();
 
-        const { result } = renderHook(() =>
-            useCountyDetails(null, selectedVariables)
-        );
+        const { result } = renderHook(() => useCountyDetails(null));
 
         expect(result.current.data).toBeNull();
         expect(fetchMock).not.toHaveBeenCalled();
@@ -50,7 +48,7 @@ describe('useCountyDetails', () => {
     it('groups response data by variable apiName', async () => {
         const fetchMock = vi.mocked(fetchCountyDetails);
         fetchMock.mockReset();
-        fetchMock.mockResolvedValueOnce({
+        fetchMock.mockResolvedValue({
             terytCode: '2401',
             variables: [
                 {
@@ -64,13 +62,13 @@ describe('useCountyDetails', () => {
             ],
         });
 
-        const { result } = renderHook(() =>
-            useCountyDetails('2401', selectedVariables)
+        const request = { terytCode: '2401', selectedVariables };
+        const { result, rerender } = renderHook(
+            ({ currentRequest }) => useCountyDetails(currentRequest),
+            { initialProps: { currentRequest: request } },
         );
 
-        await waitFor(() => {
-            expect(result.current.loading).toBe(false);
-        });
+        await waitFor(() => expect(result.current.data).not.toBeNull());
 
         expect(fetchMock).toHaveBeenCalledTimes(1);
         expect(fetchMock).toHaveBeenCalledWith(
@@ -98,5 +96,16 @@ describe('useCountyDetails', () => {
                 ],
             },
         ]);
+
+        rerender({ currentRequest: request });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+
+        rerender({
+            currentRequest: {
+                terytCode: '2401',
+                selectedVariables: [...selectedVariables],
+            },
+        });
+        await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
     });
 });

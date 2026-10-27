@@ -6,12 +6,43 @@ import { ThemeProvider } from './providers/ThemeContext';
 import { App } from './App';
 
 vi.mock('../features/filters', () => ({
-    FiltersPanel: () => <div data-testid="filters-panel" />,
+    FiltersPanel: ({
+        selectedVariables,
+        onVariableToggle,
+        onMapGenerated,
+    }: {
+        selectedVariables: { apiName: string }[];
+        onVariableToggle: (variables: { apiName: string }[]) => void;
+        onMapGenerated: (data: never[], variables: { apiName: string }[]) => void;
+    }) => {
+        const firstVariable = { apiName: 'first_variable' };
+        const secondVariable = { apiName: 'second_variable' };
+
+        return (
+            <div data-testid="filters-panel">
+                <button onClick={() => onVariableToggle([firstVariable])}>select-first</button>
+                <button onClick={() => onVariableToggle([firstVariable, secondVariable])}>select-second</button>
+                <button onClick={() => onMapGenerated([], selectedVariables)}>generate-map</button>
+            </div>
+        );
+    },
 }));
 
 vi.mock('../features/map', () => ({
-    RegionMap: () => <div data-testid="map-panel" />,
-    CountyDetailsPanel: () => null,
+    RegionMap: ({ onCountySelect }: { onCountySelect?: (feature: { properties: { teryt: string } }) => void }) => (
+        <div data-testid="map-panel">
+            <button onClick={() => onCountySelect?.({ properties: { teryt: '2401' } })}>select-county</button>
+        </div>
+    ),
+    CountyDetailsPanel: ({
+        request,
+    }: {
+        request: { selectedVariables: { apiName: string }[] } | null;
+    }) => (
+        <div data-testid="details-request">
+            {JSON.stringify(request?.selectedVariables.map(({ apiName }) => apiName) ?? null)}
+        </div>
+    ),
 }));
 
 const renderApp = (route = '/map') => render(
@@ -83,6 +114,29 @@ describe('App routes', () => {
 
         expect(screen.getByRole('heading', { name: 'Pewny Region' })).toBeInTheDocument();
         expect(screen.getByTestId('map-panel')).toBeInTheDocument();
+    });
+
+    it('loads details only on county clicks using variables from the generated map', () => {
+        renderApp();
+
+        fireEvent.click(screen.getByRole('button', { name: 'select-first' }));
+        fireEvent.click(screen.getByRole('button', { name: 'select-county' }));
+        expect(screen.getByTestId('details-request')).toHaveTextContent('[]');
+
+        fireEvent.click(screen.getByRole('button', { name: 'generate-map' }));
+        fireEvent.click(screen.getByRole('button', { name: 'select-second' }));
+        expect(screen.getByTestId('details-request')).toHaveTextContent('[]');
+
+        fireEvent.click(screen.getByRole('button', { name: 'select-county' }));
+        expect(screen.getByTestId('details-request')).toHaveTextContent('["first_variable"]');
+
+        fireEvent.click(screen.getByRole('button', { name: 'generate-map' }));
+        expect(screen.getByTestId('details-request')).toHaveTextContent('["first_variable"]');
+
+        fireEvent.click(screen.getByRole('button', { name: 'select-county' }));
+        expect(screen.getByTestId('details-request')).toHaveTextContent(
+            '["first_variable","second_variable"]',
+        );
     });
 
     it('collapses the sidebar when the menu button is clicked', () => {

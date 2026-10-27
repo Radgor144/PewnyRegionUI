@@ -8,6 +8,11 @@ export interface LabeledVariableGroup {
     variables: VariableDetail[];
 }
 
+export interface CountyDetailsRequest {
+    terytCode: string | null;
+    selectedVariables: Variable[];
+}
+
 interface UseCountyDetailsResult {
     data: LabeledVariableGroup[] | null;
     loading: boolean;
@@ -15,8 +20,7 @@ interface UseCountyDetailsResult {
 }
 
 export const useCountyDetails = (
-    terytCode: string | null,
-    selectedVariables: Variable[]
+    request: CountyDetailsRequest | null
 ): UseCountyDetailsResult => {
     const { t } = useTranslation();
     const [data, setData] = useState<LabeledVariableGroup[] | null>(null);
@@ -24,7 +28,7 @@ export const useCountyDetails = (
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!terytCode || selectedVariables.length === 0) {
+        if (!request?.terytCode || request.selectedVariables.length === 0) {
             setData(null);
             setLoading(false);
             setError(null);
@@ -33,16 +37,16 @@ export const useCountyDetails = (
 
         const abortController = new AbortController();
         const apiNames = [
-            ...new Set(selectedVariables.map((variable) => variable.apiName)),
+            ...new Set(request.selectedVariables.map((variable) => variable.apiName)),
         ];
 
         setLoading(true);
         setError(null);
 
-        fetchCountyDetails(terytCode, apiNames, abortController.signal)
+        fetchCountyDetails(request.terytCode, apiNames, abortController.signal)
             .then((response) => {
                 setData(
-                    selectedVariables.map((variable) => ({
+                    request.selectedVariables.map((variable) => ({
                         apiName: variable.apiName,
                         variables: response.variables.filter(
                             (detail) => detail.apiName === variable.apiName
@@ -64,7 +68,7 @@ export const useCountyDetails = (
         return () => {
             abortController.abort();
         };
-    }, [terytCode, selectedVariables, t]);
+    }, [request, t]);
 
     return { data, loading, error };
 };

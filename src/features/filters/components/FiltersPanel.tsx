@@ -10,7 +10,8 @@ import type { CountyScore, Variable } from 'types/api';
 interface FiltersPanelProps {
     selectedVariables: Variable[];
     onVariableToggle: Dispatch<SetStateAction<Variable[]>>;
-    onScoresUpdate: (data: CountyScore[] | null) => void;
+    onMapGenerated: (data: CountyScore[], variables: Variable[]) => void;
+    onFiltersReset: () => void;
     hasScores: boolean;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,13 +23,19 @@ const MAX_SELECTION = 10;
 export const FiltersPanel = ({
                                  selectedVariables,
                                  onVariableToggle,
-                                 onScoresUpdate,
+                                 onMapGenerated,
+                                 onFiltersReset,
                                  hasScores,
                                  isOpen,
                                  setIsOpen,
                                  isMainSidebarOpen,
                              }: FiltersPanelProps) => {
     const { t } = useTranslation();
+    const [appliedMapSettings, setAppliedMapSettings] = useState<{
+        apiNames: string[];
+        yearFrom: number;
+        yearTo: number;
+    } | null>(null);
 
     const {
         variables,
@@ -40,7 +47,14 @@ export const FiltersPanel = ({
         generate,
         isGenerating,
         error: generateError,
-    } = useGenerateCountyScores(onScoresUpdate);
+    } = useGenerateCountyScores((data) => {
+        onMapGenerated(data, selectedVariables);
+        setAppliedMapSettings({
+            apiNames: selectedVariables.map(({ apiName }) => apiName).sort(),
+            yearFrom,
+            yearTo,
+        });
+    });
 
     const [yearFrom, setYearFrom] = useState<number>(2016);
     const [yearTo, setYearTo] = useState<number>(2023);
@@ -59,7 +73,8 @@ export const FiltersPanel = ({
 
     const handleResetFilters = () => {
         onVariableToggle([]);
-        onScoresUpdate(null);
+        onFiltersReset();
+        setAppliedMapSettings(null);
     };
 
     const isResetDisabled =
@@ -67,6 +82,12 @@ export const FiltersPanel = ({
 
     const isGenerateDisabled =
         isGenerating || selectedVariables.length === 0;
+    const isMapOutOfDate = hasScores && appliedMapSettings !== null && (
+        JSON.stringify(selectedVariables.map(({ apiName }) => apiName).sort()) !==
+            JSON.stringify(appliedMapSettings.apiNames) ||
+        yearFrom !== appliedMapSettings.yearFrom ||
+        yearTo !== appliedMapSettings.yearTo
+    );
 
     return (
         <div
@@ -220,6 +241,16 @@ export const FiltersPanel = ({
                                 style={{ color: '#ef4444' }}
                             >
                                 {generateError}
+                            </p>
+                        )}
+
+                        {isMapOutOfDate && (
+                            <p
+                                role="status"
+                                className="mb-2 text-center text-[11px]"
+                                style={{ color: 'var(--color-text-muted)' }}
+                            >
+                                {t('filters.mapNeedsUpdate')}
                             </p>
                         )}
 

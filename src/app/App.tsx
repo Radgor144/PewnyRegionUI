@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DashboardLayout, MainSidebar } from '../components/Layout';
 import { FiltersPanel } from '../features/filters';
 import { RegionMap, CountyDetailsPanel } from '../features/map';
+import { getTeryt } from '../features/map/utils/teryt';
 import type { CountyFeature } from '../features/map';
 import type { CountyScore, Variable } from '../types/api';
 
@@ -22,14 +23,35 @@ export function App() {
 function MapPage() {
     const [scoresData, setScoresData] = useState<CountyScore[] | null>(null);
     const [selectedVariables, setSelectedVariables] = useState<Variable[]>([]);
+    const [appliedVariables, setAppliedVariables] = useState<Variable[]>([]);
     const [isMainSidebarOpen, setIsMainSidebarOpen] = useState<boolean>(true);
     const [isFiltersOpen, setIsFiltersOpen] = useState<boolean>(true);
     const [selectedCounty, setSelectedCounty] = useState<CountyFeature | null>(null);
+    const [detailsRequest, setDetailsRequest] = useState<{
+        terytCode: string | null;
+        selectedVariables: Variable[];
+    } | null>(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
 
     const handleCountySelect = (feature: CountyFeature) => {
         setSelectedCounty(feature);
+        setDetailsRequest({
+            terytCode: feature.properties ? getTeryt(feature.properties) ?? null : null,
+            selectedVariables: [...appliedVariables],
+        });
         setIsDetailsOpen(true);
+    };
+
+    const handleMapGenerated = (data: CountyScore[], variables: Variable[]) => {
+        setScoresData(data);
+        setAppliedVariables([...variables]);
+    };
+
+    const handleFiltersReset = () => {
+        setScoresData(null);
+        setAppliedVariables([]);
+        setSelectedCounty(null);
+        setDetailsRequest(null);
     };
 
     return (
@@ -44,7 +66,8 @@ function MapPage() {
                 <FiltersPanel
                     selectedVariables={selectedVariables}
                     onVariableToggle={setSelectedVariables}
-                    onScoresUpdate={setScoresData}
+                    onMapGenerated={handleMapGenerated}
+                    onFiltersReset={handleFiltersReset}
                     hasScores={scoresData !== null}
                     isOpen={isFiltersOpen}
                     setIsOpen={setIsFiltersOpen}
@@ -56,7 +79,7 @@ function MapPage() {
                     county={selectedCounty}
                     isOpen={isDetailsOpen}
                     setIsOpen={setIsDetailsOpen}
-                    selectedVariables={selectedVariables}
+                    request={detailsRequest}
                 />
             }
             map={

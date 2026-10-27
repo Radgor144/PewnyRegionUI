@@ -10,6 +10,7 @@
     "yearTo": "Year to",
     "generateMap": "Generate Map",
     "generating": "Calculating...",
+    "mapNeedsUpdate": "Filters changed. Generate the map again.",
     "loading": "Loading...",
     "loadError": "Failed to fetch filters.",
     "collapsePanel": "Collapse panel",
