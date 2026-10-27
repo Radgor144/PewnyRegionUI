@@ -10,6 +10,7 @@
     "yearTo": "Rok do",
     "generateMap": "Generuj mapę",
     "generating": "Obliczanie...",
+    "mapNeedsUpdate": "Filtry się zmieniły. Wygeneruj mapę ponownie.",
     "loading": "Ładowanie...",
     "loadError": "Nie udało się pobrać filtrów.",
     "collapsePanel": "Zwiń panel",
@@ -72,10 +73,6 @@
     "crimes_per_1000": {
       "label": "Przestępstwa na 1000 mieszk.",
       "description": "Stwierdzone przestępstwa na 1000 mieszkańców"
-    },
-    "criminal_crimes_per_1000": {
-      "label": "Przestępstwa kryminalne",
-      "description": "Przestępstwa o charakterze kryminalnym na 1000 mieszkańców"
     },
     "crime_detection_rate": {
       "label": "Wykrywalność przestępstw",

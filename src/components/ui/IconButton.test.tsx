@@ -6,8 +6,12 @@ describe('IconButton', () => {
     it('applies its hover background through a CSS class', () => {
         render(<IconButton>Theme</IconButton>);
 
-        expect(screen.getByRole('button', { name: 'Theme' })).toHaveClass(
+        const button = screen.getByRole('button', { name: 'Theme' });
+
+        expect(button).toHaveClass(
+            'bg-[var(--color-panel-alt)]',
             'hover:bg-[var(--color-hover)]',
         );
+        expect(button).not.toHaveStyle({ backgroundColor: 'var(--color-panel-alt)' });
     });
 });

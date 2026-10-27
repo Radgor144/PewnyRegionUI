@@ -32,7 +32,7 @@ export interface YearlyData {
 }
 
 export interface VariableDetail {
-    bdlVariableId: number;
+    apiName: string;
     yearlyValues: YearlyData[];
 }
 

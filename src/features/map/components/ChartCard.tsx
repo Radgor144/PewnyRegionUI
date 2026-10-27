@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { AreaChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { useTranslation } from 'react-i18next';
 import { VariableDetail } from 'types/api';
@@ -8,6 +9,7 @@ interface ChartCardProps {
 }
 
 export const ChartCard = ({ variable, title }: ChartCardProps) => {
+    const gradientId = `colorRawValue-${useId()}`;
     const { t } = useTranslation();
     const data = [...variable.yearlyValues].sort((a, b) => a.year - b.year);
 
@@ -27,7 +29,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                         <defs>
-                            <linearGradient id="colorRawValue" x1="0" y1="0" x2="0" y2="1">
+                            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="5%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={0.4} />
                                 <stop offset="95%" stopColor={'var(--color-chart-stroke-primary)'} stopOpacity={0} />
                             </linearGradient>
@@ -84,7 +86,7 @@ export const ChartCard = ({ variable, title }: ChartCardProps) => {
                             stroke={'var(--color-chart-stroke-primary)'}
                             strokeWidth={2.5}
                             fillOpacity={1}
-                            fill="url(#colorRawValue)"
+                            fill={`url(#${gradientId})`}
                             dot={{ r: 2, strokeWidth: 1, fill: 'var(--color-dot-this-county)', stroke: 'var(--color-chart-stroke-primary)' }}
                             activeDot={{ r: 4, strokeWidth: 0, fill: 'var(--color-chart-stroke-primary)' }}
                         />
